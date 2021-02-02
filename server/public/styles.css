@@ -36,3 +36,13 @@ font-family: 'Yeseva One', cursive; */
 .cursor-pointer {
   cursor: pointer;
 }
+
+.details {
+  background-color: #202020;
+  font-size: 24px;
+}
+
+.metacritic {
+  border: 1px solid;
+  background-color: #6c3;
+}
