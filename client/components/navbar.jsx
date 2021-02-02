@@ -3,7 +3,7 @@ import React from 'react';
 export default class Navbar extends React.Component {
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid mb-3">
         <div className="row header-row align-items-center">
             <a href="#home" className="col-4 text-white logo">
               GG
