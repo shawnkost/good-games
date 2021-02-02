@@ -1,11 +1,10 @@
 import React from 'react';
+import Navbar from '../components/navbar';
 
 export default function Home(props) {
   return (
     <>
-    <header>
-      <a href="#home">GG</a>
-    </header>
+      <Navbar />
     </>
   );
 }

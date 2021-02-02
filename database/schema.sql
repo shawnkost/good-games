@@ -11,7 +11,7 @@ CREATE TABLE "users" (
 	"username" TEXT NOT NULL,
 	"email" TEXT NOT NULL,
 	"password" TEXT NOT NULL,
-	"createdAt" TIMESTAMP NOT NULL,
+	"createdAt" TIMESTAMP NOT NULL default now(),
 	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
 ) WITH (
   OIDS=FALSE
@@ -24,7 +24,7 @@ CREATE TABLE "reviews" (
 	"gameId" integer NOT NULL,
 	"details" TEXT NOT NULL,
 	"userId" integer NOT NULL,
-	"createdAt" TIMESTAMP NOT NULL,
+	"createdAt" TIMESTAMP NOT NULL default now(),
 	CONSTRAINT "reviews_pk" PRIMARY KEY ("reviewId")
 ) WITH (
   OIDS=FALSE
