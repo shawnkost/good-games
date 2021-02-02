@@ -1,22 +1,31 @@
 import React from 'react';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
+import APIKEY from '../api.json';
 
 export default class Games extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      games: [],
-      platform: 4
+      games: []
     };
     this.date = dayjs().format('YYYY-MM-DD');
-    this.mostPopular = this.mostPopular.bind(this);
+    this.mostPopularGames = this.mostPopularGames.bind(this);
     this.mapGames = this.mapGames.bind(this);
-    this.mostPopular();
   }
 
-  mostPopular() {
+  componentDidMount() {
+    this.mostPopularGames();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.platform !== this.props.platform) {
+      this.mostPopularGames();
+    }
+  }
+
+  mostPopularGames() {
     fetch(
-      `https://api.rawg.io/api/games?platforms=${this.state.platform}&dates=2000-01-01,${this.date}&ordering=-metacritic&key=c9b670c66eaf4b37bb3b8a3d805fd304`
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=2000-01-01,${this.date}&ordering=-metacritic&key=${APIKEY.API_KEY}`
     )
       .then(response => response.json())
       .then(games =>
@@ -28,7 +37,13 @@ export default class Games extends React.Component {
 
   mapGames() {
     const listOfGames = this.state.games.results.map((game, index) => {
-      return <CreateGameCard value={game} image={game.background_image} key={index} />;
+      return (
+        <CreateGameCard
+          value={game}
+          image={game.background_image}
+          key={index}
+        />
+      );
     });
     return listOfGames;
   }
@@ -38,11 +53,7 @@ export default class Games extends React.Component {
     if (this.state.games.results && this.state.games.results.length > 0) {
       gameList = this.mapGames();
     }
-    return (
-      <div className="container-fluid">
-        {gameList}
-      </div>
-    );
+    return <div className="container-fluid">{gameList}</div>;
   }
 }
 

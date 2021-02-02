@@ -1,6 +1,15 @@
 import React from 'react';
 
 export default class GameSort extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    this.props.onChange(event.target.value);
+  }
+
   render() {
     return (
       <div className="container-fluid">
@@ -12,23 +21,24 @@ export default class GameSort extends React.Component {
           name="platform col"
           id="platform"
           className="sort-select cursor-pointer text-white"
+          onChange={this.handleClick}
         >
-          <option value="switch" className="text-white">
+          <option value="4" className="text-white">
             PC
           </option>
-          <option value="switch" className="text-white">
+          <option value="7" className="text-white">
             Switch
           </option>
-          <option value="switch" className="text-white">
+          <option value="186" className="text-white">
             Xbox Series X
           </option>
-          <option value="switch" className="text-white">
+          <option value="1" className="text-white">
             Xbox One
           </option>
-          <option value="switch" className="text-white">
+          <option value="187" className="text-white">
             Playstation 5
           </option>
-          <option value="switch" className="text-white">
+          <option value="18" className="text-white">
             Playstation 4
           </option>
         </select>
