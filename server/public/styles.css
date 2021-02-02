@@ -1,6 +1,25 @@
 /* font-family: 'Josefin Sans', sans-serif;
 font-family: 'Yeseva One', cursive; */
 
-header {
+.header-row {
   background-color: #028df2;
+  font-family: "Yeseva One", cursive;
+}
+
+.logo {
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.border-radius {
+  border-radius: 10px;
+  border: none;
+}
+
+.menu {
+  font-size: 24px;
+}
+
+.text-align-right {
+  text-align: right;
 }
