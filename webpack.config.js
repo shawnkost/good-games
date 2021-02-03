@@ -20,10 +20,14 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            plugins: [
-              '@babel/plugin-transform-react-jsx'
-            ]
+            plugins: ['@babel/plugin-transform-react-jsx']
           }
+        }
+      },
+      {
+        test: /\.(jpg|png|svg)$/,
+        use: {
+          loader: 'url-loader'
         }
       }
     ]
