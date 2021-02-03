@@ -1,6 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import APIKEY from '../api.json';
+import CreateGameCard from './createGameCard';
 
 export default class Games extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ export default class Games extends React.Component {
     this.date = dayjs().format('YYYY-MM-DD');
     this.mostPopularGames = this.mostPopularGames.bind(this);
     this.mapGames = this.mapGames.bind(this);
+    this.nextRequest = this.nextRequest.bind(this);
   }
 
   componentDidMount() {
@@ -25,7 +27,7 @@ export default class Games extends React.Component {
 
   mostPopularGames() {
     fetch(
-      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=2000-01-01,${this.date}&ordering=-metacritic&key=${APIKEY.API_KEY}`
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=2010-01-01,${this.date}&ordering=-metacritic&key=${APIKEY.API_KEY}`
     )
       .then(response => response.json())
       .then(games =>
@@ -33,6 +35,17 @@ export default class Games extends React.Component {
           games
         })
       );
+  }
+
+  nextRequest() {
+    fetch(`${this.state.games.next}`)
+      .then(response => response.json())
+      .then(games => {
+        this.setState({
+          games
+        });
+        window.scrollTo(0, 0);
+      });
   }
 
   mapGames() {
@@ -53,20 +66,18 @@ export default class Games extends React.Component {
     if (this.state.games.results && this.state.games.results.length > 0) {
       gameList = this.mapGames();
     }
-    return <div className="container-fluid">{gameList}</div>;
+    return (
+      <>
+        <div className="container-fluid">{gameList}</div>
+        <div
+          className={
+            this.state.games.results ? 'show text-white text-center' : 'hide'
+          }
+          onClick={this.nextRequest}
+        >
+          Next Page
+        </div>
+      </>
+    );
   }
-}
-
-function CreateGameCard(props) {
-  return (
-    <div className="game-card">
-      <div className="w-100">
-        <img src={props.image} className="w-100"></img>
-      </div>
-      <div className="d-flex justify-content-between align-items-center text-white details">
-        <div className="ml-3">{props.value.name}</div>
-        <div className="mr-3 metacritic">{props.value.metacritic}</div>
-      </div>
-    </div>
-  );
 }
