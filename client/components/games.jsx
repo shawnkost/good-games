@@ -71,7 +71,7 @@ export default class Games extends React.Component {
         <div className="container-fluid">{gameList}</div>
         <div
           className={
-            this.state.games.results ? 'show text-white text-center' : 'hide'
+            this.state.games.results ? 'show text-white text-center mb-3 next' : 'hide'
           }
           onClick={this.nextRequest}
         >

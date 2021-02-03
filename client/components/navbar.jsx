@@ -15,7 +15,7 @@ export default class Navbar extends React.Component {
               placeholder="Search"
               className="col-4 search-input"
             ></input>
-            <i className="fas fa-bars col-4 text-white menu text-align-right"></i>
+            <i className="fas fa-bars col-4 text-white menu text-right"></i>
         </div>
       </div>
     );
