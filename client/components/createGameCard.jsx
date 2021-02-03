@@ -14,7 +14,7 @@ export default function CreateGameCard(props) {
       <div className="text-white details">
         <div className="all-platforms-container mb-2">
           {props.value.parent_platforms.map((platform, index) => {
-            let platformImg = '';
+            let platformImg = null;
             switch (platform.platform.slug) {
               case 'pc':
                 platformImg = Windows;
@@ -29,7 +29,7 @@ export default function CreateGameCard(props) {
                 platformImg = Nintendo;
                 break;
               default:
-                return false;
+                platformImg = null;
             }
             return (
               <div className="platform-container" key={index}>
