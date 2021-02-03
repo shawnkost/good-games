@@ -1,6 +1,7 @@
 import React from 'react';
 import Home from './pages/home';
 import parseRoute from './lib/parse-route';
+import Menu from './pages/menu';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -18,7 +19,21 @@ export default class App extends React.Component {
     });
   }
 
+  renderPage() {
+    const { path } = this.state.route;
+    if (path === '') {
+      return <Home />;
+    }
+    if (path === 'menu') {
+      return <Menu />;
+    }
+  }
+
   render() {
-    return <Home />;
+    return (
+      <>
+        {this.renderPage()}
+      </>
+    );
   }
 }

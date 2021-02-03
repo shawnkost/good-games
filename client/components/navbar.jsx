@@ -14,7 +14,7 @@ export default class Navbar extends React.Component {
     return (
       <div className="container-fluid mb-4">
         <div className="row py-2 align-items-center header-row">
-          <a href="#home" className="col-4 text-white logo">
+          <a href="#" className="col-4 text-white logo">
             GG
           </a>
           <input
