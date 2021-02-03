@@ -29,7 +29,7 @@ export default function CreateGameCard(props) {
                 platformImg = Nintendo;
                 break;
               default:
-                platformImg = null;
+                return null;
             }
             return (
               <div className="platform-container" key={index}>

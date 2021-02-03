@@ -7,7 +7,7 @@ export default class Navbar extends React.Component {
   }
 
   handleClick(event) {
-
+    this.props.onChange(event);
   }
 
   render() {
@@ -24,7 +24,7 @@ export default class Navbar extends React.Component {
             placeholder="Search"
             className="col-4 search-input"
           ></input>
-          <a className="col-4 text-right" href="#menu">
+          <a className="col-4 text-right">
             <i
               className="fas fa-bars text-white menu"
               onClick={this.handleClick}
