@@ -4,7 +4,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import APIKEY from '../api.json';
 import CreateGameCard from './createGameCard';
 dayjs.extend(relativeTime);
-
 export default class Games extends React.Component {
   constructor(props) {
     super(props);
@@ -12,11 +11,13 @@ export default class Games extends React.Component {
       games: []
     };
     this.todaysDate = dayjs().format('YYYY-MM-DD');
-    this.ninetyDays = dayjs().subtract(90, 'days').format('YYYY-MM-DD');
+    this.ninetyDaysAgo = dayjs().subtract(90, 'days').format('YYYY-MM-DD');
+    this.oneYearFromNow = dayjs().add(365, 'days').format('YYYY-MM-DD');
     this.mostPopularGames = this.mostPopularGames.bind(this);
     this.newlyReleasedGames = this.newlyReleasedGames.bind(this);
-    this.mapGames = this.mapGames.bind(this);
+    this.upcomingGames = this.upcomingGames.bind(this);
     this.nextRequest = this.nextRequest.bind(this);
+    this.mapGames = this.mapGames.bind(this);
   }
 
   componentDidMount() {
@@ -25,6 +26,9 @@ export default class Games extends React.Component {
     }
     if (this.props.path === 'new-releases') {
       this.newlyReleasedGames();
+    }
+    if (this.props.path === 'upcoming-games') {
+      this.upcomingGames();
     }
   }
 
@@ -38,11 +42,17 @@ export default class Games extends React.Component {
     ) {
       this.newlyReleasedGames();
     }
+    if (
+      prevProps.platform !== this.props.platform &&
+      this.props.path === 'upcoming-games'
+    ) {
+      this.upcomingGames();
+    }
   }
 
   mostPopularGames() {
     fetch(
-      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=2010-01-01,${this.todaysDate}&metacritic=10,100&ordering=-metacritic&key=${APIKEY.API_KEY}`
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=2010-01-01,${this.todaysDate}&metacritic=10,100&ordering=-metacritic&key=${APIKEY.APIKEY}`
     )
       .then(response => response.json())
       .then(games =>
@@ -54,7 +64,19 @@ export default class Games extends React.Component {
 
   newlyReleasedGames() {
     fetch(
-      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.ninetyDays},${this.todaysDate}&metacritic=1,100&ordering=-released&key=${APIKEY.API_KEY}`
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.ninetyDaysAgo},${this.todaysDate}&metacritic=1,100&ordering=-released&key=${APIKEY.APIKEY}`
+    )
+      .then(response => response.json())
+      .then(games =>
+        this.setState({
+          games
+        })
+      );
+  }
+
+  upcomingGames() {
+    fetch(
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.todaysDate},${this.oneYearFromNow}&ordering=released&key=${APIKEY.APIKEY}`
     )
       .then(response => response.json())
       .then(games =>

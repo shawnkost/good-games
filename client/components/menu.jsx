@@ -36,13 +36,13 @@ export default class Menu extends React.Component {
           >
             New Releases
           </a>
-          <a href="#upcoming-games" className="d-block menu-items pl-2 pt-2 pb-2 mb-2">
+          <a href="#upcoming-games" className="d-block menu-items pl-2 pt-2 pb-2 mb-2" onClick={this.handleClick}>
             Upcoming
           </a>
-          <a href="#new-releases" className="d-block menu-items pl-2 pt-2 pb-2 mb-2">
+          <a href="#profile" className="d-block menu-items pl-2 pt-2 pb-2 mb-2" onClick={this.handleClick}>
             Profile
           </a>
-          <a href="#new-releases" className="d-block menu-items pl-2 pt-2 pb-2 mb-2">
+          <a href="#contact-me" className="d-block menu-items pl-2 pt-2 pb-2 mb-2" onClick={this.handleClick}>
             Contact Me
           </a>
         </div>
