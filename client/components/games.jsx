@@ -14,8 +14,9 @@ export default class Games extends React.Component {
     this.ninetyDays = dayjs().subtract(90, 'days').format('YYYY-MM-DD');
     this.mostPopularGames = this.mostPopularGames.bind(this);
     this.newlyReleasedGames = this.newlyReleasedGames.bind(this);
-    this.mapGames = this.mapGames.bind(this);
+    this.upcomingGames = this.upcomingGames.bind(this);
     this.nextRequest = this.nextRequest.bind(this);
+    this.mapGames = this.mapGames.bind(this);
   }
 
   componentDidMount() {
@@ -24,6 +25,9 @@ export default class Games extends React.Component {
     }
     if (this.props.path === 'new-releases') {
       this.newlyReleasedGames();
+    }
+    if (this.props.path === 'upcoming-games') {
+      this.upcomingGames();
     }
   }
 
@@ -36,6 +40,12 @@ export default class Games extends React.Component {
       this.props.path === 'new-releases'
     ) {
       this.newlyReleasedGames();
+    }
+    if (
+      prevProps.platform !== this.props.platform &&
+      this.props.path === 'upcoming-games'
+    ) {
+      this.upcomingGames();
     }
   }
 
