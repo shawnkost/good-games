@@ -1,7 +1,9 @@
 import React from 'react';
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import APIKEY from '../api.json';
 import CreateGameCard from './createGameCard';
+dayjs.extend(relativeTime);
 
 export default class Games extends React.Component {
   constructor(props) {
@@ -9,27 +11,49 @@ export default class Games extends React.Component {
     this.state = {
       games: []
     };
-    this.date = dayjs().format('YYYY-MM-DD');
+    this.todaysDate = dayjs().format('YYYY-MM-DD');
+    this.ninetyDays = dayjs().subtract(90, 'days').format('YYYY-MM-DD');
     this.mostPopularGames = this.mostPopularGames.bind(this);
+    this.newlyReleasedGames = this.newlyReleasedGames.bind(this);
     this.mapGames = this.mapGames.bind(this);
     this.nextRequest = this.nextRequest.bind(this);
   }
 
   componentDidMount() {
-    // console.log(this.props.path);
-    this.mostPopularGames();
+    // console.log("componentDidMount", this.props.path);
+    if (this.props.path === '') {
+      this.mostPopularGames();
+    }
+    if (this.props.path === 'new-releases') {
+      this.newlyReleasedGames();
+    }
   }
 
   componentDidUpdate(prevProps) {
-    // console.log("test", this.props)
-    if (prevProps.platform !== this.props.platform) {
+    // console.log("componentDidUpdate", this.props.path);
+    if (prevProps.platform !== this.props.platform && this.props.path === '') {
       this.mostPopularGames();
+    }
+    if (prevProps.platform !== this.props.platform && this.props.path === 'new-releases') {
+      this.newlyReleasedGames();
     }
   }
 
   mostPopularGames() {
     fetch(
-      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=2010-01-01,${this.date}&ordering=-metacritic&key=${APIKEY.API_KEY}`
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=2010-01-01,${this.todaysDate}&ordering=-metacritic&key=${APIKEY.API_KEY}`
+    )
+      .then(response => response.json())
+      .then(games =>
+        this.setState({
+          games
+        })
+      );
+  }
+
+  newlyReleasedGames() {
+    fetch(
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.ninetyDays},${this.todaysDate}&ordering=-metacritic&key=${APIKEY.API_KEY}`
     )
       .then(response => response.json())
       .then(games =>
@@ -73,7 +97,9 @@ export default class Games extends React.Component {
         <div className="container-fluid">{gameList}</div>
         <div
           className={
-            this.state.games.results ? 'show text-white text-center mb-3 next' : 'hide'
+            this.state.games.results
+              ? 'show text-white text-center mb-3 next'
+              : 'hide'
           }
           onClick={this.nextRequest}
         >
