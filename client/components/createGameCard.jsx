@@ -12,7 +12,7 @@ export default class CreateGameCard extends React.Component {
   }
 
   handleClick(event) {
-    // console.log(event.target.id)
+    this.props.passGameId(event.target.id);
   }
 
   render() {

@@ -44,7 +44,7 @@ export default class Home extends React.Component {
         >
           <Navbar onChange={this.openMenu} />
           <GameSort onChange={this.savePlatform} path={this.props.path} />
-          <Games platform={this.state.platform} path={this.props.path} />
+          <Games platform={this.state.platform} path={this.props.path} passGameId={this.props.passGameId} />
         </div>
         <Menu click={this.closeMenu} menuClicked={this.state.menuClicked} />
       </>

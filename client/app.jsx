@@ -11,6 +11,8 @@ export default class App extends React.Component {
     this.state = {
       route: parseRoute(window.location.hash)
     };
+    this.gameId = null;
+    this.passGameId = this.passGameId.bind(this);
   }
 
   componentDidMount() {
@@ -21,10 +23,14 @@ export default class App extends React.Component {
     });
   }
 
+  passGameId(gameId) {
+    this.gameId = gameId;
+  }
+
   renderPage() {
     const { path } = this.state.route;
     if (path === '') {
-      return <Home path={path} />;
+      return <Home path={path} passGameId={this.passGameId} />;
     }
     if (path === 'new-releases') {
       return <NewReleases path={path} />;
@@ -33,7 +39,7 @@ export default class App extends React.Component {
       return <UpcomingGames path={path} />;
     }
     if (path === 'game-details') {
-      return <GameDetails />;
+      return <GameDetails gameId={this.gameId} />;
     }
   }
 
