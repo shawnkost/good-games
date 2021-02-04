@@ -4,7 +4,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import APIKEY from '../api.json';
 import CreateGameCard from './createGameCard';
 dayjs.extend(relativeTime);
-
 export default class Games extends React.Component {
   constructor(props) {
     super(props);
@@ -42,7 +41,7 @@ export default class Games extends React.Component {
 
   mostPopularGames() {
     fetch(
-      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=2010-01-01,${this.todaysDate}&metacritic=10,100&ordering=-metacritic&key=${APIKEY.API_KEY}`
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=2010-01-01,${this.todaysDate}&metacritic=10,100&ordering=-metacritic&key=${APIKEY.APIKEY}`
     )
       .then(response => response.json())
       .then(games =>
@@ -54,7 +53,7 @@ export default class Games extends React.Component {
 
   newlyReleasedGames() {
     fetch(
-      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.ninetyDays},${this.todaysDate}&metacritic=1,100&ordering=-released&key=${APIKEY.API_KEY}`
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.ninetyDays},${this.todaysDate}&metacritic=1,100&ordering=-released&key=${APIKEY.APIKEY}`
     )
       .then(response => response.json())
       .then(games =>
