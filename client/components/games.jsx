@@ -63,6 +63,18 @@ export default class Games extends React.Component {
       );
   }
 
+  upcomingGames() {
+    fetch(
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.todaysDate},${this.ninetyDays}&metacritic=1,100&ordering=-released&key=${APIKEY.APIKEY}`
+    )
+      .then(response => response.json())
+      .then(games =>
+        this.setState({
+          games
+        })
+      );
+  }
+
   nextRequest() {
     if (this.state.games.next !== null) {
       fetch(`${this.state.games.next}`)
