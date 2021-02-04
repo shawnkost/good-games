@@ -12,7 +12,7 @@ export default class Games extends React.Component {
       games: []
     };
     this.todaysDate = dayjs().format('YYYY-MM-DD');
-    this.ninetyDays = dayjs().subtract(90, 'days').format('YYYY-MM-DD');
+    this.sixtyDays = dayjs().subtract(60, 'days').format('YYYY-MM-DD');
     this.mostPopularGames = this.mostPopularGames.bind(this);
     this.newlyReleasedGames = this.newlyReleasedGames.bind(this);
     this.mapGames = this.mapGames.bind(this);
@@ -20,7 +20,6 @@ export default class Games extends React.Component {
   }
 
   componentDidMount() {
-    // console.log("componentDidMount", this.props.path);
     if (this.props.path === '') {
       this.mostPopularGames();
     }
@@ -30,7 +29,6 @@ export default class Games extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    // console.log("componentDidUpdate", this.props.path);
     if (prevProps.platform !== this.props.platform && this.props.path === '') {
       this.mostPopularGames();
     }
@@ -53,7 +51,7 @@ export default class Games extends React.Component {
 
   newlyReleasedGames() {
     fetch(
-      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.ninetyDays},${this.todaysDate}&ordering=-metacritic&key=${APIKEY.API_KEY}`
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.sixtyDays},${this.todaysDate}&ordering=-metacritic&key=${APIKEY.API_KEY}`
     )
       .then(response => response.json())
       .then(games =>

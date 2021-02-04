@@ -18,7 +18,7 @@ export default class Menu extends React.Component {
           <a href="#" className="d-block menu-items mb-4" onClick={this.handleClick}>
             Most Popular
           </a>
-          <a href="#new-releases" className="d-block menu-items mb-4">
+          <a href="#new-releases" className="d-block menu-items mb-4" onClick={this.handleClick}>
             New Releases
           </a>
           <a href="#upcoming-games" className="d-block menu-items mb-4">
