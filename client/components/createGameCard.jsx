@@ -11,7 +11,7 @@ export default function CreateGameCard(props) {
         <img src={props.image} className="w-100 h-100 game-image"></img>
       </div>
       <div className="text-white details">
-        <div className="all-platforms-container mb-2">
+        <div className="all-platforms-container mb-2 pl-2 pt-2">
           {props.value.parent_platforms.map((platform, index) => {
             let platformImg = null;
             let platformURL = null;
@@ -46,8 +46,8 @@ export default function CreateGameCard(props) {
           })}
         </div>
         <div className="details-container">
-          <div className="pl-1 mb-2 font-weight-bold">{props.value.name}</div>
-          <div className="pl-1 d-inline-block details-font">
+          <div className="pl-2 mb-2 font-weight-bold">{props.value.name}</div>
+          <div className="pl-2 d-inline-block details-font">
             {'Release date: ' +
               dayjs(props.value.released).format('MMM-DD-YYYY')}
           </div>
