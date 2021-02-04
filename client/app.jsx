@@ -22,7 +22,7 @@ export default class App extends React.Component {
   renderPage() {
     const { path } = this.state.route;
     if (path === '' || path === 'upcoming-games') {
-      return <Home path={path}/>;
+      return <Home path={path} />;
     }
     if (path === 'new-releases') {
       return <NewReleases path={path} />;
@@ -30,10 +30,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    return (
-      <>
-        {this.renderPage()}
-      </>
-    );
+    return <>{this.renderPage()}</>;
   }
 }

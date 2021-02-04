@@ -14,7 +14,11 @@ export default class GameSort extends React.Component {
     return (
       <div className="container-fluid">
         <h3 className="text-center mb-4 text-white heading-text">
-          {this.props.path === '' ? 'Most Popular Games' : this.props.path === 'new-releases' ? 'New Releases' : ''}
+          {this.props.path === ''
+            ? 'Most Popular Games'
+            : this.props.path === 'new-releases'
+              ? 'New Releases'
+              : ''}
         </h3>
         <label
           htmlFor="platform"

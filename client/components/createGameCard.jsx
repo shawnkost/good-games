@@ -53,7 +53,9 @@ export default function CreateGameCard(props) {
         </div>{' '}
         <div className="details-container">
           {' '}
-          <div className="pl-1 mb-2 font-weight-bold">{props.value.name}</div>{' '}
+          <div className="pl-1 mb-2 font-weight-bold">
+            {props.value.name}
+          </div>{' '}
           <div className="pl-1 d-inline-block details-font">
             {'Release date: ' +
               dayjs(props.value.released).format('MMM-DD-YYYY')}{' '}
@@ -61,7 +63,11 @@ export default function CreateGameCard(props) {
           <div className="d-inline-block view-details pr-1 details-font">
             View Details
           </div>{' '}
-          <div className={props.value.metacritic !== null ? 'metacritic' : 'hide'}>{props.value.metacritic}</div>{' '}
+          <div
+            className={props.value.metacritic !== null ? 'metacritic' : 'hide'}
+          >
+            {props.value.metacritic}
+          </div>{' '}
         </div>{' '}
       </div>{' '}
     </div>
