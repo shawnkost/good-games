@@ -18,7 +18,9 @@ export default class GameSort extends React.Component {
             ? 'Most Popular Games'
             : this.props.path === 'new-releases'
               ? 'New Releases'
-              : ''}
+              : this.props.path === 'upcoming-games'
+                ? 'Upcoming Games'
+                : ''}
         </h3>
         <label
           htmlFor="platform"

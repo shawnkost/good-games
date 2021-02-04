@@ -11,7 +11,8 @@ export default class Games extends React.Component {
       games: []
     };
     this.todaysDate = dayjs().format('YYYY-MM-DD');
-    this.ninetyDays = dayjs().subtract(90, 'days').format('YYYY-MM-DD');
+    this.ninetyDaysAgo = dayjs().subtract(90, 'days').format('YYYY-MM-DD');
+    this.oneYearFromNow = dayjs().add(365, 'days').format('YYYY-MM-DD');
     this.mostPopularGames = this.mostPopularGames.bind(this);
     this.newlyReleasedGames = this.newlyReleasedGames.bind(this);
     this.upcomingGames = this.upcomingGames.bind(this);
@@ -63,7 +64,7 @@ export default class Games extends React.Component {
 
   newlyReleasedGames() {
     fetch(
-      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.ninetyDays},${this.todaysDate}&metacritic=1,100&ordering=-released&key=${APIKEY.APIKEY}`
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.ninetyDaysAgo},${this.todaysDate}&metacritic=1,100&ordering=-released&key=${APIKEY.APIKEY}`
     )
       .then(response => response.json())
       .then(games =>
@@ -75,7 +76,7 @@ export default class Games extends React.Component {
 
   upcomingGames() {
     fetch(
-      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.todaysDate},${this.ninetyDays}&metacritic=1,100&ordering=-released&key=${APIKEY.APIKEY}`
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.todaysDate},${this.oneYearFromNow}&ordering=released&key=${APIKEY.APIKEY}`
     )
       .then(response => response.json())
       .then(games =>
