@@ -12,7 +12,7 @@ export default class Games extends React.Component {
       games: []
     };
     this.todaysDate = dayjs().format('YYYY-MM-DD');
-    this.sixtyDays = dayjs().subtract(60, 'days').format('YYYY-MM-DD');
+    this.ninetyDays = dayjs().subtract(90, 'days').format('YYYY-MM-DD');
     this.mostPopularGames = this.mostPopularGames.bind(this);
     this.newlyReleasedGames = this.newlyReleasedGames.bind(this);
     this.mapGames = this.mapGames.bind(this);
@@ -32,14 +32,17 @@ export default class Games extends React.Component {
     if (prevProps.platform !== this.props.platform && this.props.path === '') {
       this.mostPopularGames();
     }
-    if (prevProps.platform !== this.props.platform && this.props.path === 'new-releases') {
+    if (
+      prevProps.platform !== this.props.platform &&
+      this.props.path === 'new-releases'
+    ) {
       this.newlyReleasedGames();
     }
   }
 
   mostPopularGames() {
     fetch(
-      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=2010-01-01,${this.todaysDate}&ordering=-metacritic&key=${APIKEY.API_KEY}`
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=2010-01-01,${this.todaysDate}&metacritic=10,100&ordering=-metacritic&key=${APIKEY.API_KEY}`
     )
       .then(response => response.json())
       .then(games =>
@@ -51,7 +54,7 @@ export default class Games extends React.Component {
 
   newlyReleasedGames() {
     fetch(
-      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.sixtyDays},${this.todaysDate}&ordering=-metacritic&key=${APIKEY.API_KEY}`
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.ninetyDays},${this.todaysDate}&metacritic=1,100&ordering=-released&key=${APIKEY.API_KEY}`
     )
       .then(response => response.json())
       .then(games =>
@@ -62,14 +65,16 @@ export default class Games extends React.Component {
   }
 
   nextRequest() {
-    fetch(`${this.state.games.next}`)
-      .then(response => response.json())
-      .then(games => {
-        this.setState({
-          games
+    if (this.state.games.next !== null) {
+      fetch(`${this.state.games.next}`)
+        .then(response => response.json())
+        .then(games => {
+          this.setState({
+            games
+          });
         });
-        window.scrollTo(0, 0);
-      });
+    }
+    window.scrollTo(0, 0);
   }
 
   mapGames() {
@@ -101,7 +106,7 @@ export default class Games extends React.Component {
           }
           onClick={this.nextRequest}
         >
-          Next Page
+          {this.state.games.next !== null ? 'Next Page' : 'Back to top'}
         </div>
       </>
     );
