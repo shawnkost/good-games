@@ -16,10 +16,12 @@ export default class Games extends React.Component {
   }
 
   componentDidMount() {
+    // console.log(this.props.path);
     this.mostPopularGames();
   }
 
   componentDidUpdate(prevProps) {
+    // console.log("test", this.props)
     if (prevProps.platform !== this.props.platform) {
       this.mostPopularGames();
     }

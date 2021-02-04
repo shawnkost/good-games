@@ -20,8 +20,8 @@ export default class App extends React.Component {
 
   renderPage() {
     const { path } = this.state.route;
-    if (path === '') {
-      return <Home />;
+    if (path === '' || path === 'new-releases' || path === 'upcoming-games') {
+      return <Home path={path}/>;
     }
   }
 

@@ -40,7 +40,7 @@ export default class Home extends React.Component {
           <div className={this.state.menuClicked ? 'blur-container' : 'page-container'}>
             <Navbar onChange={this.openMenu} />
             <GameSort onChange={this.savePlatform} />
-            <Games platform={this.state.platform} />
+            <Games platform={this.state.platform} path={this.props.path}/>
           </div>
           <Menu click={this.closeMenu} menuClicked={this.state.menuClicked} />
         </>
