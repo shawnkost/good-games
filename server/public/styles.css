@@ -98,7 +98,7 @@ body {
 
 .menu-container {
   width: 65%;
-  height: 60%;
+  height: 65%;
   margin-top: 2%;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -115,6 +115,10 @@ body {
 }
 
 .menu-items {
+  text-align: left;
+  border-left: 4px solid black;
+  background-color: #222;
+  border-bottom: 2px;
   color: white;
   text-decoration: none;
   font-size: 28px;
