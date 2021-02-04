@@ -93,6 +93,34 @@ body {
   font-family: "Yeseva One", cursive;
 }
 
+.blur-container {
+  filter: blur(10px);
+}
+
+.menu-container {
+  width: 65%;
+  height: 60%;
+  margin-top: 2%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: #3a3a3a;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.close-menu {
+  font-size: 24px;
+}
+
+.menu-items {
+  color: white;
+  text-decoration: none;
+  font-size: 28px;
+}
+
 .hide {
   display: none;
 }
