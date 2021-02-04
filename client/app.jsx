@@ -3,6 +3,7 @@ import Home from './pages/home';
 import NewReleases from './pages/newReleases';
 import parseRoute from './lib/parse-route';
 import UpcomingGames from './pages/upcomingGames';
+import GameDetails from './pages/gameDetails';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -30,6 +31,9 @@ export default class App extends React.Component {
     }
     if (path === 'upcoming-games') {
       return <UpcomingGames path={path} />;
+    }
+    if (path === 'game-details') {
+      return <GameDetails />;
     }
   }
 
