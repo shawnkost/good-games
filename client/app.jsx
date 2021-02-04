@@ -1,5 +1,6 @@
 import React from 'react';
 import Home from './pages/home';
+import NewReleases from './pages/newReleases';
 import parseRoute from './lib/parse-route';
 
 export default class App extends React.Component {
@@ -21,15 +22,14 @@ export default class App extends React.Component {
   renderPage() {
     const { path } = this.state.route;
     if (path === '') {
-      return <Home />;
+      return <Home path={path} />;
+    }
+    if (path === 'new-releases') {
+      return <NewReleases path={path} />;
     }
   }
 
   render() {
-    return (
-      <>
-        {this.renderPage()}
-      </>
-    );
+    return <>{this.renderPage()}</>;
   }
 }
