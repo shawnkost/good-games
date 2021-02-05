@@ -5,7 +5,7 @@ export default class UpcomingGames extends React.Component {
   render() {
     return (
       <>
-        <Home path={this.props.path} />
+        <Home path={this.props.path} passGameId={this.props.passGameId} />
       </>
     );
   }

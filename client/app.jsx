@@ -33,10 +33,10 @@ export default class App extends React.Component {
       return <Home path={path} passGameId={this.passGameId} />;
     }
     if (path === 'new-releases') {
-      return <NewReleases path={path} />;
+      return <NewReleases path={path} passGameId={this.passGameId} />;
     }
     if (path === 'upcoming-games') {
-      return <UpcomingGames path={path} />;
+      return <UpcomingGames path={path} passGameId={this.passGameId} />;
     }
     if (path === 'game-details') {
       return <GameDetails gameId={this.gameId} />;
