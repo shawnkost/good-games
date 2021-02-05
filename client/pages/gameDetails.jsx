@@ -1,6 +1,7 @@
 import React from 'react';
 import APIKEY from '../api.json';
 import Navbar from '../components/navbar';
+import Menu from '../components/menu';
 import dayjs from 'dayjs';
 import CheckPlatform from '../components/checkPlatforms';
 import CreateScrollingImages from '../components/createScrollingImages';
@@ -10,19 +11,29 @@ export default class GameDetails extends React.Component {
     super(props);
     this.state = {
       gameDetails: '',
-      gamePhotos: ''
+      gamePhotos: '',
+      youtubeURL: ''
     };
-    this.youtubeURL = '';
+    this.createDescription = this.createDescription.bind(this);
     this.grabGameDetails = this.grabGameDetails.bind(this);
     this.grabGamePhotos = this.grabGamePhotos.bind(this);
     this.grabYoutubeVideo = this.grabYoutubeVideo.bind(this);
-    this.grabGameDetails();
   }
 
-  componentDidUpdate() {
-    if (this.state.gameDetails.slug) {
+  componentDidMount() {
+    if (this.state.gameDetails === '') {
+      this.grabGameDetails();
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.gameDetails.slug !== this.state.gameDetails.slug) {
       this.grabYoutubeVideo();
     }
+  }
+
+  createDescription() {
+    return { __html: this.state.gameDetails.description };
   }
 
   grabGameDetails() {
@@ -59,74 +70,93 @@ export default class GameDetails extends React.Component {
       )
         .then(response => response.json())
         .then(youtubeResults => {
-          this.youtubeURL = youtubeResults.items[0].id.videoId;
+          this.setState({
+            youtubeURL: youtubeResults.items[0].id.videoId
+          });
         });
     }
   }
 
   render() {
-    return (
-      <>
-        <div className="">
-          <Navbar />
+    if (this.state.gameDetails.slug) {
+      return (
+        <>
           <div
             className={
-              this.state.gamePhotos !== ''
-                ? 'mb-2 text-white text-center game-details-path'
-                : 'hide'
+              this.props.menuClicked ? 'blur-container' : 'page-container'
             }
           >
-            {'Home / Games / ' + this.state.gameDetails.name}
-          </div>
-          <div className="text-center release-platform-container">
-            <div className="mr-2 mb-2 text-white text-center game-details-date">
-              {dayjs(this.state.gameDetails.released).format('MMM DD, YYYY')}
-            </div>
-            <CheckPlatform game={this.state.gameDetails} />
-          </div>
-          <div className="mb-2 text-center text-white game-details-name">
-            {this.state.gameDetails.name}
-          </div>
-          <div className="scrolling-wrapper mb-4">
-            <div className="screenshot align-middle">
-              <iframe
-                className="w-100 h-100"
-                src={
-                  this.youtubeURL !== ''
-                    ? `https://www.youtube.com/embed/${this.youtubeURL}?autoplay=1&mute=1`
-                    : ' '
+            <div className="">
+              <Navbar onChange={this.props.onChange} />
+              <div
+                className={
+                  this.state.gamePhotos !== ''
+                    ? 'mb-2 text-white text-center game-details-path'
+                    : 'hide'
                 }
-              ></iframe>
+              >
+                {'Home / Games / ' + this.state.gameDetails.name}
+              </div>
+              <div className="text-center release-platform-container">
+                <div className="mr-2 mb-2 text-white text-center game-details-date">
+                  {dayjs(this.state.gameDetails.released).format(
+                    'MMM DD, YYYY'
+                  )}
+                </div>
+                <CheckPlatform game={this.state.gameDetails} />
+              </div>
+              <div className="mb-2 text-center text-white game-details-name">
+                {this.state.gameDetails.name}
+              </div>
+              <div className="scrolling-wrapper mb-4">
+                <iframe
+                  className="screenshot align-middle"
+                  width="264"
+                  height="148"
+                  frameBorder="0"
+                  src={
+                    this.youtubeURL !== ''
+                      ? `https://www.youtube.com/embed/${this.state.youtubeURL}?autoplay=1&mute=0`
+                      : ' '
+                  }
+                  allow="autoplay"
+                  allowFullScreen
+                ></iframe>
+                <CreateScrollingImages images={this.state.gamePhotos} />
+              </div>
+              <div className="d-flex justify-content-around mb-4 list-container text-white">
+                <div className="list-text">Played</div>
+                <div className="list-text">Want To Play</div>
+                <div className="list-text">Currently Playing</div>
+              </div>
+              <div className="game-description pl-3">
+                <div className="mb-2 text-white details-about">About</div>
+                <div
+                  className="text-white"
+                  dangerouslySetInnerHTML={this.createDescription()}
+                ></div>
+              </div>
             </div>
-            <CreateScrollingImages images={this.state.gamePhotos} />
+            <div className="background-img-container">
+              {this.state.gameDetails.background_image
+                ? (
+                <div
+                  className="background-image"
+                  style={{
+                    backgroundImage: `linear-gradient(rgba(15, 15, 15, 0), rgb(21, 21, 21)), linear-gradient(rgba(21, 21, 21, 0.8), rgba(21, 21, 21, 0.5)), url(${this.state.gameDetails.background_image})`
+                  }}
+                ></div>
+                  )
+                : (
+                    ''
+                  )}
+            </div>
           </div>
-          <div className="d-flex justify-content-around mb-4 list-container text-white">
-            <div className="list-text">Played</div>
-            <div className="list-text">Want To Play</div>
-            <div className="list-text">Currently Playing</div>
-          </div>
-          <div className="game-description">
-            <div className="text-white">About</div>
-            <p className="text-white">
-              {this.state.gameDetails.description_raw}
-            </p>
-          </div>
-        </div>
-        <div className="background-img-container">
-          {this.state.gameDetails.background_image
-            ? (
-            <div
-              className="test"
-              style={{
-                backgroundImage: `linear-gradient(rgba(15, 15, 15, 0), rgb(21, 21, 21)), linear-gradient(rgba(21, 21, 21, 0.8), rgba(21, 21, 21, 0.5)), url(${this.state.gameDetails.background_image})`
-              }}
-            ></div>
-              )
-            : (
-                ''
-              )}
-        </div>
-      </>
-    );
+          <Menu click={this.props.click} menuClicked={this.props.menuClicked} />
+        </>
+      );
+    } else {
+      return null;
+    }
   }
 }

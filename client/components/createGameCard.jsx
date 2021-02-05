@@ -6,21 +6,12 @@ import Windows from '../images/windows.png';
 import Nintendo from '../images/nintendo.png';
 
 export default class CreateGameCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(event) {
-    this.props.passGameId(event.target.id);
-  }
-
   render() {
     return (
       <div className="game-card mb-3">
         <div className="w-100 image-container">
-          <a href="#game-details">
-            <img src={this.props.image} className="w-100 h-100 game-image" id={this.props.value.id} onClick={this.handleClick}></img>
+          <a href={`#game-details?gameId=${this.props.value.id}`}>
+            <img src={this.props.image} className="w-100 h-100 game-image"></img>
           </a>
         </div>
         <div className="text-white details">

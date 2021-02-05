@@ -106,7 +106,6 @@ export default class Games extends React.Component {
           value={game}
           image={game.background_image}
           key={index}
-          passGameId={this.props.passGameId}
         />
       );
     });

@@ -136,7 +136,7 @@ body {
   cursor: pointer;
 }
 
-.test {
+.background-image {
   background-size: cover;
   background-position: center;
   position: absolute;
@@ -177,4 +177,8 @@ body {
 
 .list-text {
   font-size: 12px;
+}
+
+.details-about {
+  font-size: 22px;
 }
