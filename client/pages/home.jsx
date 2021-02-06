@@ -24,7 +24,7 @@ export default class Home extends React.Component {
       <>
         <div
           className={
-            this.state.menuClicked ? 'blur-container' : 'page-container'
+            this.props.menuClicked ? 'blur-container' : 'page-container'
           }
         >
           <Navbar onChange={this.props.onChange} />

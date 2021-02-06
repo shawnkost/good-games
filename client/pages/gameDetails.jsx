@@ -61,17 +61,17 @@ export default class GameDetails extends React.Component {
 
   grabYoutubeVideo() {
     if (this.state.gameDetails.slug) {
-      // let youtubeSearch = this.state.gameDetails.slug.split('-').join('%20');
-      // youtubeSearch = youtubeSearch + '%20Official%20Trailer';
-      // fetch(
-      //   `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${youtubeSearch}&key=${APIKEY.GOOGLEAPI}`
-      // )
-      //   .then(response => response.json())
-      //   .then(youtubeResults => {
-      //     this.setState({
-      //       youtubeURL: youtubeResults.items[0].id.videoId
-      //     });
-      //   });
+      let youtubeSearch = this.state.gameDetails.slug.split('-').join('%20');
+      youtubeSearch = youtubeSearch + '%20Official%20Trailer';
+      fetch(
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${youtubeSearch}&key=${APIKEY.GOOGLEAPI}`
+      )
+        .then(response => response.json())
+        .then(youtubeResults => {
+          this.setState({
+            youtubeURL: youtubeResults.items[0].id.videoId
+          });
+        });
     }
   }
 
@@ -89,7 +89,11 @@ export default class GameDetails extends React.Component {
       body: JSON.stringify(data)
     })
       .then(response => response.json())
-      .then((data));
+      .then((review));
+  }
+
+  grabUserReviews() {
+    fetch('/api/games/reviews');
   }
 
   render() {

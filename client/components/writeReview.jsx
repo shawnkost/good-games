@@ -17,6 +17,9 @@ export default class WriteReview extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.submitForm(this.state.textAreaValue);
+    this.setState({
+      textAreaValue: ''
+    });
   }
 
   render() {

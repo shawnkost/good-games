@@ -25,12 +25,14 @@ export default class App extends React.Component {
   }
 
   openMenu(clicked) {
+    document.body.style.overflow = 'hidden';
     this.setState({
       menuClicked: true
     });
   }
 
   closeMenu(clicked) {
+    document.body.style.overflow = '';
     this.setState({
       menuClicked: false
     });

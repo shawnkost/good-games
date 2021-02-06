@@ -15,6 +15,26 @@ app.use(express.json());
 
 app.use(staticMiddleware);
 
+app.get('/api/games/reviews/:gameId', (req, res, next) => {
+  const gameId = parseInt(req.params.gameId, 10);
+  if (!Number.isInteger(gameId) || gameId < 1) {
+    res.status(400).json({
+      error: 'gameId must be a positive integer'
+    });
+    return;
+  }
+  const sql = `
+    select "details"
+    from "reviews"
+    where "gameId" = $1
+    `;
+  db.query(sql, [gameId]).then(result => {
+    const reviews = result.rows;
+    res.status(201).json(reviews);
+  })
+    .catch(err => next(err));
+});
+
 app.post('/api/games/reviews', (req, res, next) => {
   const { gameId, details, userId } = req.body;
   if (!gameId || !details || !userId) {
