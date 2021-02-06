@@ -12,8 +12,6 @@ export default class App extends React.Component {
       route: parseRoute(window.location.hash),
       menuClicked: false
     };
-    this.gameId = null;
-    this.passGameId = this.passGameId.bind(this);
     this.openMenu = this.openMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
   }
@@ -24,10 +22,6 @@ export default class App extends React.Component {
         route: parseRoute(location.hash)
       });
     });
-  }
-
-  passGameId(gameId) {
-    this.gameId = gameId;
   }
 
   openMenu(clicked) {
@@ -51,7 +45,6 @@ export default class App extends React.Component {
           onChange={this.openMenu}
           click={this.closeMenu}
           menuClicked={this.state.menuClicked}
-          // passGameId={this.passGameId}
         />
       );
     }
@@ -62,7 +55,6 @@ export default class App extends React.Component {
           onChange={this.openMenu}
           click={this.closeMenu}
           menuClicked={this.state.menuClicked}
-          // passGameId={this.passGameId}
         />
       );
     }
@@ -73,7 +65,6 @@ export default class App extends React.Component {
           onChange={this.openMenu}
           click={this.closeMenu}
           menuClicked={this.state.menuClicked}
-          // passGameId={this.passGameId}
         />
       );
     }

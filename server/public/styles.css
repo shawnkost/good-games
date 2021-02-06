@@ -147,14 +147,22 @@ body {
 }
 
 .game-details-path {
+  font-family: "Yeseva One", cursive;
   font-size: 16px;
 }
 
+.detail-links {
+  color: white;
+  text-decoration: none;
+}
+
 .game-details-date {
+  font-family: "Yeseva One", cursive;
   font-size: 24px;
 }
 
 .game-details-name {
+  font-family: "Yeseva One", cursive;
   font-size: 36px;
 }
 
@@ -180,5 +188,28 @@ body {
 }
 
 .details-about {
+  font-family: "Yeseva One", cursive;
   font-size: 22px;
+}
+
+.details-bio {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 18px;
+}
+
+.write-review {
+  font-family: "Yeseva One", cursive;
+  font-size: 24px;
+}
+
+.review-text-area {
+  width: 91.4%;
+  height: 200px;
+  background-color: #222;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 24px;
+}
+
+.button {
+  font-family: "Yeseva One", cursive;
 }
