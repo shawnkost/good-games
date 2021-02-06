@@ -61,7 +61,7 @@ export default function CreateGameDetails(props) {
           }}
         ></div>
       </div>
-      <WriteReview />
+      <WriteReview submitForm={props.submitForm} />
     </div>
   );
 }

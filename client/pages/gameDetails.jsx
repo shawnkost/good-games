@@ -15,6 +15,7 @@ export default class GameDetails extends React.Component {
     this.grabGameDetails = this.grabGameDetails.bind(this);
     this.grabGamePhotos = this.grabGamePhotos.bind(this);
     this.grabYoutubeVideo = this.grabYoutubeVideo.bind(this);
+    this.sendUserReview = this.sendUserReview.bind(this);
   }
 
   componentDidMount() {
@@ -60,18 +61,35 @@ export default class GameDetails extends React.Component {
 
   grabYoutubeVideo() {
     if (this.state.gameDetails.slug) {
-      let youtubeSearch = this.state.gameDetails.slug.split('-').join('%20');
-      youtubeSearch = youtubeSearch + '%20Official%20Trailer';
-      fetch(
-        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${youtubeSearch}&key=${APIKEY.GOOGLEAPI}`
-      )
-        .then(response => response.json())
-        .then(youtubeResults => {
-          this.setState({
-            youtubeURL: youtubeResults.items[0].id.videoId
-          });
-        });
+      // let youtubeSearch = this.state.gameDetails.slug.split('-').join('%20');
+      // youtubeSearch = youtubeSearch + '%20Official%20Trailer';
+      // fetch(
+      //   `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${youtubeSearch}&key=${APIKEY.GOOGLEAPI}`
+      // )
+      //   .then(response => response.json())
+      //   .then(youtubeResults => {
+      //     this.setState({
+      //       youtubeURL: youtubeResults.items[0].id.videoId
+      //     });
+      //   });
     }
+  }
+
+  sendUserReview(review) {
+    const data = {
+      gameId: this.props.gameId,
+      details: review,
+      userId: 1
+    };
+    fetch('/api/games/reviews', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then((data));
   }
 
   render() {
@@ -85,6 +103,7 @@ export default class GameDetails extends React.Component {
             youtubeURL={this.state.youtubeURL}
             gamePhotos={this.state.gamePhotos}
             createDescription={this.createDescription}
+            submitForm={this.sendUserReview}
           />
           <Menu click={this.props.click} menuClicked={this.props.menuClicked} />
         </>
