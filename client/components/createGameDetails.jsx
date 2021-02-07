@@ -15,7 +15,7 @@ export default function CreateGameDetails(props) {
           <a href="#" className="detail-links">
             <span>Home /</span>
           </a>
-          <a href="#" className="detail-links">
+          <a href={`#${props.previousRoute.path}`} className="detail-links">
             <span> Games /</span>
           </a>
           <div className="d-inline-block">&nbsp;{props.gameDetails.name}</div>
@@ -63,7 +63,7 @@ export default function CreateGameDetails(props) {
         ></div>
       </div>
       <WriteReview submitForm={props.submitForm} />
-      <div className="text-white user-reviews">User Reviews</div>
+      <div className="pl-3 mb-4 text-white user-reviews">User Reviews</div>
       <ShowReviews reviews={props.reviews} />
     </div>
   );

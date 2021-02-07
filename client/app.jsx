@@ -12,12 +12,14 @@ export default class App extends React.Component {
       route: parseRoute(window.location.hash),
       menuClicked: false
     };
+    this.previousRoute = '';
     this.openMenu = this.openMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('hashchange', () => {
+      this.previousRoute = this.state.route;
       this.setState({
         route: parseRoute(location.hash)
       });
@@ -75,6 +77,7 @@ export default class App extends React.Component {
       return (
         <GameDetails
           path={path}
+          previousRoute={this.previousRoute}
           onChange={this.openMenu}
           click={this.closeMenu}
           menuClicked={this.state.menuClicked}

@@ -215,3 +215,14 @@ body {
 .button {
   font-family: "Yeseva One", cursive;
 }
+
+.user-reviews {
+  font-size: 24px;
+}
+
+.review-card {
+  background-color: #3a3a3a;
+  border-radius: 15px;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 18px;
+}

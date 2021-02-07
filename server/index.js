@@ -24,8 +24,9 @@ app.get('/api/games/reviews/:gameId', (req, res, next) => {
     return;
   }
   const sql = `
-    select "details"
+    select "details", "username"
     from "reviews"
+    join "users" using ("userId")
     where "gameId" = $1
     `;
   db.query(sql, [gameId]).then(result => {

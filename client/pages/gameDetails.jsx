@@ -2,6 +2,7 @@ import React from 'react';
 import APIKEY from '../api.json';
 import Menu from '../components/menu';
 import CreateGameDetails from '../components/createGameDetails';
+import Loader from 'react-loader-spinner';
 
 export default class GameDetails extends React.Component {
   constructor(props) {
@@ -82,7 +83,7 @@ export default class GameDetails extends React.Component {
     const data = {
       gameId: this.props.gameId,
       details: review,
-      userId: 1
+      userId: 3
     };
     fetch('/api/games/reviews', {
       method: 'POST',
@@ -110,6 +111,7 @@ export default class GameDetails extends React.Component {
       return (
         <>
           <CreateGameDetails
+            previousRoute={this.props.previousRoute}
             menuClicked={this.props.menuClicked}
             onChange={this.props.onChange}
             gameDetails={this.state.gameDetails}
@@ -123,7 +125,13 @@ export default class GameDetails extends React.Component {
         </>
       );
     } else {
-      return null;
+      return <Loader
+        className="text-center"
+        type="Rings"
+        color="White"
+        height={175}
+        width={175}
+      />;
     }
   }
 }
