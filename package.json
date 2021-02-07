@@ -36,7 +36,9 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.1",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-loader-spinner": "^4.0.0",
+    "react-show-more-text": "^1.4.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

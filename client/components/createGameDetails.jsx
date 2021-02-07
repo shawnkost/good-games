@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import CreateScrollingImages from '../components/createScrollingImages';
 import CheckPlatform from '../components/checkPlatforms';
 import WriteReview from './writeReview';
+import ShowReviews from './showReviews';
 
 export default function CreateGameDetails(props) {
   return (
@@ -15,7 +16,7 @@ export default function CreateGameDetails(props) {
             <span>Home /</span>
           </a>
           <a href="#" className="detail-links">
-           <span> Games /</span>
+            <span> Games /</span>
           </a>
           <div className="d-inline-block">&nbsp;{props.gameDetails.name}</div>
         </div>
@@ -62,6 +63,8 @@ export default function CreateGameDetails(props) {
         ></div>
       </div>
       <WriteReview submitForm={props.submitForm} />
+      <div className="text-white user-reviews">User Reviews</div>
+      <ShowReviews reviews={props.reviews} />
     </div>
   );
 }

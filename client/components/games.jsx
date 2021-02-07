@@ -3,7 +3,10 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import APIKEY from '../api.json';
 import CreateGameCard from './createGameCard';
+import Loader from 'react-loader-spinner';
+
 dayjs.extend(relativeTime);
+
 export default class Games extends React.Component {
   constructor(props) {
     super(props);
@@ -116,6 +119,16 @@ export default class Games extends React.Component {
     let gameList = '';
     if (this.state.games.results && this.state.games.results.length > 0) {
       gameList = this.mapGames();
+    } else {
+      return (
+        <Loader
+          className="text-center"
+          type="Rings"
+          color="White"
+          height={175}
+          width={175}
+        />
+      );
     }
     return (
       <>

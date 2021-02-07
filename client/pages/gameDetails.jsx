@@ -9,18 +9,21 @@ export default class GameDetails extends React.Component {
     this.state = {
       gameDetails: '',
       gamePhotos: '',
-      youtubeURL: ''
+      youtubeURL: '',
+      reviews: []
     };
     this.createDescription = this.createDescription.bind(this);
     this.grabGameDetails = this.grabGameDetails.bind(this);
     this.grabGamePhotos = this.grabGamePhotos.bind(this);
     this.grabYoutubeVideo = this.grabYoutubeVideo.bind(this);
     this.sendUserReview = this.sendUserReview.bind(this);
+    this.grabUserReviews = this.grabUserReviews.bind(this);
   }
 
   componentDidMount() {
     if (this.state.gameDetails === '') {
       this.grabGameDetails();
+      this.grabUserReviews();
     }
   }
 
@@ -89,11 +92,17 @@ export default class GameDetails extends React.Component {
       body: JSON.stringify(data)
     })
       .then(response => response.json())
-      .then((review));
+      .then(this.grabUserReviews);
   }
 
   grabUserReviews() {
-    fetch('/api/games/reviews');
+    fetch(`/api/games/reviews/${this.props.gameId}`)
+      .then(response => response.json())
+      .then(reviews => {
+        this.setState({
+          reviews
+        });
+      });
   }
 
   render() {
@@ -108,6 +117,7 @@ export default class GameDetails extends React.Component {
             gamePhotos={this.state.gamePhotos}
             createDescription={this.createDescription}
             submitForm={this.sendUserReview}
+            reviews={this.state.reviews}
           />
           <Menu click={this.props.click} menuClicked={this.props.menuClicked} />
         </>
