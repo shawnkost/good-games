@@ -24,7 +24,7 @@ export default class WriteReview extends React.Component {
 
   render() {
     return (
-      <div className="review-container">
+      <div className="mb-5 review-container">
         <form onSubmit={this.handleSubmit}>
           <label
             htmlFor="review"

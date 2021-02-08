@@ -6,7 +6,7 @@ export default function ShowReviews(props) {
   const allReviews = reviews.map((review, index) => {
     return (
       <div className="pl-3 pr-3" key={index}>
-        <div className="text-white">{review.username}</div>
+        <div className="review-username text-white">{review.username}</div>
         <ShowMoreText
           lines={5}
           more="Show more"
