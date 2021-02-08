@@ -38,7 +38,6 @@ CREATE TABLE "gameList" (
 	"gameId" integer NOT NULL,
 	"wantToPlay" BOOLEAN NOT NULL,
 	"played" BOOLEAN NOT NULL,
-	"currentlyPlaying" BOOLEAN NOT NULL,
 	CONSTRAINT "gameList_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE

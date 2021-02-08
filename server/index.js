@@ -15,6 +15,22 @@ app.use(express.json());
 
 app.use(staticMiddleware);
 
+app.get('/api/games/gameList/:gameId/:userId', (req, res, next) => {
+  const userId = req.params.userId;
+  const gameId = req.params.gameId;
+  const sql = `
+    select "wantToPlay", "played"
+    from "gameList"
+    where "gameId" = $1 AND "userId" = $2
+    `;
+  const params = [gameId, userId];
+  db.query(sql, params).then(result => {
+    const gameList = result.rows;
+    res.status(201).json(gameList);
+  })
+    .catch(err => next(err));
+});
+
 app.get('/api/games/reviews/:gameId', (req, res, next) => {
   const gameId = parseInt(req.params.gameId, 10);
   if (!Number.isInteger(gameId) || gameId < 1) {
@@ -51,6 +67,41 @@ app.post('/api/games/reviews', (req, res, next) => {
     .then(result => {
       const [review] = result.rows;
       res.status(201).json(review);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/games/gameList', (req, res, next) => {
+  const { userId, gameId, wantToPlay, played } = req.body;
+  const sql = ' insert into "gameList" ("userId", "gameId", "wantToPlay", "played") values ($1, $2, $3, $4) returning * ';
+  const params = [userId, gameId, wantToPlay, played];
+  db.query(sql, params)
+    .then(result => {
+      const [list] = result.rows;
+      res.status(201).json(list);
+    })
+    .catch(err => next(err));
+});
+
+app.patch('/api/games/gameList/:gameId/:userId', (req, res, next) => {
+  const userId = req.params.userId;
+  const gameId = req.params.gameId;
+  const { wantToPlay, played } = req.body;
+  if (!userId || !gameId || wantToPlay === undefined || played === undefined) {
+    throw new ClientError(400, 'userId, gameId, wantToPlay, played are required');
+  }
+  const sql = `
+    update "gameList"
+       set "wantToPlay" = $1,
+           "played" = $2
+     where "gameId" = $3 AND "userId" = $4
+     returning "wantToPlay", "played"
+     `;
+  const params = [wantToPlay, played, gameId, userId];
+  db.query(sql, params)
+    .then(result => {
+      const [list] = result.rows;
+      res.status(201).json(list);
     })
     .catch(err => next(err));
 });

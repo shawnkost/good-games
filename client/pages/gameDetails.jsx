@@ -11,6 +11,7 @@ export default class GameDetails extends React.Component {
       gameDetails: '',
       gamePhotos: '',
       youtubeURL: '',
+      gameList: '',
       reviews: []
     };
     this.createDescription = this.createDescription.bind(this);
@@ -125,13 +126,15 @@ export default class GameDetails extends React.Component {
         </>
       );
     } else {
-      return <Loader
-        className="text-center"
-        type="Rings"
-        color="White"
-        height={175}
-        width={175}
-      />;
+      return (
+        <Loader
+          className="text-center"
+          type="Rings"
+          color="White"
+          height={175}
+          width={175}
+        />
+      );
     }
   }
 }
