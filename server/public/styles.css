@@ -239,3 +239,16 @@ body {
   border-radius: 4px;
   background-color: #ffff;
 }
+
+.search-games {
+  font-size: 28px;
+}
+
+.search-img-container {
+  width: 15%;
+  height: 50px;
+}
+
+.search-name {
+  font-size: 14px;
+}
