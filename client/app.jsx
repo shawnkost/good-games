@@ -6,6 +6,7 @@ import UpcomingGames from './pages/upcomingGames';
 import GameDetails from './pages/gameDetails';
 import Profile from './pages/profile';
 import ProfileLogin from './pages/profileLogin';
+import ProfileSignUp from './pages/profileSignUp';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -88,14 +89,13 @@ export default class App extends React.Component {
       );
     }
     if (path === 'profile') {
-      return (
-        <Profile />
-      );
+      return <Profile />;
     }
     if (path === 'profile-login') {
-      return (
-        <ProfileLogin />
-      );
+      return <ProfileLogin />;
+    }
+    if (path === 'profile-sign-up') {
+      return <ProfileSignUp />;
     }
   }
 
