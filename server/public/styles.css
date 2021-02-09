@@ -235,6 +235,14 @@ body {
   font-size: 22px;
 }
 
+.review-button {
+  border: 2px solid black;
+  color: white;
+  font-size: 18px;
+  border-radius: 10px;
+  background-color: #3a3a3a;
+}
+
 .list-button-container {
   border: 2px solid black;
   color: white;
@@ -261,6 +269,12 @@ body {
   border-radius: 10px;
 }
 
-.list-button-container:active {
+.list-button-container:active,
+.review-button:active {
   background-color: #575656;
+}
+
+.search-close {
+  position: absolute;
+  right: 25px;
 }

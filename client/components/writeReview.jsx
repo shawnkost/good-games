@@ -40,7 +40,7 @@ export default class WriteReview extends React.Component {
             onChange={this.handleChange}
           ></textarea>
           <div className="text-right pr-3 button">
-            <button type="submit">Submit</button>
+            <button type="submit" className="review-button">Submit</button>
           </div>
         </form>
       </div>

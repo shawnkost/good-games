@@ -80,7 +80,6 @@ export default class Home extends React.Component {
             <div className="mb-4 pl-3 text-white search-games">Games</div>
             <SearchResults games={this.state.games} />
           </div>
-          <Menu click={this.props.click} menuClicked={this.props.menuClicked} />
         </>
       );
     }
