@@ -8,12 +8,9 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      platform: 4,
-      menuClicked: false
+      platform: 4
     };
     this.savePlatform = this.savePlatform.bind(this);
-    this.openMenu = this.openMenu.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
   }
 
   savePlatform(value) {
@@ -22,31 +19,19 @@ export default class Home extends React.Component {
     });
   }
 
-  openMenu(clicked) {
-    this.setState({
-      menuClicked: true
-    });
-  }
-
-  closeMenu(clicked) {
-    this.setState({
-      menuClicked: false
-    });
-  }
-
   render() {
     return (
       <>
         <div
           className={
-            this.state.menuClicked ? 'blur-container' : 'page-container'
+            this.props.menuClicked ? 'blur-container' : 'page-container'
           }
         >
-          <Navbar onChange={this.openMenu} />
+          <Navbar onChange={this.props.onChange} />
           <GameSort onChange={this.savePlatform} path={this.props.path} />
           <Games platform={this.state.platform} path={this.props.path} />
         </div>
-        <Menu click={this.closeMenu} menuClicked={this.state.menuClicked} />
+        <Menu click={this.props.click} menuClicked={this.props.menuClicked} />
       </>
     );
   }
