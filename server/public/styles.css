@@ -280,6 +280,7 @@ body {
 }
 
 .profile-text {
+  margin-top: 40%;
   font-size: 32px;
 }
 
@@ -288,7 +289,7 @@ body {
   width: 309px;
   height: 46px;
   left: 33px;
-  bottom: 100px;
+  bottom: 185px;
 }
 
 .profile-button2 {
@@ -296,5 +297,5 @@ body {
   width: 309px;
   height: 46px;
   left: 33px;
-  bottom: 20px;
+  bottom: 130px;
 }
