@@ -15,6 +15,7 @@ body {
   background-color: #3a3a3a;
   border-radius: 10px;
   border: none;
+  outline: none;
 }
 
 .menu {
@@ -234,8 +235,46 @@ body {
   font-size: 22px;
 }
 
+.review-button {
+  border: 2px solid black;
+  color: white;
+  font-size: 18px;
+  border-radius: 10px;
+  background-color: #3a3a3a;
+}
+
 .list-button-container {
+  border: 2px solid black;
+  color: white;
   font-size: 24px;
-  border-radius: 4px;
-  background-color: #ffff;
+  border-radius: 10px;
+  background-color: #3a3a3a;
+  padding: 10px 0;
+}
+
+.search-games {
+  font-size: 28px;
+}
+
+.search-img-container {
+  width: 15%;
+  height: 50px;
+}
+
+.search-name {
+  font-size: 14px;
+}
+
+.youtube-video {
+  border-radius: 10px;
+}
+
+.list-button-container:active,
+.review-button:active {
+  background-color: #575656;
+}
+
+.search-close {
+  position: absolute;
+  right: 25px;
 }

@@ -5,16 +5,22 @@ import CreateScrollingImages from '../components/createScrollingImages';
 import CheckPlatform from '../components/checkPlatforms';
 import WriteReview from './writeReview';
 import ShowReviews from './showReviews';
+import SearchResults from './searchResults';
+import APIKEY from '../api.json';
 
 export default class CreateGameDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameList: []
+      gameList: [],
+      searchInput: '',
+      games: ''
     };
     this.grabUserGameList = this.grabUserGameList.bind(this);
     this.addPlayed = this.addPlayed.bind(this);
     this.addWantToPlay = this.addWantToPlay.bind(this);
+    this.updateValue = this.updateValue.bind(this);
+    this.searchGames = this.searchGames.bind(this);
     this.grabUserGameList();
   }
 
@@ -91,7 +97,6 @@ export default class CreateGameDetails extends React.Component {
             gameList: [gameList]
           })
         );
-
     }
   }
 
@@ -158,90 +163,134 @@ export default class CreateGameDetails extends React.Component {
             gameList: [gameList]
           })
         );
-
     }
   }
 
+  updateValue(searchInput) {
+    this.setState({
+      searchInput
+    });
+    if (this.timeoutId) clearTimeout(this.timeoutId);
+    this.timeoutId = setTimeout(this.searchGames, 800);
+  }
+
+  searchGames() {
+    fetch(
+      `https://api.rawg.io/api/games?search=${this.state.searchInput}&key=${APIKEY.APIKEY}`
+    )
+      .then(response => response.json())
+      .then(games =>
+        this.setState({
+          games
+        })
+      );
+  }
+
   render() {
-    return (
-      <div
-        className={this.props.menuClicked ? 'blur-container' : 'page-container'}
-      >
-        <div className="">
-          <Navbar onChange={this.props.onChange} />
-          <div className="mb-2 text-white text-center game-details-path">
-            <a href="#" className="detail-links">
-              <span>Home /</span>
-            </a>
-            <a
-              href={`#${this.props.previousRoute.path}`}
-              className="detail-links"
-            >
-              <span> Games /</span>
-            </a>
-            <div className="d-inline-block">
-              &nbsp;{this.props.gameDetails.name}
+    if (this.state.searchInput === '') {
+      return (
+        <div
+          className={
+            this.props.menuClicked ? 'blur-container' : 'page-container'
+          }
+        >
+          <div className="">
+            <Navbar
+              onChange={this.props.onChange}
+              updateValue={this.updateValue}
+            />
+            <div className="mb-2 text-white text-center game-details-path">
+              <a href="#" className="detail-links">
+                <span>Home /</span>
+              </a>
+              <a
+                href={`#${this.props.previousRoute.path}`}
+                className="detail-links"
+              >
+                <span> Games /</span>
+              </a>
+              <div className="d-inline-block">
+                &nbsp;{this.props.gameDetails.name}
+              </div>
+            </div>
+            <div className="text-center release-platform-container">
+              <div className="mr-2 mb-2 text-white text-center game-details-date">
+                {dayjs(this.props.gameDetails.released).format('MMM DD, YYYY')}
+              </div>
+              <CheckPlatform game={this.props.gameDetails} />
+            </div>
+            <div className="mb-2 text-center text-white game-details-name">
+              {this.props.gameDetails.name}
+            </div>
+            <div className="scrolling-wrapper mb-4">
+              <iframe
+                className="screenshot align-middle youtube-video"
+                width="264"
+                height="148"
+                frameBorder="0"
+                src={`https://www.youtube.com/embed/${this.props.youtubeURL}?autoplay=1&mute=0`}
+                allow="autoplay"
+                allowFullScreen
+              ></iframe>
+              <CreateScrollingImages images={this.props.gamePhotos} />
+            </div>
+            <div className="list-container">
+              <div
+                className="ml-3 mr-3 mb-4 text-center list-button-container"
+                onClick={this.addPlayed}
+              >
+                {this.state.gameList.length !== 0 &&
+                this.state.gameList[0].played
+                  ? 'Played'
+                  : 'Add to Played'}
+              </div>
+              <div
+                className="ml-3 mr-3 mb-4 text-center list-button-container"
+                onClick={this.addWantToPlay}
+              >
+                {this.state.gameList.length !== 0 &&
+                this.state.gameList[0].wantToPlay
+                  ? 'Want to Play'
+                  : 'Add to Want to Play'}
+              </div>
+            </div>
+            <div className="game-description pl-3">
+              <div className="mb-2 text-white details-about">About</div>
+              <div
+                className="text-white details-bio"
+                dangerouslySetInnerHTML={this.props.createDescription()}
+              ></div>
             </div>
           </div>
-          <div className="text-center release-platform-container">
-            <div className="mr-2 mb-2 text-white text-center game-details-date">
-              {dayjs(this.props.gameDetails.released).format('MMM DD, YYYY')}
-            </div>
-            <CheckPlatform game={this.props.gameDetails} />
-          </div>
-          <div className="mb-2 text-center text-white game-details-name">
-            {this.props.gameDetails.name}
-          </div>
-          <div className="scrolling-wrapper mb-4">
-            <iframe
-              className="screenshot align-middle"
-              width="264"
-              height="148"
-              frameBorder="0"
-              src={`https://www.youtube.com/embed/${this.props.youtubeURL}?autoplay=1&mute=0`}
-              allow="autoplay"
-              allowFullScreen
-            ></iframe>
-            <CreateScrollingImages images={this.props.gamePhotos} />
-          </div>
-          <div className="list-container">
+          <div className="background-img-container">
             <div
-              className="ml-3 mr-3 mb-4 text-center list-button-container"
-              onClick={this.addPlayed}
-            >
-              {this.state.gameList.length !== 0 && this.state.gameList[0].played
-                ? 'Played'
-                : 'Add to Played'}
-            </div>
-            <div
-              className="ml-3 mr-3 mb-4 text-center list-button-container"
-              onClick={this.addWantToPlay}
-            >
-              {this.state.gameList.length !== 0 &&
-              this.state.gameList[0].wantToPlay
-                ? 'Want to Play'
-                : 'Add to Want to Play'}
-            </div>
-          </div>
-          <div className="game-description pl-3">
-            <div className="mb-2 text-white details-about">About</div>
-            <div
-              className="text-white details-bio"
-              dangerouslySetInnerHTML={this.props.createDescription()}
+              className="background-image"
+              style={{
+                backgroundImage: `linear-gradient(rgba(15, 15, 15, 0), rgb(21, 21, 21)), linear-gradient(rgba(21, 21, 21, 0.8), rgba(21, 21, 21, 0.5)), url(${this.props.gameDetails.background_image})`
+              }}
             ></div>
           </div>
+          <WriteReview submitForm={this.props.submitForm} />
+          <ShowReviews reviews={this.props.reviews} />
         </div>
-        <div className="background-img-container">
+      );
+    } else {
+      return (
+        <>
           <div
-            className="background-image"
-            style={{
-              backgroundImage: `linear-gradient(rgba(15, 15, 15, 0), rgb(21, 21, 21)), linear-gradient(rgba(21, 21, 21, 0.8), rgba(21, 21, 21, 0.5)), url(${this.props.gameDetails.background_image})`
-            }}
-          ></div>
-        </div>
-        <WriteReview submitForm={this.props.submitForm} />
-        <ShowReviews reviews={this.props.reviews} />
-      </div>
-    );
+            className={
+              this.props.menuClicked ? 'blur-container' : 'page-container'
+            }
+          >
+            <Navbar
+              onChange={this.props.onChange}
+              updateValue={this.updateValue}
+            />
+            <div className="mb-4 pl-3 text-white search-games">Games</div>
+            <SearchResults games={this.state.games} updateValue={this.updateValue} />
+          </div>
+        </>
+      );
+    }
   }
 }
