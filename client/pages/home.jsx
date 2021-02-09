@@ -30,7 +30,8 @@ export default class Home extends React.Component {
     this.setState({
       searchInput
     });
-    this.timeoutId = setTimeout(this.searchGames, 3000);
+    if (this.timeoutId) clearTimeout(this.timeoutId);
+    this.timeoutId = setTimeout(this.searchGames, 800);
   }
 
   searchGames() {

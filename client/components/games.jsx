@@ -55,7 +55,7 @@ export default class Games extends React.Component {
 
   mostPopularGames() {
     fetch(
-      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=2010-01-01,${this.todaysDate}&metacritic=10,100&ordering=-metacritic&key=${APIKEY.APIKEY}`
+      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=2016-01-01,${this.todaysDate}&metacritic=10,100&ordering=-metacritic&key=${APIKEY.APIKEY}`
     )
       .then(response => response.json())
       .then(games =>

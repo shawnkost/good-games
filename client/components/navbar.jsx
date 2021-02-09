@@ -29,7 +29,7 @@ export default class Navbar extends React.Component {
             id="search"
             name="search"
             placeholder="Search"
-            className={this.input !== '' ? 'w-100 search-input text-white' : 'col-4 search-input text-white'}
+            className={this.input !== '' ? 'ml-3 mr-3 w-100 search-input text-white' : 'col-4 search-input text-white'}
             onChange={this.updateValue}
           ></input>
           <a className={this.input !== '' ? 'hide' : 'col-4 text-right'}>
