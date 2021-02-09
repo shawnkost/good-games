@@ -5,6 +5,7 @@ import parseRoute from './lib/parse-route';
 import UpcomingGames from './pages/upcomingGames';
 import GameDetails from './pages/gameDetails';
 import Profile from './pages/profile';
+import ProfileLogin from './pages/profileLogin';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -89,6 +90,11 @@ export default class App extends React.Component {
     if (path === 'profile') {
       return (
         <Profile />
+      );
+    }
+    if (path === 'profile-login') {
+      return (
+        <ProfileLogin />
       );
     }
   }

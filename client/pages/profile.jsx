@@ -1,10 +1,15 @@
 import React from 'react';
+import ProfileBackground from '../images/profile-background.png';
 
-export default class Profile extends React.Component {
-  render() {
-    return (
-      <div className="profile-container">
-        <div className="text-white text-center profile-text">GG</div>
+export default function Profile() {
+  return (
+      <div
+        className="profile-login-container"
+        style={{
+          backgroundImage: `url(${ProfileBackground})`
+        }}
+      >
+        <div className="text-white text-center profile-text">GoodGames</div>
         <div className="input-container">
           <a href="#profile-sign-up">
             <button className="profile-button1">Create Account</button>
@@ -16,6 +21,5 @@ export default class Profile extends React.Component {
           </a>
         </div>
       </div>
-    );
-  }
+  );
 }
