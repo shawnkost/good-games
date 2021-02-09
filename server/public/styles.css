@@ -278,3 +278,23 @@ body {
   position: absolute;
   right: 25px;
 }
+
+.profile-text {
+  font-size: 32px;
+}
+
+.profile-button1 {
+  position: absolute;
+  width: 309px;
+  height: 46px;
+  left: 33px;
+  bottom: 100px;
+}
+
+.profile-button2 {
+  position: absolute;
+  width: 309px;
+  height: 46px;
+  left: 33px;
+  bottom: 20px;
+}

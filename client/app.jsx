@@ -4,6 +4,7 @@ import NewReleases from './pages/newReleases';
 import parseRoute from './lib/parse-route';
 import UpcomingGames from './pages/upcomingGames';
 import GameDetails from './pages/gameDetails';
+import Profile from './pages/profile';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -83,6 +84,11 @@ export default class App extends React.Component {
           menuClicked={this.state.menuClicked}
           gameId={gameID}
         />
+      );
+    }
+    if (path === 'profile') {
+      return (
+        <Profile />
       );
     }
   }
