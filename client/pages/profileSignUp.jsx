@@ -21,7 +21,7 @@ export default function ProfileSignUp() {
         className="profile-button2"
       ></input>
       <input
-        type="text"
+        type="password"
         placeholder="Password"
         className="profile-button4"
       ></input>

@@ -2,6 +2,7 @@ require('dotenv/config');
 const pg = require('pg');
 const argon2 = require('argon2');
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
@@ -25,10 +26,11 @@ app.get('/api/games/gameList/:gameId/:userId', (req, res, next) => {
     where "gameId" = $1 AND "userId" = $2
     `;
   const params = [gameId, userId];
-  db.query(sql, params).then(result => {
-    const gameList = result.rows;
-    res.status(201).json(gameList);
-  })
+  db.query(sql, params)
+    .then(result => {
+      const gameList = result.rows;
+      res.status(201).json(gameList);
+    })
     .catch(err => next(err));
 });
 
@@ -46,33 +48,75 @@ app.get('/api/games/reviews/:gameId', (req, res, next) => {
     join "users" using ("userId")
     where "gameId" = $1
     `;
-  db.query(sql, [gameId]).then(result => {
-    const reviews = result.rows;
-    res.status(201).json(reviews);
-  })
+  db.query(sql, [gameId])
+    .then(result => {
+      const reviews = result.rows;
+      res.status(201).json(reviews);
+    })
     .catch(err => next(err));
 });
 
 app.post('/api/auth/sign-up', (req, res, next) => {
   const { username, email, password } = req.body;
   if (!username || !email || !password) {
-    throw new ClientError(400, 'username, email, & password are required fields');
+    throw new ClientError(
+      400,
+      'username, email, & password are required fields'
+    );
   }
-  argon2.hash(password)
-    .then(password => {
-      const sql = `
+  argon2.hash(password).then(hashedPassword => {
+    const sql = `
       insert into "users" ("username", "email", "password")
       values ($1, $2, $3)
       returning *
       `;
-      const params = [username, email, password];
-      db.query(sql, params)
-        .then(result => {
-          const [newUser] = result.rows;
-          res.status(201).json(newUser);
-        })
-        .catch(err => next(err));
-    });
+    const params = [username, email, hashedPassword];
+    db.query(sql, params)
+      .then(result => {
+        const [newUser] = result.rows;
+        res.status(201).json(newUser);
+      })
+      .catch(err => next(err));
+  });
+});
+
+app.post('/api/auth/sign-in', (req, res, next) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    throw new ClientError(401, 'invalid login');
+  }
+  const sql = `
+    select "userId", "username", "password"
+    from "users"
+    where "email" = $1
+    `;
+  const params = [email];
+  db.query(sql, params).then(result => {
+    const [user] = result.rows;
+    if (!user) {
+      throw new ClientError(401, 'invalid login');
+    }
+    argon2
+      .verify(user.password, password)
+      .then(result => {
+        if (!result) {
+          throw new ClientError(401, 'invalid login');
+        }
+        const payload = {
+          user: {
+            userId: user.userId,
+            username: user.username,
+            email: email
+          }
+        };
+        const token = {
+          token: jwt.sign(payload, process.env.TOKEN_SECRET)
+        };
+        const userInfo = Object.assign(token, payload);
+        res.status(200).json(userInfo);
+      })
+      .catch(err => next(err));
+  });
 });
 
 app.post('/api/games/reviews', (req, res, next) => {
@@ -96,7 +140,8 @@ app.post('/api/games/reviews', (req, res, next) => {
 
 app.post('/api/games/gameList', (req, res, next) => {
   const { userId, gameId, wantToPlay, played } = req.body;
-  const sql = ' insert into "gameList" ("userId", "gameId", "wantToPlay", "played") values ($1, $2, $3, $4) returning * ';
+  const sql =
+    ' insert into "gameList" ("userId", "gameId", "wantToPlay", "played") values ($1, $2, $3, $4) returning * ';
   const params = [userId, gameId, wantToPlay, played];
   db.query(sql, params)
     .then(result => {
@@ -111,7 +156,10 @@ app.patch('/api/games/gameList/:gameId/:userId', (req, res, next) => {
   const gameId = req.params.gameId;
   const { wantToPlay, played } = req.body;
   if (!userId || !gameId || wantToPlay === undefined || played === undefined) {
-    throw new ClientError(400, 'userId, gameId, wantToPlay, played are required');
+    throw new ClientError(
+      400,
+      'userId, gameId, wantToPlay, played are required'
+    );
   }
   const sql = `
     update "gameList"

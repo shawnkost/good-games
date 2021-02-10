@@ -17,7 +17,7 @@ export default function ProfileLogin() {
         className="profile-button1"
       ></input>
       <input
-        type="text"
+        type="password"
         placeholder="Password"
         className="profile-button2"
       ></input>
