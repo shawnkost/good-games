@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
+const authorizationMiddleware = require('./authorization-middleware');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL
@@ -98,8 +99,8 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     }
     argon2
       .verify(user.password, password)
-      .then(result => {
-        if (!result) {
+      .then(isMatching => {
+        if (!isMatching) {
           throw new ClientError(401, 'invalid login');
         }
         const payload = {
@@ -176,6 +177,8 @@ app.patch('/api/games/gameList/:gameId/:userId', (req, res, next) => {
     })
     .catch(err => next(err));
 });
+
+app.use(authorizationMiddleware);
 
 app.use(errorMiddleware);
 

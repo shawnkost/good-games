@@ -7,17 +7,22 @@ import GameDetails from './pages/gameDetails';
 import Profile from './pages/profile';
 import ProfileLogin from './pages/profileLogin';
 import ProfileSignUp from './pages/profileSignUp';
+import decodeToken from './lib/decode-token';
+import ProfileHome from './pages/profileHome';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: null,
+      isAuthorizing: true,
       route: parseRoute(window.location.hash),
       menuClicked: false
     };
     this.previousRoute = '';
     this.openMenu = this.openMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
+    this.handleSignIn = this.handleSignIn.bind(this);
   }
 
   componentDidMount() {
@@ -27,6 +32,9 @@ export default class App extends React.Component {
         route: parseRoute(location.hash)
       });
     });
+    const token = window.localStorage.getItem('jwt-token');
+    const user = token ? decodeToken(token) : null;
+    this.setState({ user, isAuthorizing: false });
   }
 
   openMenu(clicked) {
@@ -43,6 +51,12 @@ export default class App extends React.Component {
     });
   }
 
+  handleSignIn(result) {
+    const { user, token } = result;
+    window.localStorage.setItem('jwt-token', token);
+    this.setState({ user });
+  }
+
   renderPage() {
     const { path, params } = this.state.route;
     if (path === '') {
@@ -52,6 +66,7 @@ export default class App extends React.Component {
           onChange={this.openMenu}
           click={this.closeMenu}
           menuClicked={this.state.menuClicked}
+          user={this.state.user}
         />
       );
     }
@@ -62,6 +77,7 @@ export default class App extends React.Component {
           onChange={this.openMenu}
           click={this.closeMenu}
           menuClicked={this.state.menuClicked}
+          user={this.state.user}
         />
       );
     }
@@ -72,6 +88,7 @@ export default class App extends React.Component {
           onChange={this.openMenu}
           click={this.closeMenu}
           menuClicked={this.state.menuClicked}
+          user={this.state.user}
         />
       );
     }
@@ -85,6 +102,7 @@ export default class App extends React.Component {
           click={this.closeMenu}
           menuClicked={this.state.menuClicked}
           gameId={gameID}
+          user={this.state.user}
         />
       );
     }
@@ -92,10 +110,13 @@ export default class App extends React.Component {
       return <Profile />;
     }
     if (path === 'profile-login') {
-      return <ProfileLogin />;
+      return <ProfileLogin handleSignIn={this.handleSignIn} />;
     }
     if (path === 'profile-sign-up') {
       return <ProfileSignUp />;
+    }
+    if (path === 'profile-home') {
+      return <ProfileHome />;
     }
   }
 

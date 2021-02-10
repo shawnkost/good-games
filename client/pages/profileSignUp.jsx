@@ -9,7 +9,9 @@ export default function ProfileSignUp() {
         backgroundImage: `url(${ProfileBackground})`
       }}
     >
-      <div className="text-white text-center profile-text">GoodGames</div>
+      <a href="#">
+        <div className="text-white text-center profile-text">GoodGames</div>
+      </a>
       <input
         type="text"
         placeholder="Username"

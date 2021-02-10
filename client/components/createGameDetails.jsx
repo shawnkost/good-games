@@ -16,6 +16,7 @@ export default class CreateGameDetails extends React.Component {
       searchInput: '',
       games: ''
     };
+    this.userId = '';
     this.grabUserGameList = this.grabUserGameList.bind(this);
     this.addPlayed = this.addPlayed.bind(this);
     this.addWantToPlay = this.addWantToPlay.bind(this);
@@ -35,9 +36,10 @@ export default class CreateGameDetails extends React.Component {
   }
 
   addPlayed(props) {
+    this.userId = this.props.user.user.userId;
     if (this.state.gameList.length === 0) {
       const data = {
-        userId: 1,
+        userId: this.userId,
         gameId: this.props.gameDetails.id,
         wantToPlay: false,
         played: true
@@ -101,9 +103,10 @@ export default class CreateGameDetails extends React.Component {
   }
 
   addWantToPlay(props) {
+    this.userId = this.props.user.user.userId;
     if (this.state.gameList.length === 0) {
       const data = {
-        userId: 1,
+        userId: this.userId,
         gameId: this.props.gameDetails.id,
         wantToPlay: true,
         played: false
@@ -129,7 +132,7 @@ export default class CreateGameDetails extends React.Component {
         wantToPlay: false,
         played: false
       };
-      fetch(`/api/games/gameList/${this.props.gameDetails.id}/1`, {
+      fetch(`/api/games/gameList/${this.props.gameDetails.id}/${this.userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -150,7 +153,7 @@ export default class CreateGameDetails extends React.Component {
         wantToPlay: true,
         played: false
       };
-      fetch(`/api/games/gameList/${this.props.gameDetails.id}/1`, {
+      fetch(`/api/games/gameList/${this.props.gameDetails.id}/${this.userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -287,7 +290,10 @@ export default class CreateGameDetails extends React.Component {
               updateValue={this.updateValue}
             />
             <div className="mb-4 pl-3 text-white search-games">Games</div>
-            <SearchResults games={this.state.games} updateValue={this.updateValue} />
+            <SearchResults
+              games={this.state.games}
+              updateValue={this.updateValue}
+            />
           </div>
         </>
       );
