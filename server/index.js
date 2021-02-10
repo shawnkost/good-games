@@ -7,6 +7,7 @@ const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const authorizationMiddleware = require('./authorization-middleware');
+const dayjs = require('dayjs');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL
@@ -87,12 +88,16 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     throw new ClientError(401, 'invalid login');
   }
   const sql = `
-    select "userId", "username", "password"
-    from "users"
+    select u."userId", u."username", u."password", "token"
+    from "users" as u
+    left outer join "session" using ("userId")
     where "email" = $1
     `;
   const params = [email];
   db.query(sql, params).then(result => {
+    if (!result.rows.length) {
+      throw new ClientError(401, 'invalid login');
+    }
     const [user] = result.rows;
     if (!user) {
       throw new ClientError(401, 'invalid login');
@@ -110,11 +115,42 @@ app.post('/api/auth/sign-in', (req, res, next) => {
             email: email
           }
         };
-        const token = {
-          token: jwt.sign(payload, process.env.TOKEN_SECRET)
-        };
-        const userInfo = Object.assign(token, payload);
-        res.status(200).json(userInfo);
+        const newExpiration = dayjs()
+          .add(3, 'hours')
+          .format('YYYY-MM-DD HH:mm:ss');
+        if (user.token) {
+          const sql = `
+            update "session"
+            set "expiration" = $1
+            where "token" = $3
+            `;
+          const params = [newExpiration, user.token];
+          db.query(sql, params)
+            .then(result => {
+              // const [data] = result.rows;
+              const userInfo = Object.assign(user.token, payload);
+              res.status(200).json(userInfo);
+              // res.status(201).json(data);
+            })
+            .catch(err => next(err));
+        } else {
+          const token = {
+            token: jwt.sign(payload, process.env.TOKEN_SECRET)
+          };
+          const sql = `
+            insert into "session" ("userId", "token", "expiration")
+            values ($1, $2, $3)
+            `;
+          const params = [user.userId, token.token, newExpiration];
+          db.query(sql, params)
+            .then(result => {
+              const userInfo = Object.assign(token, payload);
+              res.status(200).json(userInfo);
+            })
+            .catch(err => next(err));
+        }
+        // const userInfo = Object.assign(token, payload);
+        // res.status(200).json(userInfo);
       })
       .catch(err => next(err));
   });

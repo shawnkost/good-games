@@ -34,7 +34,9 @@ export default class App extends React.Component {
     });
     const token = window.localStorage.getItem('jwt-token');
     const user = token ? decodeToken(token) : null;
-    this.setState({ user, isAuthorizing: false });
+    if (user) {
+      this.setState({ user, isAuthorizing: false });
+    }
   }
 
   openMenu(clicked) {
@@ -55,6 +57,7 @@ export default class App extends React.Component {
     const { user, token } = result;
     window.localStorage.setItem('jwt-token', token);
     this.setState({ user });
+    window.location.hash = 'profile-home';
   }
 
   renderPage() {
