@@ -58,23 +58,28 @@ export default class App extends React.Component {
     const { user, token } = result;
     if (token) {
       window.localStorage.setItem('jwt-token', token);
-      window.location.hash = 'profile-home';
+      window.location.hash = '#profile-home';
     }
     this.setState({ user });
   }
 
-  handleSignOut() {
+  handleSignOut(event) {
     const token = window.localStorage.getItem('jwt-token');
-    fetch('/api/users/session', {
-      method: 'DELETE',
-      headers: {
-        'X-ACCESS-TOKEN': token
-      }
-    })
-      .then(response => {
-        window.localStorage.removeItem('jwt-token');
-        this.setState({ user: null });
-      });
+    if (event) {
+      fetch('/api/users/session', {
+        method: 'DELETE',
+        headers: {
+          'X-ACCESS-TOKEN': token
+        }
+      })
+        .then(response => {
+          window.localStorage.removeItem('jwt-token');
+          this.setState({ user: null });
+        });
+    }
+    window.localStorage.removeItem('jwt-token');
+    this.setState({ user: null });
+    window.location.hash = '#profile-login';
   }
 
   renderPage() {
@@ -137,7 +142,7 @@ export default class App extends React.Component {
     if (path === 'profile-sign-up') {
       return <ProfileSignUp />;
     }
-    if (path === 'profile-home') {
+    if (path === 'profile-home' && this.state.user) {
       return (
         <ProfileHome
           user={this.state.user}

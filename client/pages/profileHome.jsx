@@ -27,8 +27,7 @@ export default class ProfileHome extends React.Component {
       .then(response => response.json())
       .then(reviews => {
         if (reviews.error) {
-          window.localStorage.removeItem('jwt-token');
-          return <Redirect to="#profile-login" />; // this isn't working, check it
+          this.props.handleSignOut();
         }
         this.setState({
           reviews

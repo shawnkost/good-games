@@ -114,7 +114,7 @@ app.post('/api/auth/sign-in', (req, res, next) => {
             }
           };
           const newExpiration = dayjs()
-            .add(3, 'seconds')
+            .add(3, 'hours')
             .format('YYYY-MM-DD HH:mm:ss');
           if (user.token) {
             const sql = `
@@ -244,7 +244,7 @@ app.use(function (req, res, next) {
           .catch(err => next(err));
       } else {
         const newExpiration = dayjs()
-          .add(3, 'seconds')
+          .add(3, 'hours')
           .format('YYYY-MM-DD HH:mm:ss');
         const sql = `
           update "session"
