@@ -16,6 +16,7 @@ export default class CreateGameDetails extends React.Component {
       searchInput: '',
       games: ''
     };
+    this.userId = '';
     this.grabUserGameList = this.grabUserGameList.bind(this);
     this.addPlayed = this.addPlayed.bind(this);
     this.addWantToPlay = this.addWantToPlay.bind(this);
@@ -25,19 +26,33 @@ export default class CreateGameDetails extends React.Component {
   }
 
   grabUserGameList() {
-    fetch(`/api/games/gameList/${this.props.gameDetails.id}/1`)
-      .then(response => response.json())
-      .then(gameList => {
-        this.setState({
-          gameList
+    if (this.props.user) {
+      if (this.props.user.user) {
+        this.userId = this.props.user.user.userId;
+      } else {
+        this.userId = this.props.user.userId;
+      }
+      fetch(`/api/games/gameList/${this.props.gameDetails.id}/${this.userId}`)
+        .then(response => response.json())
+        .then(gameList => {
+          this.setState({
+            gameList
+          });
         });
-      });
+    }
   }
 
   addPlayed(props) {
+    if (this.props) {
+      if (this.props.user.user) {
+        this.userId = this.props.user.user.userId;
+      } else {
+        this.userId = this.props.user.userId;
+      }
+    }
     if (this.state.gameList.length === 0) {
       const data = {
-        userId: 1,
+        userId: this.userId,
         gameId: this.props.gameDetails.id,
         wantToPlay: false,
         played: true
@@ -63,7 +78,7 @@ export default class CreateGameDetails extends React.Component {
         wantToPlay: false,
         played: false
       };
-      fetch(`/api/games/gameList/${this.props.gameDetails.id}/1`, {
+      fetch(`/api/games/gameList/${this.props.gameDetails.id}/${this.userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -84,7 +99,7 @@ export default class CreateGameDetails extends React.Component {
         wantToPlay: false,
         played: true
       };
-      fetch(`/api/games/gameList/${this.props.gameDetails.id}/1`, {
+      fetch(`/api/games/gameList/${this.props.gameDetails.id}/${this.userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -101,9 +116,16 @@ export default class CreateGameDetails extends React.Component {
   }
 
   addWantToPlay(props) {
+    if (this.props) {
+      if (this.props.user.user) {
+        this.userId = this.props.user.user.userId;
+      } else {
+        this.userId = this.props.user.userId;
+      }
+    }
     if (this.state.gameList.length === 0) {
       const data = {
-        userId: 1,
+        userId: this.userId,
         gameId: this.props.gameDetails.id,
         wantToPlay: true,
         played: false
@@ -129,7 +151,7 @@ export default class CreateGameDetails extends React.Component {
         wantToPlay: false,
         played: false
       };
-      fetch(`/api/games/gameList/${this.props.gameDetails.id}/1`, {
+      fetch(`/api/games/gameList/${this.props.gameDetails.id}/${this.userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -150,7 +172,7 @@ export default class CreateGameDetails extends React.Component {
         wantToPlay: true,
         played: false
       };
-      fetch(`/api/games/gameList/${this.props.gameDetails.id}/1`, {
+      fetch(`/api/games/gameList/${this.props.gameDetails.id}/${this.userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -287,7 +309,10 @@ export default class CreateGameDetails extends React.Component {
               updateValue={this.updateValue}
             />
             <div className="mb-4 pl-3 text-white search-games">Games</div>
-            <SearchResults games={this.state.games} updateValue={this.updateValue} />
+            <SearchResults
+              games={this.state.games}
+              updateValue={this.updateValue}
+            />
           </div>
         </>
       );

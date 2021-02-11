@@ -14,6 +14,7 @@ export default class GameDetails extends React.Component {
       gameList: '',
       reviews: []
     };
+    this.userId = '';
     this.createDescription = this.createDescription.bind(this);
     this.grabGameDetails = this.grabGameDetails.bind(this);
     this.grabGamePhotos = this.grabGamePhotos.bind(this);
@@ -65,26 +66,34 @@ export default class GameDetails extends React.Component {
   }
 
   grabYoutubeVideo() {
-    // if (this.state.gameDetails.slug) {
-    //   let youtubeSearch = this.state.gameDetails.slug.split('-').join('%20');
-    //   youtubeSearch = youtubeSearch + '%20Official%20Trailer';
-    //   fetch(
-    //     `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${youtubeSearch}&key=${APIKEY.GOOGLEAPI}`
-    //   )
-    //     .then(response => response.json())
-    //     .then(youtubeResults => {
-    //       this.setState({
-    //         youtubeURL: youtubeResults.items[0].id.videoId
-    //       });
-    //     });
-    // }
+    if (this.state.gameDetails.slug) {
+      let youtubeSearch = this.state.gameDetails.slug.split('-').join('%20');
+      youtubeSearch = youtubeSearch + '%20Official%20Trailer';
+      fetch(
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${youtubeSearch}&key=${APIKEY.GOOGLEAPI}`
+      )
+        .then(response => response.json())
+        .then(youtubeResults => {
+          this.setState({
+            youtubeURL: youtubeResults.items[0].id.videoId
+          });
+        });
+    }
   }
 
   sendUserReview(review) {
+    if (this.props) {
+      if (this.props.user.user) {
+        this.userId = this.props.user.user.userId;
+      } else {
+        this.userId = this.props.user.userId;
+      }
+    }
     const data = {
-      gameId: this.props.gameId,
+      gameId: this.state.gameDetails.id,
+      gameTitle: this.state.gameDetails.name,
       details: review,
-      userId: 3
+      userId: this.userId
     };
     fetch('/api/games/reviews', {
       method: 'POST',
@@ -121,6 +130,7 @@ export default class GameDetails extends React.Component {
             createDescription={this.createDescription}
             submitForm={this.sendUserReview}
             reviews={this.state.reviews}
+            user={this.props.user}
           />
           <Menu click={this.props.click} menuClicked={this.props.menuClicked} />
         </>

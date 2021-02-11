@@ -4,17 +4,26 @@ import NewReleases from './pages/newReleases';
 import parseRoute from './lib/parse-route';
 import UpcomingGames from './pages/upcomingGames';
 import GameDetails from './pages/gameDetails';
+import Profile from './pages/profile';
+import ProfileLogin from './pages/profileLogin';
+import ProfileSignUp from './pages/profileSignUp';
+import decodeToken from './lib/decode-token';
+import ProfileHome from './pages/profileHome';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: null,
+      isAuthorizing: true,
       route: parseRoute(window.location.hash),
       menuClicked: false
     };
     this.previousRoute = '';
     this.openMenu = this.openMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
+    this.handleSignIn = this.handleSignIn.bind(this);
+    this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   componentDidMount() {
@@ -24,6 +33,11 @@ export default class App extends React.Component {
         route: parseRoute(location.hash)
       });
     });
+    const token = window.localStorage.getItem('jwt-token');
+    const user = token ? decodeToken(token) : null;
+    if (user) {
+      this.setState({ user, isAuthorizing: false });
+    }
   }
 
   openMenu(clicked) {
@@ -40,6 +54,34 @@ export default class App extends React.Component {
     });
   }
 
+  handleSignIn(result) {
+    const { user, token } = result;
+    if (token) {
+      window.localStorage.setItem('jwt-token', token);
+      window.location.hash = '#profile-home';
+    }
+    this.setState({ user });
+  }
+
+  handleSignOut(event) {
+    const token = window.localStorage.getItem('jwt-token');
+    if (event) {
+      fetch('/api/users/session', {
+        method: 'DELETE',
+        headers: {
+          'X-ACCESS-TOKEN': token
+        }
+      })
+        .then(response => {
+          window.localStorage.removeItem('jwt-token');
+          this.setState({ user: null });
+        });
+    }
+    window.localStorage.removeItem('jwt-token');
+    this.setState({ user: null });
+    window.location.hash = '#profile-login';
+  }
+
   renderPage() {
     const { path, params } = this.state.route;
     if (path === '') {
@@ -49,6 +91,7 @@ export default class App extends React.Component {
           onChange={this.openMenu}
           click={this.closeMenu}
           menuClicked={this.state.menuClicked}
+          user={this.state.user}
         />
       );
     }
@@ -59,6 +102,7 @@ export default class App extends React.Component {
           onChange={this.openMenu}
           click={this.closeMenu}
           menuClicked={this.state.menuClicked}
+          user={this.state.user}
         />
       );
     }
@@ -69,6 +113,7 @@ export default class App extends React.Component {
           onChange={this.openMenu}
           click={this.closeMenu}
           menuClicked={this.state.menuClicked}
+          user={this.state.user}
         />
       );
     }
@@ -82,6 +127,29 @@ export default class App extends React.Component {
           click={this.closeMenu}
           menuClicked={this.state.menuClicked}
           gameId={gameID}
+          user={this.state.user}
+        />
+      );
+    }
+    if (path === 'profile') {
+      return <Profile user={this.state.user} />;
+    }
+    if (path === 'profile-login') {
+      return (
+        <ProfileLogin handleSignIn={this.handleSignIn} user={this.state.user} />
+      );
+    }
+    if (path === 'profile-sign-up') {
+      return <ProfileSignUp />;
+    }
+    if (path === 'profile-home' && this.state.user) {
+      return (
+        <ProfileHome
+          user={this.state.user}
+          onChange={this.openMenu}
+          click={this.closeMenu}
+          menuClicked={this.state.menuClicked}
+          handleSignOut={this.handleSignOut}
         />
       );
     }
