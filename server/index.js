@@ -241,8 +241,7 @@ app.delete('/api/users/session', (req, res, next) => {
   const params = [userId];
   db.query(sql, params)
     .then(result => {
-      const [deletedSession] = result.rows;
-      res.status(204).json(deletedSession);
+      res.sendStatus(204);
     })
     .catch(err => next(err));
 });

@@ -68,16 +68,13 @@ export default class App extends React.Component {
     fetch('/api/users/session', {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json',
         'X-ACCESS-TOKEN': token
       }
     })
-      .then(response => response.json())
-      .then(() => {
+      .then(response => {
         window.localStorage.removeItem('jwt-token');
         this.setState({ user: null });
       });
-    // .catch((err) => console.log(err))
   }
 
   renderPage() {
