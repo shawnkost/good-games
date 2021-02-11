@@ -82,9 +82,16 @@ export default class GameDetails extends React.Component {
   }
 
   sendUserReview(review) {
-    this.userId = this.props.user.user.userId;
+    if (this.props) {
+      if (this.props.user.user) {
+        this.userId = this.props.user.user.userId;
+      } else {
+        this.userId = this.props.user.userId;
+      }
+    }
     const data = {
-      gameId: this.props.gameId,
+      gameId: this.state.gameDetails.id,
+      gameTitle: this.state.gameDetails.name,
       details: review,
       userId: this.userId
     };

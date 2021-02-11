@@ -1,4 +1,5 @@
 import React from 'react';
+import Redirect from '../components/redirect';
 import ProfileBackground from '../images/profile-background.png';
 
 export default class ProfileLogin extends React.Component {
@@ -33,6 +34,11 @@ export default class ProfileLogin extends React.Component {
   }
 
   render() {
+
+    if (this.props.user) {
+      return <Redirect to="profile-home" />;
+    }
+
     return (
       <div
         className="profile-login-container"

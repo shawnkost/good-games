@@ -265,10 +265,6 @@ body {
   font-size: 14px;
 }
 
-.youtube-video {
-  border-radius: 10px;
-}
-
 .list-button-container:active,
 .review-button:active {
   background-color: #575656;
@@ -281,8 +277,6 @@ body {
 
 .profile-text {
   padding-top: 35%;
-
-  /* margin-top: 40%; */
   font-family: "Yeseva One", cursive;
   font-size: 32px;
 }
@@ -332,4 +326,8 @@ body {
 .profile-login-container {
   width: 375px;
   height: 667px;
+}
+
+.profile-username {
+  font-size: 24px;
 }

@@ -1,7 +1,13 @@
 import React from 'react';
 import ProfileBackground from '../images/profile-background.png';
+import Redirect from '../components/redirect';
 
-export default function Profile() {
+export default function Profile(props) {
+
+  if (props.user) {
+    return <Redirect to="profile-home" />;
+  }
+
   return (
     <div
       className="profile-login-container"

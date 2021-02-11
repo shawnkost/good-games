@@ -31,7 +31,7 @@ app.get('/api/games/gameList/:gameId/:userId', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       const gameList = result.rows;
-      res.status(201).json(gameList);
+      res.status(200).json(gameList);
     })
     .catch(err => next(err));
 });
@@ -53,7 +53,7 @@ app.get('/api/games/reviews/:gameId', (req, res, next) => {
   db.query(sql, [gameId])
     .then(result => {
       const reviews = result.rows;
-      res.status(201).json(reviews);
+      res.status(200).json(reviews);
     })
     .catch(err => next(err));
 });
@@ -95,9 +95,6 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     `;
   const params = [email];
   db.query(sql, params).then(result => {
-    if (!result.rows.length) {
-      throw new ClientError(401, 'invalid login');
-    }
     const [user] = result.rows;
     if (!user) {
       throw new ClientError(401, 'invalid login');
@@ -122,15 +119,13 @@ app.post('/api/auth/sign-in', (req, res, next) => {
           const sql = `
             update "session"
             set "expiration" = $1
-            where "token" = $3
+            where "token" = $2
             `;
           const params = [newExpiration, user.token];
           db.query(sql, params)
             .then(result => {
-              // const [data] = result.rows;
               const userInfo = Object.assign(user.token, payload);
               res.status(200).json(userInfo);
-              // res.status(201).json(data);
             })
             .catch(err => next(err));
         } else {
@@ -149,24 +144,23 @@ app.post('/api/auth/sign-in', (req, res, next) => {
             })
             .catch(err => next(err));
         }
-        // const userInfo = Object.assign(token, payload);
-        // res.status(200).json(userInfo);
       })
       .catch(err => next(err));
-  });
+  })
+    .catch(err => next(err));
 });
 
 app.post('/api/games/reviews', (req, res, next) => {
-  const { gameId, details, userId } = req.body;
-  if (!gameId || !details || !userId) {
+  const { gameId, gameTitle, details, userId } = req.body;
+  if (!gameId || !gameTitle || !details || !userId) {
     throw new ClientError(400, 'Invalid gameID/Review/UserId');
   }
   const sql = `
-    insert into "reviews" ("gameId", "details", "userId")
-    values ($1, $2, $3)
+    insert into "reviews" ("gameId", "gameTitle", "details", "userId")
+    values ($1, $2, $3, $4)
     returning *
     `;
-  const params = [gameId, details, userId];
+  const params = [gameId, gameTitle, details, userId];
   db.query(sql, params)
     .then(result => {
       const [review] = result.rows;
@@ -215,6 +209,43 @@ app.patch('/api/games/gameList/:gameId/:userId', (req, res, next) => {
 });
 
 app.use(authorizationMiddleware);
+
+app.get('/api/games/reviews', (req, res, next) => {
+  const userId = req.user.user.userId;
+  if (!userId) {
+    throw new ClientError(400, 'invalid user');
+  }
+  const sql = `
+    select "gameTitle", "details"
+    from "reviews"
+    where "userId" = $1
+    `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      const reviews = result.rows;
+      res.status(200).json(reviews);
+    })
+    .catch(err => next(err));
+});
+
+app.delete('/api/users/session', (req, res, next) => {
+  const userId = req.user.user.userId;
+  if (!userId) {
+    throw new ClientError(400, 'invalid user');
+  }
+  const sql = `
+    delete from "session"
+    where "userId" = $1
+    `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      const [deletedSession] = result.rows;
+      res.status(204).json(deletedSession);
+    })
+    .catch(err => next(err));
+});
 
 app.use(errorMiddleware);
 

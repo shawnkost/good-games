@@ -23,6 +23,7 @@ export default class App extends React.Component {
     this.openMenu = this.openMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this);
+    this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   componentDidMount() {
@@ -55,9 +56,28 @@ export default class App extends React.Component {
 
   handleSignIn(result) {
     const { user, token } = result;
-    window.localStorage.setItem('jwt-token', token);
+    if (token) {
+      window.localStorage.setItem('jwt-token', token);
+      window.location.hash = 'profile-home';
+    }
     this.setState({ user });
-    window.location.hash = 'profile-home';
+  }
+
+  handleSignOut() {
+    const token = window.localStorage.getItem('jwt-token');
+    fetch('/api/users/session', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-ACCESS-TOKEN': token
+      }
+    })
+      .then(response => response.json())
+      .then(() => {
+        window.localStorage.removeItem('jwt-token');
+        this.setState({ user: null });
+      });
+    // .catch((err) => console.log(err))
   }
 
   renderPage() {
@@ -110,16 +130,26 @@ export default class App extends React.Component {
       );
     }
     if (path === 'profile') {
-      return <Profile />;
+      return <Profile user={this.state.user} />;
     }
     if (path === 'profile-login') {
-      return <ProfileLogin handleSignIn={this.handleSignIn} />;
+      return (
+        <ProfileLogin handleSignIn={this.handleSignIn} user={this.state.user} />
+      );
     }
     if (path === 'profile-sign-up') {
       return <ProfileSignUp />;
     }
     if (path === 'profile-home') {
-      return <ProfileHome />;
+      return (
+        <ProfileHome
+          user={this.state.user}
+          onChange={this.openMenu}
+          click={this.closeMenu}
+          menuClicked={this.state.menuClicked}
+          handleSignOut={this.handleSignOut}
+        />
+      );
     }
   }
 

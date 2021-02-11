@@ -26,17 +26,30 @@ export default class CreateGameDetails extends React.Component {
   }
 
   grabUserGameList() {
-    fetch(`/api/games/gameList/${this.props.gameDetails.id}/1`)
-      .then(response => response.json())
-      .then(gameList => {
-        this.setState({
-          gameList
+    if (this.props.user) {
+      if (this.props.user.user) {
+        this.userId = this.props.user.user.userId;
+      } else {
+        this.userId = this.props.user.userId;
+      }
+      fetch(`/api/games/gameList/${this.props.gameDetails.id}/${this.userId}`)
+        .then(response => response.json())
+        .then(gameList => {
+          this.setState({
+            gameList
+          });
         });
-      });
+    }
   }
 
   addPlayed(props) {
-    this.userId = this.props.user.user.userId;
+    if (this.props) {
+      if (this.props.user.user) {
+        this.userId = this.props.user.user.userId;
+      } else {
+        this.userId = this.props.user.userId;
+      }
+    }
     if (this.state.gameList.length === 0) {
       const data = {
         userId: this.userId,
@@ -65,7 +78,7 @@ export default class CreateGameDetails extends React.Component {
         wantToPlay: false,
         played: false
       };
-      fetch(`/api/games/gameList/${this.props.gameDetails.id}/1`, {
+      fetch(`/api/games/gameList/${this.props.gameDetails.id}/${this.userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -86,7 +99,7 @@ export default class CreateGameDetails extends React.Component {
         wantToPlay: false,
         played: true
       };
-      fetch(`/api/games/gameList/${this.props.gameDetails.id}/1`, {
+      fetch(`/api/games/gameList/${this.props.gameDetails.id}/${this.userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -103,7 +116,13 @@ export default class CreateGameDetails extends React.Component {
   }
 
   addWantToPlay(props) {
-    this.userId = this.props.user.user.userId;
+    if (this.props) {
+      if (this.props.user.user) {
+        this.userId = this.props.user.user.userId;
+      } else {
+        this.userId = this.props.user.userId;
+      }
+    }
     if (this.state.gameList.length === 0) {
       const data = {
         userId: this.userId,

@@ -14,6 +14,7 @@ CREATE TABLE "users" (
 CREATE TABLE "reviews" (
 	"reviewId" serial NOT NULL,
 	"gameId" integer NOT NULL,
+	"gameDetails" TEXT NOT NULL,
 	"details" TEXT NOT NULL,
 	"userId" integer NOT NULL,
 	"createdAt" TIMESTAMP NOT NULL,
