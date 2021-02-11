@@ -7,12 +7,12 @@ export default function ProfileReviews(props) {
     const allReviews = reviews.map((review, index) => {
       return (
          <div className="pl-3 pr-3" key={index}>
-           <div className="text-white">{review.gameTitle}</div>
+           <div className="mb-2 text-white profile-game-title">{review.gameTitle}</div>
            <ShowMoreText
              lines={5}
              more="Show more"
              less="Show less"
-             className="pl-2 pt-2 mb-4 review-card text-white"
+             className="pl-2 pt-2 mb-4 profile-card text-white"
              anchorClass="my-anchor-css-class"
              expanded={false}
              width={320}

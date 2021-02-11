@@ -26,6 +26,10 @@ export default class ProfileHome extends React.Component {
     })
       .then(response => response.json())
       .then(reviews => {
+        if (reviews.error) {
+          window.localStorage.removeItem('jwt-token');
+          return <Redirect to="#profile-login" />; // this isn't working, check it
+        }
         this.setState({
           reviews
         });
@@ -41,17 +45,19 @@ export default class ProfileHome extends React.Component {
     return (
       <>
         <div
-          className={this.props.menuClicked ? 'blur-container' : 'page-container'}
+          className={
+            this.props.menuClicked ? 'blur-container' : 'page-container'
+          }
         >
           <Navbar onChange={this.props.onChange} />
-          <div className="d-inline-block pl-3 mb-4 profile-username text-white">
-            {this.props.user.user ? this.props.user.user.username : this.props.user.username}
-          </div>
-          <div className="d-inline-block pl-3 mb-4 text-white" onClick={this.props.handleSignOut}>
+          <div className="pl-3 mb-4 text-white text-center my-reviews">My Reviews</div>
+          <ProfileReviews reviews={this.state.reviews} />
+          <div
+            className="pr-2 mb-4 text-white text-center sign-out"
+            onClick={this.props.handleSignOut}
+          >
             Sign Out
           </div>
-          <div className="pl-3 text-white">My Reviews</div>
-          <ProfileReviews reviews={this.state.reviews} />
         </div>
         <Menu click={this.props.click} menuClicked={this.props.menuClicked} />
       </>

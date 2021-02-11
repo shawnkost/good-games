@@ -12,7 +12,8 @@ export default function Profile(props) {
     <div
       className="profile-login-container"
       style={{
-        backgroundImage: `url(${ProfileBackground})`
+        backgroundImage: `url(${ProfileBackground})`,
+        backgroundSize: 'cover'
       }}
     >
       <a href="#">
@@ -20,12 +21,12 @@ export default function Profile(props) {
       </a>
       <div className="input-container">
         <a href="#profile-sign-up">
-          <button className="profile-button1">Create Account</button>
+          <button className="profile-button1 text-white">Create Account</button>
         </a>
       </div>
       <div className="input-container">
         <a href="#profile-login">
-          <button className="profile-button2">Login</button>
+          <button className="profile-button2 text-white">Login</button>
         </a>
       </div>
     </div>

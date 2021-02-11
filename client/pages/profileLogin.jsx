@@ -43,7 +43,8 @@ export default class ProfileLogin extends React.Component {
       <div
         className="profile-login-container"
         style={{
-          backgroundImage: `url(${ProfileBackground})`
+          backgroundImage: `url(${ProfileBackground})`,
+          backgroundSize: 'cover'
         }}
       >
         <a href="#">
@@ -54,14 +55,14 @@ export default class ProfileLogin extends React.Component {
             type="email"
             placeholder="Email"
             name="email"
-            className="profile-button1"
+            className="email"
             onChange={this.handleChange}
           ></input>
           <input
             type="password"
             placeholder="Password"
             name="password"
-            className="profile-button2"
+            className="password"
             onChange={this.handleChange}
           ></input>
           <button className="text-white profile-button3">Login</button>

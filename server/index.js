@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
-const authorizationMiddleware = require('./authorization-middleware');
+// const authorizationMiddleware = require('./authorization-middleware');
 const dayjs = require('dayjs');
 
 const db = new pg.Pool({
@@ -94,59 +94,60 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     where "email" = $1
     `;
   const params = [email];
-  db.query(sql, params).then(result => {
-    const [user] = result.rows;
-    if (!user) {
-      throw new ClientError(401, 'invalid login');
-    }
-    argon2
-      .verify(user.password, password)
-      .then(isMatching => {
-        if (!isMatching) {
-          throw new ClientError(401, 'invalid login');
-        }
-        const payload = {
-          user: {
-            userId: user.userId,
-            username: user.username,
-            email: email
+  db.query(sql, params)
+    .then(result => {
+      const [user] = result.rows;
+      if (!user) {
+        throw new ClientError(401, 'invalid login');
+      }
+      argon2
+        .verify(user.password, password)
+        .then(isMatching => {
+          if (!isMatching) {
+            throw new ClientError(401, 'invalid login');
           }
-        };
-        const newExpiration = dayjs()
-          .add(3, 'hours')
-          .format('YYYY-MM-DD HH:mm:ss');
-        if (user.token) {
-          const sql = `
+          const payload = {
+            user: {
+              userId: user.userId,
+              username: user.username,
+              email: email
+            }
+          };
+          const newExpiration = dayjs()
+            .add(3, 'seconds')
+            .format('YYYY-MM-DD HH:mm:ss');
+          if (user.token) {
+            const sql = `
             update "session"
             set "expiration" = $1
             where "token" = $2
             `;
-          const params = [newExpiration, user.token];
-          db.query(sql, params)
-            .then(result => {
-              const userInfo = Object.assign(user.token, payload);
-              res.status(200).json(userInfo);
-            })
-            .catch(err => next(err));
-        } else {
-          const token = {
-            token: jwt.sign(payload, process.env.TOKEN_SECRET)
-          };
-          const sql = `
+            const params = [newExpiration, user.token];
+            db.query(sql, params)
+              .then(result => {
+                const userInfo = Object.assign(user.token, payload);
+                res.status(200).json(userInfo);
+              })
+              .catch(err => next(err));
+          } else {
+            const token = {
+              token: jwt.sign(payload, process.env.TOKEN_SECRET)
+            };
+            const sql = `
             insert into "session" ("userId", "token", "expiration")
             values ($1, $2, $3)
             `;
-          const params = [user.userId, token.token, newExpiration];
-          db.query(sql, params)
-            .then(result => {
-              const userInfo = Object.assign(token, payload);
-              res.status(200).json(userInfo);
-            })
-            .catch(err => next(err));
-        }
-      })
-      .catch(err => next(err));
-  })
+            const params = [user.userId, token.token, newExpiration];
+            db.query(sql, params)
+              .then(result => {
+                const userInfo = Object.assign(token, payload);
+                res.status(200).json(userInfo);
+              })
+              .catch(err => next(err));
+          }
+        })
+        .catch(err => next(err));
+    })
     .catch(err => next(err));
 });
 
@@ -208,7 +209,59 @@ app.patch('/api/games/gameList/:gameId/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.use(authorizationMiddleware);
+app.use(function (req, res, next) {
+  const headers = req.headers;
+  const token = headers['x-access-token'];
+  if (!token) {
+    throw new ClientError(401, 'authentication required');
+  }
+  const sql = `
+    select "expiration"
+    from "session"
+    where "token" = $1
+    `;
+  const params = [token];
+  db.query(sql, params)
+    .then(result => {
+      const [expiration] = result.rows;
+      if (result.rows.length !== 1) {
+        throw new ClientError(401, 'invalid token');
+      }
+      const currentMoment = dayjs().format('YYYY-MM-DD HH:mm:ss');
+      if (
+        currentMoment >
+        dayjs(expiration.expiration).format('YYYY-MM-DD HH:mm:ss')
+      ) {
+        const sql = `
+             delete from "session"
+             where "token" = $1
+             `;
+        const params = [token];
+        db.query(sql, params)
+          .then(result => {
+            throw new ClientError(401, 'invalid token');
+          })
+          .catch(err => next(err));
+      } else {
+        const newExpiration = dayjs()
+          .add(3, 'seconds')
+          .format('YYYY-MM-DD HH:mm:ss');
+        const sql = `
+          update "session"
+          set "expiration" = $1
+          where "token" = $2
+          `;
+        const params = [newExpiration, token];
+        db.query(sql, params).then(result => {
+          req.user = jwt.verify(token, process.env.TOKEN_SECRET);
+          next();
+        });
+      }
+    })
+    .catch(err => next(err));
+});
+
+// app.use(authorizationMiddleware);
 
 app.get('/api/games/reviews', (req, res, next) => {
   const userId = req.user.user.userId;
