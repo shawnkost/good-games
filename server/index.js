@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
-// const authorizationMiddleware = require('./authorization-middleware');
 const dayjs = require('dayjs');
 
 const db = new pg.Pool({
@@ -260,8 +259,6 @@ app.use(function (req, res, next) {
     })
     .catch(err => next(err));
 });
-
-// app.use(authorizationMiddleware);
 
 app.get('/api/games/reviews', (req, res, next) => {
   const userId = req.user.user.userId;
