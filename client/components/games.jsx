@@ -136,7 +136,7 @@ export default class Games extends React.Component {
         <div
           className={
             this.state.games.results
-              ? 'show text-white text-center mb-3 next'
+              ? 'show text-white text-center mb-3 font-24 font-Yeseva'
               : 'hide'
           }
           onClick={this.nextRequest}

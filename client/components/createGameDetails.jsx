@@ -221,7 +221,7 @@ export default class CreateGameDetails extends React.Component {
               onChange={this.props.onChange}
               updateValue={this.updateValue}
             />
-            <div className="mb-2 text-white text-center game-details-path">
+            <div className="mb-2 text-white text-center font-Yeseva font-16">
               <a href="#" className="detail-links">
                 <span>Home /</span>
               </a>
@@ -236,12 +236,12 @@ export default class CreateGameDetails extends React.Component {
               </div>
             </div>
             <div className="text-center release-platform-container">
-              <div className="mr-2 mb-2 text-white text-center game-details-date">
+              <div className="mr-2 mb-2 text-white text-center font-24 font-Yeseva">
                 {dayjs(this.props.gameDetails.released).format('MMM DD, YYYY')}
               </div>
               <CheckPlatform game={this.props.gameDetails} />
             </div>
-            <div className="mb-2 text-center text-white game-details-name">
+            <div className="mb-2 text-center text-white font-36 font-Yeseva">
               {this.props.gameDetails.name}
             </div>
             <div className="scrolling-wrapper mb-4">
@@ -258,7 +258,7 @@ export default class CreateGameDetails extends React.Component {
             </div>
             <div className="list-container">
               <div
-                className="ml-3 mr-3 mb-4 text-center list-button-container"
+                className="ml-3 mr-3 mb-4 text-center text-white font-24 list-button-container"
                 onClick={this.addPlayed}
               >
                 {this.state.gameList.length !== 0 &&
@@ -267,7 +267,7 @@ export default class CreateGameDetails extends React.Component {
                   : 'Add to Played'}
               </div>
               <div
-                className="ml-3 mr-3 mb-4 text-center list-button-container"
+                className="ml-3 mr-3 mb-4 text-center text-white font-24 list-button-container"
                 onClick={this.addWantToPlay}
               >
                 {this.state.gameList.length !== 0 &&
@@ -277,9 +277,9 @@ export default class CreateGameDetails extends React.Component {
               </div>
             </div>
             <div className="game-description pl-3">
-              <div className="mb-2 text-white details-about">About</div>
+              <div className="mb-2 text-white font-22 font-Yeseva">About</div>
               <div
-                className="text-white details-bio"
+                className="text-white font-18 font-Josefin"
                 dangerouslySetInnerHTML={this.props.createDescription()}
               ></div>
             </div>
@@ -308,7 +308,7 @@ export default class CreateGameDetails extends React.Component {
               onChange={this.props.onChange}
               updateValue={this.updateValue}
             />
-            <div className="mb-4 pl-3 text-white search-games">Games</div>
+            <div className="mb-4 pl-3 text-white font-28">Games</div>
             <SearchResults
               games={this.state.games}
               updateValue={this.updateValue}

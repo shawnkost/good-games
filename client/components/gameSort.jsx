@@ -13,7 +13,7 @@ export default class GameSort extends React.Component {
   render() {
     return (
       <div className="container-fluid">
-        <h3 className="text-center mb-4 text-white heading-text">
+        <h3 className="text-center mb-4 text-white font-Yeseva heading-text">
           {this.props.path === ''
             ? 'Most Popular Games'
             : this.props.path === 'new-releases'
@@ -24,33 +24,33 @@ export default class GameSort extends React.Component {
         </h3>
         <label
           htmlFor="platform"
-          className="d-block mr-2 mb-3 select-label text-white"
+          className="d-block mr-2 mb-3 font-Josefin font-24 text-white"
         >
           Platform:
         </label>
         <select
           name="platform"
           id="platform"
-          className="sort-select cursor-pointer text-white mb-3"
+          className="sort-select font-18 font-Josefin cursor-pointer text-white mb-3"
           onChange={this.handleClick}
         >
           Platform:
-          <option value="4" className="text-white option-text">
+          <option value="4" className="text-white font-18">
             PC
           </option>
-          <option value="7" className="text-white option-text">
+          <option value="7" className="text-white font-18">
             Switch
           </option>
-          <option value="186" className="text-white option-text">
+          <option value="186" className="text-white font-18">
             Xbox Series X
           </option>
-          <option value="1" className="text-white option-text">
+          <option value="1" className="text-white font-18">
             Xbox One
           </option>
-          <option value="187" className="text-white option-text">
+          <option value="187" className="text-white font-18">
             Playstation 5
           </option>
-          <option value="18" className="text-white option-text">
+          <option value="18" className="text-white font-18">
             Playstation 4
           </option>
         </select>

@@ -28,19 +28,19 @@ export default class WriteReview extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <label
             htmlFor="review"
-            className="d-block pl-3 text-white write-review"
+            className="d-block pl-3 text-white font-24 font-Yeseva write-review"
           >
             Write a review
           </label>
           <textarea
             id="review"
             name="review"
-            className="ml-3 text-white review-text-area"
+            className="ml-3 text-white font-24 font-Josefin review-text-area"
             value={this.state.textAreaValue}
             onChange={this.handleChange}
           ></textarea>
-          <div className="text-right pr-3 button">
-            <button type="submit" className="review-button">Submit</button>
+          <div className="text-right pr-3 font-Yeseva button">
+            <button type="submit" className="font-18 text-white review-button">Submit</button>
           </div>
         </form>
       </div>
