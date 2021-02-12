@@ -48,24 +48,26 @@ export default class ProfileLogin extends React.Component {
         }}
       >
         <a href="#">
-          <div className="text-white text-center profile-text">GoodGames</div>
+          <div className="text-white text-center font-32 font-Yeseva profile-text">
+            GoodGames
+          </div>
         </a>
         <form onSubmit={this.handleLogin}>
           <input
             type="email"
             placeholder="Email"
             name="email"
-            className="email"
+            className="profile-inputs email"
             onChange={this.handleChange}
           ></input>
           <input
             type="password"
             placeholder="Password"
             name="password"
-            className="password"
+            className="profile-inputs password"
             onChange={this.handleChange}
           ></input>
-          <button className="text-white profile-button3">Login</button>
+          <button className="text-white profile-buttons profile-button3">Login</button>
         </form>
       </div>
     );

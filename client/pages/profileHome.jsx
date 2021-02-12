@@ -95,12 +95,12 @@ export default class ProfileHome extends React.Component {
             onChange={this.props.onChange}
             updateValue={this.updateValue}
           />
-          <div className="pl-3 mb-4 text-white text-center my-reviews">
+          <div className="pl-3 mb-4 text-white text-center font-36 font-Yeseva">
             My Reviews
           </div>
           <ProfileReviews reviews={this.state.reviews} />
           <div
-            className="pr-2 mb-4 text-white text-center sign-out"
+            className="pr-2 mb-4 text-white text-center font-24 font-Yeseva"
             onClick={this.props.handleSignOut}
           >
             Sign Out

@@ -39,7 +39,7 @@ export default class WriteReview extends React.Component {
             value={this.state.textAreaValue}
             onChange={this.handleChange}
           ></textarea>
-          <div className="text-right pr-3 font-Yeseva button">
+          <div className="text-right pr-3 font-Yeseva review-submit">
             <button type="submit" className="font-18 text-white review-button">Submit</button>
           </div>
         </form>

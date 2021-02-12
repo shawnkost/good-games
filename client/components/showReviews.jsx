@@ -11,10 +11,9 @@ export default function ShowReviews(props) {
           lines={5}
           more="Show more"
           less="Show less"
-          className="pl-2 pt-2 mb-4 font-18 font- Josefin review-card text-white"
+          className="pl-2 pt-2 mb-4 font-18 font-Josefin review-card text-white"
           anchorClass="my-anchor-css-class"
           expanded={false}
-          width={320}
           key={index}
         >
           <div>{review.details}</div>
