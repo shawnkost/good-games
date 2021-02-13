@@ -53,7 +53,7 @@ export default class CreateGameCard extends React.Component {
             })}
           </div>
           <div className="details-container">
-            <div className="pl-2 mb-2 font-weight-bold">
+            <div className="pl-2 mb-2 font-weight-bold game-title">
               {this.props.value.name}
             </div>
             <div className="pl-2 d-inline-block font-18">
