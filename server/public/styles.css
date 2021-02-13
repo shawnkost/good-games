@@ -272,7 +272,7 @@ body {
   border-radius: 0 15px 15px 15px;
 }
 
-@media only screen and (min-width: 576px) {
+@media (min-width: 576px) {
   .menu-container {
     height: 94vh;
   }
@@ -324,5 +324,122 @@ body {
 
   .profile-sign-up {
     top: 95px;
+  }
+}
+
+@media (min-width: 768px) {
+  .image-container {
+    width: 80% !important;
+    height: 240px;
+  }
+
+  .details {
+    width: 80%;
+  }
+
+  .game-card {
+    margin-left: 18%;
+  }
+
+  .platform-label {
+    margin-left: 18%;
+  }
+
+  .sort-select {
+    margin-left: 18%;
+  }
+
+  .menu-container {
+    height: 55vh;
+  }
+
+  .menu-items {
+    font-size: 24px;
+  }
+
+  .platform-container {
+    width: 7%;
+  }
+
+  .logo {
+    padding-left: 8%;
+    font-size: 32px;
+  }
+
+  .menu-icon {
+    padding-left: 3%;
+    padding-right: 8%;
+  }
+
+  .search-img-container {
+    width: 20%;
+    height: 100px;
+  }
+
+  .search-name {
+    font-size: 24px;
+  }
+
+  .search-input {
+    font-size: 24px;
+  }
+
+  .search-games {
+    font-size: 24px;
+  }
+
+  .menu-icon2 {
+    font-size: 32px;
+  }
+
+  .game-about {
+    font-size: 32px;
+  }
+
+  .game-bio {
+    font-size: 24px;
+  }
+
+  .profile-inputs {
+    font-size: 24px;
+    left: 31vh;
+  }
+
+  .profile-text {
+    padding-top: 20%;
+    font-size: 42px;
+  }
+
+  .email {
+    top: 170px;
+  }
+
+  .password {
+    top: 205px;
+  }
+
+  .username-sign-up {
+    top: 135px;
+  }
+
+  .profile-buttons {
+    font-size: 24px;
+    left: 31vh;
+  }
+
+  .profile-button3 {
+    top: 240px;
+  }
+
+  .profile-game-title {
+    font-size: 24px;
+  }
+
+  .profile-card {
+    font-size: 24px;
+  }
+
+  .review-card {
+    font-size: 24px;
   }
 }

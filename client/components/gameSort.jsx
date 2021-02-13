@@ -24,7 +24,7 @@ export default class GameSort extends React.Component {
         </h3>
         <label
           htmlFor="platform"
-          className="d-block mr-2 mb-3 font-Josefin font-24 text-white"
+          className="d-block mr-2 mb-3 font-Josefin font-24 text-white platform-label"
         >
           Platform:
         </label>

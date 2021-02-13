@@ -250,8 +250,7 @@ export default class CreateGameDetails extends React.Component {
                 width="264"
                 height="148"
                 frameBorder="0"
-                src={`https://www.youtube.com/embed/${this.props.youtubeURL}?autoplay=1&mute=0`}
-                allow="autoplay"
+                src={`https://www.youtube.com/embed/${this.props.youtubeURL}?autoplay=0&mute=0`}
                 allowFullScreen
               ></iframe>
               <CreateScrollingImages images={this.props.gamePhotos} />
@@ -277,9 +276,9 @@ export default class CreateGameDetails extends React.Component {
               </div>
             </div>
             <div className="game-description pl-3">
-              <div className="mb-2 text-white font-22 font-Yeseva">About</div>
+              <div className="mb-2 text-white font-22 font-Yeseva game-about">About</div>
               <div
-                className="text-white font-18 font-Josefin"
+                className="text-white font-18 font-Josefin game-bio"
                 dangerouslySetInnerHTML={this.props.createDescription()}
               ></div>
             </div>
