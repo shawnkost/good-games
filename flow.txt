@@ -1,0 +1,12 @@
+When the page loads, our app component renders the home component. As long as the search bar is empty and no one is searching for anything, we render the games component.
+Inside our games component, we create a state property that will hold all of the games shown on the page from the network request. As long as we haven't made any network requests
+and stored them to state yet, we will render the loader. Once the component mounts, we check which path was passed down from our app.jsx file and make the network call based on
+the path. Once we have the results from the network call, we update state with all the games returned. Since state has been updated, our component gets rendered, and our if statement
+hits. We call the mapGames function which maps over all the games stored in state and calls the CreateGameCard component. Inside the CreateGameCard component is the HTML structure
+for the game card. Each image is wrapped inside of an anchor tag that changes the route so the App component gets rendered and the gameDetails page would show. Inside our
+createGameCard component, we map over the parent_platforms array that got passed by props from the Games Component. There is a switch statement that creates an image for each platform
+that exists within the platforms array. Those are then wrapped inside of an anchor tag that takes you to each platforms storefront. The title, release date, and metacritic score are
+also created and passed values from the Games component. Once the mapGames function is done, the games component gets rendered with all the game cards. When a user scrolls down to the
+end of the page and clicks on the next button, the nextRequest method gets called that makes a fetch request for the next page. Last but not least, there is the componentDidUpdate method
+with a prevProps parameter. This function checks if the previous platform passed down from the home component is the same as the current platform selected from the drop down, and if
+the platform has changed, the specified network call is made.
