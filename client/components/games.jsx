@@ -37,18 +37,27 @@ export default class Games extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.platform !== this.props.platform && this.props.path === '') {
+      this.setState({
+        games: []
+      });
       this.mostPopularGames();
     }
     if (
       prevProps.platform !== this.props.platform &&
       this.props.path === 'new-releases'
     ) {
+      this.setState({
+        games: []
+      });
       this.newlyReleasedGames();
     }
     if (
       prevProps.platform !== this.props.platform &&
       this.props.path === 'upcoming-games'
     ) {
+      this.setState({
+        games: []
+      });
       this.upcomingGames();
     }
   }
@@ -91,6 +100,9 @@ export default class Games extends React.Component {
 
   nextRequest() {
     if (this.state.games.next !== null) {
+      this.setState({
+        games: []
+      });
       fetch(`${this.state.games.next}`)
         .then(response => response.json())
         .then(games => {
@@ -136,7 +148,7 @@ export default class Games extends React.Component {
         <div
           className={
             this.state.games.results
-              ? 'show text-white text-center mb-3 next'
+              ? 'show text-white text-center mb-3 font-24 font-Yeseva'
               : 'hide'
           }
           onClick={this.nextRequest}

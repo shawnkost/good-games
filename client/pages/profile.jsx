@@ -17,16 +17,16 @@ export default function Profile(props) {
       }}
     >
       <a href="#">
-        <div className="text-white text-center profile-text">GoodGames</div>
+        <div className="text-white text-center font-32 font-Yeseva profile-text">GoodGames</div>
       </a>
       <div className="input-container">
         <a href="#profile-sign-up">
-          <button className="profile-button1 text-white">Create Account</button>
+          <button className="profile-buttons profile-button1 text-white">Create Account</button>
         </a>
       </div>
       <div className="input-container">
         <a href="#profile-login">
-          <button className="profile-button2 text-white">Login</button>
+          <button className="profile-buttons profile-button2 text-white">Login</button>
         </a>
       </div>
     </div>

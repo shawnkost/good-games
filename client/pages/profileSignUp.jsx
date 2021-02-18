@@ -43,31 +43,33 @@ export default class ProfileSignUp extends React.Component {
         }}
       >
         <a href="#">
-          <div className="text-white text-center profile-text">GoodGames</div>
+          <div className="text-white text-center font-32 font-Yeseva profile-text">
+            GoodGames
+          </div>
         </a>
         <form onSubmit={this.handleSignUp}>
           <input
             type="text"
             placeholder="Username"
             name="username"
-            className="username-sign-up"
+            className="profile-inputs username-sign-up"
             onChange={this.handleChange}
           ></input>
           <input
             type="email"
             placeholder="Email Address"
             name="email"
-            className="email"
+            className="profile-inputs email"
             onChange={this.handleChange}
           ></input>
           <input
             type="password"
             placeholder="Password"
             name="password"
-            className="password"
+            className="profile-inputs password"
             onChange={this.handleChange}
           ></input>
-          <button className="text-white profile-button3">Sign Up</button>
+          <button className="text-white profile-buttons profile-button3 profile-sign-up">Sign Up</button>
         </form>
       </div>
     );

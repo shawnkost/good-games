@@ -17,7 +17,7 @@ export default class CreateGameCard extends React.Component {
             ></img>
           </a>
         </div>
-        <div className="text-white details">
+        <div className="text-white font-24 font-Josefin details">
           <div className="all-platforms-container mb-2 pl-2 pt-2">
             {this.props.value.parent_platforms.map((platform, index) => {
               let platformImg = null;
@@ -53,21 +53,21 @@ export default class CreateGameCard extends React.Component {
             })}
           </div>
           <div className="details-container">
-            <div className="pl-2 mb-2 font-weight-bold">
+            <div className="pl-2 mb-2 font-weight-bold game-title">
               {this.props.value.name}
             </div>
-            <div className="pl-2 d-inline-block details-font">
+            <div className="pl-2 d-inline-block font-18">
               {'Release date: ' +
                 dayjs(this.props.value.released).format('MMM-DD-YYYY')}
             </div>
             <a href={`#game-details?gameId=${this.props.value.id}`}>
-              <div className="d-inline-block view-details pr-1 details-font">
+              <div className="d-inline-block view-details pr-1 font-18">
                 View Details
               </div>
             </a>
             <div
               className={
-                this.props.value.metacritic !== null ? 'metacritic' : 'hide'
+                this.props.value.metacritic !== null ? 'font-18 metacritic' : 'hide'
               }
             >
               {this.props.value.metacritic}
