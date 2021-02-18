@@ -247,17 +247,15 @@ export default class CreateGameDetails extends React.Component {
             <div className="scrolling-wrapper mb-4">
               <iframe
                 className="screenshot align-middle youtube-video"
-                // width="264"
-                // height="148"
                 frameBorder="0"
                 src={`https://www.youtube.com/embed/${this.props.youtubeURL}?autoplay=0&mute=0`}
-                allowFullScreen="true"
+                allowFullScreen={true}
               ></iframe>
               <CreateScrollingImages images={this.props.gamePhotos} />
             </div>
             <div className="list-container">
               <div
-                className="ml-3 mr-3 mb-4 text-center text-white font-24 list-button-container"
+                className="ml-3 ml-md-5 mr-3 mr-md-5 mb-4 text-center text-white font-24 list-button-container"
                 onClick={this.addPlayed}
               >
                 {this.state.gameList.length !== 0 &&
@@ -266,7 +264,7 @@ export default class CreateGameDetails extends React.Component {
                   : 'Add to Played'}
               </div>
               <div
-                className="ml-3 mr-3 mb-4 text-center text-white font-24 list-button-container"
+                className="ml-3 ml-md-5 mr-3 mr-md-5 mb-4 text-center text-white font-24 list-button-container"
                 onClick={this.addWantToPlay}
               >
                 {this.state.gameList.length !== 0 &&
@@ -275,7 +273,7 @@ export default class CreateGameDetails extends React.Component {
                   : 'Add to Want to Play'}
               </div>
             </div>
-            <div className="game-description pl-3">
+            <div className="game-description pl-3 pl-md-5 pr-md-5">
               <div className="mb-2 text-white font-22 font-Yeseva game-about">About</div>
               <div
                 className="text-white font-18 font-Josefin game-bio"

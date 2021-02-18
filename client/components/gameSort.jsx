@@ -24,14 +24,14 @@ export default class GameSort extends React.Component {
         </h3>
         <label
           htmlFor="platform"
-          className="d-block mr-2 mb-3 font-Josefin font-24 text-white platform-label"
+          className="d-block mr-2 ml-md-5 mb-3 font-Josefin font-24 text-white platform-label"
         >
           Platform:
         </label>
         <select
           name="platform"
           id="platform"
-          className="sort-select font-18 font-Josefin cursor-pointer text-white mb-3"
+          className="ml-md-5 sort-select font-18 font-Josefin cursor-pointer text-white mb-3"
           onChange={this.handleClick}
         >
           Platform:

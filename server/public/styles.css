@@ -349,12 +349,7 @@ body {
 
 @media (min-width: 768px) {
   .image-container {
-    /* width: 80% !important; */
     height: 240px;
-  }
-
-  .details {
-    /* width: 80%; */
   }
 
   .game-card {
@@ -383,13 +378,11 @@ body {
   }
 
   .logo {
-    padding-left: 8%;
     font-size: 32px;
   }
 
   .menu-icon {
     padding-left: 3%;
-    padding-right: 8%;
   }
 
   .search-img-container {
@@ -460,6 +453,10 @@ body {
     font-size: 24px;
   }
 
+  .review-text-area {
+    width: 88%;
+  }
+
   .review-card {
     font-size: 24px;
   }
@@ -486,13 +483,13 @@ body {
     margin-right: 5%;
   }
 
-  .platform-label {
+  /* .platform-label {
     margin-left: 8%;
-  }
+  } */
 
-  .sort-select {
+  /* .sort-select {
     margin-left: 8%;
-  }
+  } */
 
   .next-button {
     font-size: 28px;
@@ -510,4 +507,18 @@ body {
     width: 380px;
     height: 250px;
   }
+
+  .list-container {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .list-button-container {
+    width: 35%;
+  }
+
+  /* .game-description {
+    padding-left: 8% !important;
+    padding-right: 8%;
+  } */
 }
