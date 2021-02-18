@@ -55,7 +55,7 @@ export default class Navbar extends React.Component {
           <i className={this.state.input !== '' ? 'fas fa-times text-white search-close' : 'hide'} onClick={this.resetValue}></i>
           <a className={this.state.input !== '' ? 'hide' : 'col-4 col-md text-right menu-icon'}>
             <i
-              className="fas fa-bars text-white font-24 menu-icon2"
+              className="fas fa-bars text-white font-24 menu-icon2 cursor-pointer"
               onClick={this.handleClick}
             ></i>
           </a>
