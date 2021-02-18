@@ -100,7 +100,7 @@ export default class ProfileHome extends React.Component {
           </div>
           <ProfileReviews reviews={this.state.reviews} />
           <div
-            className="pr-2 mb-4 text-white text-center font-24 font-Yeseva"
+            className="pr-2 mb-4 text-white text-center font-24 font-Yeseva cursor-pointer"
             onClick={this.props.handleSignOut}
           >
             Sign Out

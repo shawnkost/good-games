@@ -69,7 +69,7 @@ export default class ProfileSignUp extends React.Component {
             className="profile-inputs password"
             onChange={this.handleChange}
           ></input>
-          <button className="text-white profile-buttons profile-button3 profile-sign-up">Sign Up</button>
+          <button className="text-white profile-buttons profile-button3 profile-sign-up cursor-pointer">Sign Up</button>
         </form>
       </div>
     );

@@ -236,12 +236,12 @@ export default class CreateGameDetails extends React.Component {
               </div>
             </div>
             <div className="text-center release-platform-container">
-              <div className="mr-2 mb-2 text-white text-center font-24 font-Yeseva">
+              <div className="mr-2 mb-2 text-white text-center font-24 font-Yeseva game-details-date">
                 {dayjs(this.props.gameDetails.released).format('MMM DD, YYYY')}
               </div>
               <CheckPlatform game={this.props.gameDetails} />
             </div>
-            <div className="mb-2 text-center text-white font-36 font-Yeseva">
+            <div className="mb-2 mb-lg-4 text-center text-white font-36 font-Yeseva game-details-name">
               {this.props.gameDetails.name}
             </div>
             <div className="scrolling-wrapper mb-4">
@@ -253,9 +253,9 @@ export default class CreateGameDetails extends React.Component {
               ></iframe>
               <CreateScrollingImages images={this.props.gamePhotos} />
             </div>
-            <div className="list-container">
+            <div className="list-container mb-lg-4">
               <div
-                className="ml-3 ml-md-5 mr-3 mr-md-5 mb-4 text-center text-white font-24 list-button-container"
+                className="ml-3 ml-md-5 mr-3 mr-md-5 mb-4 text-center text-white font-24 list-button-container cursor-pointer"
                 onClick={this.addPlayed}
               >
                 {this.state.gameList.length !== 0 &&
@@ -264,7 +264,7 @@ export default class CreateGameDetails extends React.Component {
                   : 'Add to Played'}
               </div>
               <div
-                className="ml-3 ml-md-5 mr-3 mr-md-5 mb-4 text-center text-white font-24 list-button-container"
+                className="ml-3 ml-md-5 mr-3 mr-md-5 mb-4 text-center text-white font-24 list-button-container cursor-pointer"
                 onClick={this.addWantToPlay}
               >
                 {this.state.gameList.length !== 0 &&
@@ -274,7 +274,7 @@ export default class CreateGameDetails extends React.Component {
               </div>
             </div>
             <div className="game-description pl-3 pl-md-5 pr-md-5">
-              <div className="mb-2 text-white font-22 font-Yeseva game-about">About</div>
+              <div className="mb-2 mb-lg-4 text-white font-22 font-Yeseva game-about">About</div>
               <div
                 className="text-white font-18 font-Josefin game-bio"
                 dangerouslySetInnerHTML={this.props.createDescription()}
