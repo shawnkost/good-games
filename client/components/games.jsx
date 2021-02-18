@@ -144,11 +144,11 @@ export default class Games extends React.Component {
     }
     return (
       <>
-        <div className="container-fluid">{gameList}</div>
+        <div className="container-fluid game-container">{gameList}</div>
         <div
           className={
             this.state.games.results
-              ? 'show text-white text-center mb-3 font-24 font-Yeseva'
+              ? 'show text-white text-center mb-3 font-24 font-Yeseva next-button'
               : 'hide'
           }
           onClick={this.nextRequest}

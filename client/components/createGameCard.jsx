@@ -8,7 +8,7 @@ import Nintendo from '../images/nintendo.png';
 export default class CreateGameCard extends React.Component {
   render() {
     return (
-      <div className="game-card mb-3">
+      <div className="game-card mb-3 mb-lg-5">
         <div className="w-100 image-container">
           <a href={`#game-details?gameId=${this.props.value.id}`}>
             <img

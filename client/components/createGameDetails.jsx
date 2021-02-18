@@ -221,7 +221,7 @@ export default class CreateGameDetails extends React.Component {
               onChange={this.props.onChange}
               updateValue={this.updateValue}
             />
-            <div className="mb-2 text-white text-center font-Yeseva font-16">
+            <div className="mb-2 text-white text-center font-Yeseva font-16 breadcrumbs">
               <a href="#" className="detail-links">
                 <span>Home /</span>
               </a>
@@ -247,11 +247,11 @@ export default class CreateGameDetails extends React.Component {
             <div className="scrolling-wrapper mb-4">
               <iframe
                 className="screenshot align-middle youtube-video"
-                width="264"
-                height="148"
+                // width="264"
+                // height="148"
                 frameBorder="0"
                 src={`https://www.youtube.com/embed/${this.props.youtubeURL}?autoplay=0&mute=0`}
-                allowFullScreen
+                allowFullScreen="true"
               ></iframe>
               <CreateScrollingImages images={this.props.gamePhotos} />
             </div>

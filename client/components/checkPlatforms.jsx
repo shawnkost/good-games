@@ -32,7 +32,7 @@ export default function CheckPlatform(props) {
             return null;
         }
         return (
-          <div className="platform-container" style={{ width: '7%' }} key={index}>
+          <div className="platform-container game-details-platforms" style={{ width: '7%' }} key={index}>
             <a href={platformURL} target="_blank" rel="noreferrer">
               <img src={platformImg} className="w-100"></img>
             </a>
