@@ -56,7 +56,7 @@ export default class CreateGameCard extends React.Component {
             <div className="pl-2 mb-2 font-weight-bold game-title">
               {this.props.value.name}
             </div>
-            <div className="pl-2 d-inline-block font-18">
+            <div className="pl-2 d-inline-block font-18 game-card-date">
               {'Release date: ' +
                 dayjs(this.props.value.released).format('MMM-DD-YYYY')}
             </div>

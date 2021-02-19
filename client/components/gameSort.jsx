@@ -35,13 +35,13 @@ export default class GameSort extends React.Component {
           onChange={this.handleClick}
         >
           Platform:
-          <option value="4" className="text-white font-18">
+          <option value="4" className="text-white font-18 cursor-pointer">
             PC
           </option>
-          <option value="7" className="text-white font-18">
+          <option value="7" className="text-white font-18 cursor-pointer">
             Switch
           </option>
-          <option value="186" className="text-white font-18">
+          <option value="186" className="text-white font-18 cursor-pointer">
             Xbox Series X
           </option>
           <option value="1" className="text-white font-18">

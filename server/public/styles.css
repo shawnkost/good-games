@@ -571,4 +571,79 @@ body {
   .profile-inputs {
     left: 35vh;
   }
+
+  .search-img-container {
+    width: 15%;
+    height: 120px;
+  }
+
+  .search-games {
+    font-size: 28px;
+  }
+
+  .search-close {
+    font-size: 28px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .game-card {
+    width: 28.5%;
+  }
+
+  .platform-container {
+    width: 10%;
+  }
+
+  .game-details-platforms {
+    width: 3% !important;
+  }
+
+  .review-text-area {
+    width: 92.3%;
+  }
+
+  .profile-buttons {
+    left: 47vh;
+  }
+
+  .profile-inputs {
+    left: 47vh;
+  }
+}
+
+@media (min-width: 1800px) {
+  .game-card {
+    width: 22%;
+  }
+
+  .game-details-platforms {
+    width: 2% !important;
+  }
+
+  .screenshot {
+    width: 500px;
+    height: 300px;
+  }
+
+  .list-button-container {
+    width: 30%;
+  }
+
+  .review-text-area {
+    width: 95.2%;
+  }
+
+  .menu-container {
+    width: 45%;
+    height: 65vh;
+  }
+
+  .profile-buttons {
+    left: 82vh;
+  }
+
+  .profile-inputs {
+    left: 82vh;
+  }
 }

@@ -55,14 +55,14 @@ export default class ProfileLogin extends React.Component {
         <form onSubmit={this.handleLogin}>
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Email: demo@games.com"
             name="email"
             className="profile-inputs email"
             onChange={this.handleChange}
           ></input>
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Password: password1"
             name="password"
             className="profile-inputs password"
             onChange={this.handleChange}
