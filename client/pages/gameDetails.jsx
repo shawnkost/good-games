@@ -66,19 +66,19 @@ export default class GameDetails extends React.Component {
   }
 
   grabYoutubeVideo() {
-    // if (this.state.gameDetails.slug) {
-    //   let youtubeSearch = this.state.gameDetails.slug.split('-').join('%20');
-    //   youtubeSearch = youtubeSearch + '%20Official%20Trailer';
-    //   fetch(
-    //     `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${youtubeSearch}&key=${APIKEY.GOOGLEAPI}`
-    //   )
-    //     .then(response => response.json())
-    //     .then(youtubeResults => {
-    //       this.setState({
-    //         youtubeURL: youtubeResults.items[0].id.videoId
-    //       });
-    //     });
-    // }
+    if (this.state.gameDetails.slug) {
+      let youtubeSearch = this.state.gameDetails.slug.split('-').join('%20');
+      youtubeSearch = youtubeSearch + '%20Official%20Trailer';
+      fetch(
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${youtubeSearch}&key=${APIKEY.GOOGLEAPI}`
+      )
+        .then(response => response.json())
+        .then(youtubeResults => {
+          this.setState({
+            youtubeURL: youtubeResults.items[0].id.videoId
+          });
+        });
+    }
   }
 
   sendUserReview(review) {
