@@ -1,5 +1,4 @@
 import React from 'react';
-import APIKEY from '../api.json';
 import Games from '../components/games';
 import GameSort from '../components/gameSort';
 import Menu from '../components/menu';
@@ -36,7 +35,7 @@ export default class Home extends React.Component {
 
   searchGames() {
     fetch(
-      `https://api.rawg.io/api/games?search=${this.state.searchInput}&key=${APIKEY.APIKEY}`
+      `https://api.rawg.io/api/games?search=${this.state.searchInput}&key=${process.env.API_KEY}`
     )
       .then(response => response.json())
       .then(games =>

@@ -1,5 +1,4 @@
 import React from 'react';
-import APIKEY from '../api.json';
 import Menu from '../components/menu';
 import CreateGameDetails from '../components/createGameDetails';
 import Loader from 'react-loader-spinner';
@@ -42,7 +41,7 @@ export default class GameDetails extends React.Component {
 
   grabGameDetails() {
     fetch(
-      `https://api.rawg.io/api/games/${this.props.gameId}?key=${APIKEY.APIKEY}`
+      `https://api.rawg.io/api/games/${this.props.gameId}?key=${process.env.API_KEY}`
     )
       .then(response => response.json())
       .then(gameDetails => {
@@ -55,7 +54,7 @@ export default class GameDetails extends React.Component {
 
   grabGamePhotos() {
     fetch(
-      `https://api.rawg.io/api/games/${this.props.gameId}/screenshots?key=${APIKEY.APIKEY}`
+      `https://api.rawg.io/api/games/${this.props.gameId}/screenshots?key=${process.env.API_KEY}`
     )
       .then(response => response.json())
       .then(gamePhotos =>
@@ -70,7 +69,7 @@ export default class GameDetails extends React.Component {
       let youtubeSearch = this.state.gameDetails.slug.split('-').join('%20');
       youtubeSearch = youtubeSearch + '%20Official%20Trailer';
       fetch(
-        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${youtubeSearch}&key=${APIKEY.GOOGLEAPI}`
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${youtubeSearch}&key=${process.env.GOOGLEAPI}`
       )
         .then(response => response.json())
         .then(youtubeResults => {

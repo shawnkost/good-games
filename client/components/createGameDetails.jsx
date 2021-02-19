@@ -6,7 +6,6 @@ import CheckPlatform from '../components/checkPlatforms';
 import WriteReview from './writeReview';
 import ShowReviews from './showReviews';
 import SearchResults from './searchResults';
-import APIKEY from '../api.json';
 
 export default class CreateGameDetails extends React.Component {
   constructor(props) {
@@ -198,7 +197,7 @@ export default class CreateGameDetails extends React.Component {
 
   searchGames() {
     fetch(
-      `https://api.rawg.io/api/games?search=${this.state.searchInput}&key=${APIKEY.APIKEY}`
+      `https://api.rawg.io/api/games?search=${this.state.searchInput}&key=${process.env.API_KEY}`
     )
       .then(response => response.json())
       .then(games =>
