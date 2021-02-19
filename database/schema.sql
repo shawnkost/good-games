@@ -3,7 +3,7 @@ CREATE TABLE "users" (
 	"username" TEXT NOT NULL,
 	"email" TEXT NOT NULL,
 	"password" TEXT NOT NULL,
-	"createdAt" TIMESTAMP NOT NULL,
+	"createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
 	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
 ) WITH (
   OIDS=FALSE
@@ -14,10 +14,10 @@ CREATE TABLE "users" (
 CREATE TABLE "reviews" (
 	"reviewId" serial NOT NULL,
 	"gameId" integer NOT NULL,
-	"gameDetails" TEXT NOT NULL,
+	"gameTitle" TEXT NOT NULL,
 	"details" TEXT NOT NULL,
 	"userId" integer NOT NULL,
-	"createdAt" TIMESTAMP NOT NULL,
+	"createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
 	CONSTRAINT "reviews_pk" PRIMARY KEY ("reviewId")
 ) WITH (
   OIDS=FALSE
