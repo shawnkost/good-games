@@ -1,26 +1,20 @@
 import React from 'react';
+import Redirect from '../components/redirect';
 import ProfileBackground from '../images/profile-background.png';
 
-export default class ProfileSignUp extends React.Component {
+export default class ProfileLoginDemo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      email: '',
-      password: ''
+      email: 'demo@goodgames.com',
+      password: 'password1'
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSignUp = this.handleSignUp.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
-  handleChange(event) {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
-  }
-
-  handleSignUp(event) {
+  handleLogin(event) {
     event.preventDefault();
-    fetch('/api/auth/sign-up', {
+    fetch('/api/auth/sign-in', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -28,12 +22,14 @@ export default class ProfileSignUp extends React.Component {
       body: JSON.stringify(this.state)
     })
       .then(response => response.json())
-      .then(result => {
-        window.location.hash = 'profile-login';
-      });
+      .then(result => this.props.handleSignIn(result));
   }
 
   render() {
+    if (this.props.user) {
+      return <Redirect to="profile-home" />;
+    }
+
     return (
       <div
         className="profile-login-container"
@@ -47,29 +43,24 @@ export default class ProfileSignUp extends React.Component {
             GoodGames
           </div>
         </a>
-        <form onSubmit={this.handleSignUp}>
-          <input
-            type="text"
-            placeholder="Username"
-            name="username"
-            className="profile-inputs username-sign-up"
-            onChange={this.handleChange}
-          ></input>
+        <form onSubmit={this.handleLogin}>
           <input
             type="email"
-            placeholder="Email Address"
             name="email"
             className="profile-inputs email"
-            onChange={this.handleChange}
+            readOnly="readonly"
+            value={this.state.email}
           ></input>
           <input
             type="password"
-            placeholder="Password"
             name="password"
             className="profile-inputs password"
-            onChange={this.handleChange}
+            readOnly="readonly"
+            value={this.state.password}
           ></input>
-          <button className="text-white profile-buttons profile-button3 profile-sign-up cursor-pointer">Sign Up</button>
+          <button className="text-white profile-buttons profile-button3 cursor-pointer">
+            Login
+          </button>
         </form>
       </div>
     );

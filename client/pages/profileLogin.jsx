@@ -59,6 +59,7 @@ export default class ProfileLogin extends React.Component {
             name="email"
             className="profile-inputs email"
             onChange={this.handleChange}
+            value={this.state.email}
           ></input>
           <input
             type="password"
@@ -66,8 +67,11 @@ export default class ProfileLogin extends React.Component {
             name="password"
             className="profile-inputs password"
             onChange={this.handleChange}
+            value={this.state.password}
           ></input>
-          <button className="text-white profile-buttons profile-button3">Login</button>
+          <button className="text-white profile-buttons profile-button3 cursor-pointer">
+            Login
+          </button>
         </form>
       </div>
     );

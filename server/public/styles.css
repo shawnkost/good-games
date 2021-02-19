@@ -1,3 +1,23 @@
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #151515;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 body {
   background-color: #151515;
 }
@@ -237,6 +257,10 @@ body {
   top: 200px;
 }
 
+.demo-user {
+  top: 215px;
+}
+
 .profile-button3 {
   top: 240px;
 }
@@ -290,7 +314,7 @@ body {
   }
 
   .profile-buttons {
-    left: 50vh;
+    left: 27%;
   }
 
   .profile-button1 {
@@ -301,12 +325,16 @@ body {
     top: 100px;
   }
 
+  .demo-user {
+    top: 140px;
+  }
+
   .profile-button3 {
     top: 115px;
   }
 
   .profile-inputs {
-    left: 50vh;
+    left: 27%;
     display: block;
   }
 
@@ -329,15 +357,11 @@ body {
 
 @media (min-width: 768px) {
   .image-container {
-    width: 80% !important;
     height: 240px;
   }
 
-  .details {
-    width: 80%;
-  }
-
   .game-card {
+    width: 65%;
     margin-left: 18%;
   }
 
@@ -362,13 +386,11 @@ body {
   }
 
   .logo {
-    padding-left: 8%;
     font-size: 32px;
   }
 
   .menu-icon {
     padding-left: 3%;
-    padding-right: 8%;
   }
 
   .search-img-container {
@@ -402,7 +424,7 @@ body {
 
   .profile-inputs {
     font-size: 24px;
-    left: 31vh;
+    left: 31%;
   }
 
   .profile-text {
@@ -424,7 +446,7 @@ body {
 
   .profile-buttons {
     font-size: 24px;
-    left: 31vh;
+    left: 31%;
   }
 
   .profile-button3 {
@@ -439,6 +461,10 @@ body {
     font-size: 24px;
   }
 
+  .review-text-area {
+    width: 88%;
+  }
+
   .review-card {
     font-size: 24px;
   }
@@ -449,5 +475,183 @@ body {
 
   .game-title {
     font-size: 30px;
+  }
+}
+
+@media (min-width: 992px) {
+  .heading-text {
+    font-size: 48px;
+  }
+
+  .game-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .game-card {
+    width: 43%;
+  }
+
+  .next-button {
+    font-size: 28px;
+  }
+
+  .breadcrumbs {
+    font-size: 22px;
+  }
+
+  .release-platform-container {
+    margin-bottom: 2%;
+  }
+
+  .game-details-platforms {
+    width: 4% !important;
+  }
+
+  .screenshot {
+    width: 380px;
+    height: 250px;
+  }
+
+  .list-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .list-button-container {
+    font-size: 28px;
+    width: 35%;
+  }
+
+  .game-details-name {
+    font-size: 48px;
+  }
+
+  .game-about {
+    font-size: 42px;
+  }
+
+  .game-bio {
+    font-size: 32px;
+  }
+
+  .game-details-date {
+    font-size: 32px;
+  }
+
+  .write-review {
+    font-size: 28px;
+  }
+
+  .review-button {
+    font-size: 24px;
+  }
+
+  .review-text-area {
+    font-size: 28px;
+    width: 90.5%;
+  }
+
+  .review-username {
+    font-size: 28px;
+  }
+
+  .review-card {
+    font-size: 24px;
+  }
+
+  .menu-container {
+    height: 60vh;
+  }
+
+  .close-menu {
+    font-size: 36px;
+  }
+
+  .menu-items {
+    font-size: 42px;
+  }
+
+  .profile-buttons {
+    left: 35%;
+  }
+
+  .profile-inputs {
+    left: 35%;
+  }
+
+  .search-img-container {
+    width: 15%;
+    height: 120px;
+  }
+
+  .search-games {
+    font-size: 28px;
+  }
+
+  .search-close {
+    font-size: 28px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .game-card {
+    width: 28.5%;
+  }
+
+  .platform-container {
+    width: 10%;
+  }
+
+  .game-details-platforms {
+    width: 3% !important;
+  }
+
+  .review-text-area {
+    width: 92.3%;
+  }
+
+  .profile-buttons {
+    left: 47%;
+  }
+
+  .profile-inputs {
+    left: 47%;
+  }
+}
+
+@media (min-width: 1800px) {
+  .game-card {
+    width: 22%;
+  }
+
+  .game-details-platforms {
+    width: 2% !important;
+  }
+
+  .screenshot {
+    width: 500px;
+    height: 300px;
+  }
+
+  .list-button-container {
+    width: 30%;
+  }
+
+  .review-text-area {
+    width: 95.2%;
+  }
+
+  .menu-container {
+    width: 45%;
+    height: 65vh;
+  }
+
+  .profile-buttons {
+    left: 42%;
+  }
+
+  .profile-inputs {
+    left: 42%;
   }
 }

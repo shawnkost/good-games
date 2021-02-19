@@ -8,7 +8,7 @@ import Nintendo from '../images/nintendo.png';
 export default class CreateGameCard extends React.Component {
   render() {
     return (
-      <div className="game-card mb-3">
+      <div className="game-card ml-lg-5 mb-3 mb-lg-5">
         <div className="w-100 image-container">
           <a href={`#game-details?gameId=${this.props.value.id}`}>
             <img
@@ -56,7 +56,7 @@ export default class CreateGameCard extends React.Component {
             <div className="pl-2 mb-2 font-weight-bold game-title">
               {this.props.value.name}
             </div>
-            <div className="pl-2 d-inline-block font-18">
+            <div className="pl-2 d-inline-block font-18 game-card-date">
               {'Release date: ' +
                 dayjs(this.props.value.released).format('MMM-DD-YYYY')}
             </div>

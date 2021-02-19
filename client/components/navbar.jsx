@@ -35,7 +35,7 @@ export default class Navbar extends React.Component {
         <div className="row py-2 align-items-center font-Yeseva">
           <a
             href="#"
-            className={this.state.input !== '' ? 'hide' : 'col-4 col-md text-white font-24 logo'}
+            className={this.state.input !== '' ? 'hide' : 'col-4 col-md pl-md-5 text-white font-24 logo'}
           >
             GG
           </a>
@@ -52,8 +52,8 @@ export default class Navbar extends React.Component {
             }
             onChange={this.updateValue}
           ></input>
-          <i className={this.state.input !== '' ? 'fas fa-times text-white search-close' : 'hide'} onClick={this.resetValue}></i>
-          <a className={this.state.input !== '' ? 'hide' : 'col-4 col-md text-right menu-icon'}>
+          <i className={this.state.input !== '' ? 'fas fa-times text-white search-close cursor-pointer' : 'hide'} onClick={this.resetValue}></i>
+          <a className={this.state.input !== '' ? 'hide' : 'col-4 col-md pr-md-5 text-right menu-icon'}>
             <i
               className="fas fa-bars text-white font-24 menu-icon2 cursor-pointer"
               onClick={this.handleClick}

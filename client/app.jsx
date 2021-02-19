@@ -6,6 +6,7 @@ import UpcomingGames from './pages/upcomingGames';
 import GameDetails from './pages/gameDetails';
 import Profile from './pages/profile';
 import ProfileLogin from './pages/profileLogin';
+import ProfileLoginDemo from './pages/profileLoginDemo';
 import ProfileSignUp from './pages/profileSignUp';
 import decodeToken from './lib/decode-token';
 import ProfileHome from './pages/profileHome';
@@ -137,6 +138,11 @@ export default class App extends React.Component {
     if (path === 'profile-login') {
       return (
         <ProfileLogin handleSignIn={this.handleSignIn} user={this.state.user} />
+      );
+    }
+    if (path === 'profile-login-demo') {
+      return (
+        <ProfileLoginDemo handleSignIn={this.handleSignIn} user={this.state.user} />
       );
     }
     if (path === 'profile-sign-up') {
