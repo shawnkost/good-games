@@ -29,6 +29,11 @@ export default function Profile(props) {
           <button className="profile-buttons profile-button2 cursor-pointer text-white">Login</button>
         </a>
       </div>
+      <div className="input-container">
+        <a href="#profile-login-demo">
+          <button className="profile-buttons demo-user cursor-pointer text-white">Demo User</button>
+        </a>
+      </div>
     </div>
   );
 }

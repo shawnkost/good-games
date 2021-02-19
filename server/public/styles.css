@@ -257,6 +257,10 @@ body {
   top: 200px;
 }
 
+.demo-user {
+  top: 215px;
+}
+
 .profile-button3 {
   top: 240px;
 }
@@ -310,7 +314,7 @@ body {
   }
 
   .profile-buttons {
-    left: 50vh;
+    left: 27%;
   }
 
   .profile-button1 {
@@ -321,12 +325,16 @@ body {
     top: 100px;
   }
 
+  .demo-user {
+    top: 140px;
+  }
+
   .profile-button3 {
     top: 115px;
   }
 
   .profile-inputs {
-    left: 50vh;
+    left: 27%;
     display: block;
   }
 
@@ -416,7 +424,7 @@ body {
 
   .profile-inputs {
     font-size: 24px;
-    left: 31vh;
+    left: 31%;
   }
 
   .profile-text {
@@ -438,7 +446,7 @@ body {
 
   .profile-buttons {
     font-size: 24px;
-    left: 31vh;
+    left: 31%;
   }
 
   .profile-button3 {
@@ -565,11 +573,11 @@ body {
   }
 
   .profile-buttons {
-    left: 35vh;
+    left: 35%;
   }
 
   .profile-inputs {
-    left: 35vh;
+    left: 35%;
   }
 
   .search-img-container {
@@ -604,11 +612,11 @@ body {
   }
 
   .profile-buttons {
-    left: 47vh;
+    left: 47%;
   }
 
   .profile-inputs {
-    left: 47vh;
+    left: 47%;
   }
 }
 
@@ -640,10 +648,10 @@ body {
   }
 
   .profile-buttons {
-    left: 82vh;
+    left: 42%;
   }
 
   .profile-inputs {
-    left: 82vh;
+    left: 42%;
   }
 }
