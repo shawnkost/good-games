@@ -4,7 +4,6 @@ import Navbar from '../components/navbar';
 import ProfileReviews from '../components/profileReviews';
 import Menu from '../components/menu';
 import SearchResults from '../components/searchResults';
-import APIKEY from '../api.json';
 
 export default class ProfileHome extends React.Component {
   constructor(props) {
@@ -51,7 +50,7 @@ export default class ProfileHome extends React.Component {
 
   searchGames() {
     fetch(
-      `https://api.rawg.io/api/games?search=${this.state.searchInput}&key=${APIKEY.APIKEY}`
+      `https://api.rawg.io/api/games?search=${this.state.searchInput}&key=${process.env.API_KEY}`
     )
       .then(response => response.json())
       .then(games =>
