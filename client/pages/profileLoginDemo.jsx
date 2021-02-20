@@ -38,30 +38,36 @@ export default class ProfileLoginDemo extends React.Component {
           backgroundSize: 'cover'
         }}
       >
-        <a href="#">
-          <div className="text-white text-center font-32 font-Yeseva profile-text">
-            GoodGames
-          </div>
-        </a>
-        <form onSubmit={this.handleLogin}>
-          <input
-            type="email"
-            name="email"
-            className="profile-inputs email"
-            readOnly="readonly"
-            value={this.state.email}
-          ></input>
-          <input
-            type="password"
-            name="password"
-            className="profile-inputs password"
-            readOnly="readonly"
-            value={this.state.password}
-          ></input>
-          <button className="text-white profile-buttons profile-button3 cursor-pointer">
-            Login
-          </button>
-        </form>
+        <div className="container text-center">
+          <a href="#">
+            <div className="mb-5 text-white text-center font-32 font-Yeseva profile-text">
+              GoodGames
+            </div>
+          </a>
+          <form onSubmit={this.handleLogin}>
+            <div>
+              <input
+                type="email"
+                name="email"
+                className="mb-3 profile-inputs email"
+                readOnly="readonly"
+                value={this.state.email}
+              ></input>
+            </div>
+            <div>
+              <input
+                type="password"
+                name="password"
+                className="mb-3 profile-inputs password"
+                readOnly="readonly"
+                value={this.state.password}
+              ></input>
+            </div>
+            <button className="text-white profile-buttons cursor-pointer">
+              Login
+            </button>
+          </form>
+        </div>
       </div>
     );
   }

@@ -42,35 +42,45 @@ export default class ProfileSignUp extends React.Component {
           backgroundSize: 'cover'
         }}
       >
-        <a href="#">
-          <div className="text-white text-center font-32 font-Yeseva profile-text">
-            GoodGames
-          </div>
-        </a>
-        <form onSubmit={this.handleSignUp}>
-          <input
-            type="text"
-            placeholder="Username"
-            name="username"
-            className="profile-inputs username-sign-up"
-            onChange={this.handleChange}
-          ></input>
-          <input
-            type="email"
-            placeholder="Email Address"
-            name="email"
-            className="profile-inputs email"
-            onChange={this.handleChange}
-          ></input>
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            className="profile-inputs password"
-            onChange={this.handleChange}
-          ></input>
-          <button className="text-white profile-buttons profile-button3 profile-sign-up cursor-pointer">Sign Up</button>
-        </form>
+        <div className="container text-center">
+          <a href="#">
+            <div className="mb-5 text-white text-center font-32 font-Yeseva profile-text">
+              GoodGames
+            </div>
+          </a>
+          <form onSubmit={this.handleSignUp}>
+            <div>
+              <input
+                type="text"
+                placeholder="Username"
+                name="username"
+                className="mb-3 profile-inputs username-sign-up"
+                onChange={this.handleChange}
+              ></input>
+            </div>
+            <div>
+              <input
+                type="email"
+                placeholder="Email Address"
+                name="email"
+                className="mb-3 profile-inputs email"
+                onChange={this.handleChange}
+              ></input>
+            </div>
+            <div>
+              <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                className="mb-3 profile-inputs password"
+                onChange={this.handleChange}
+              ></input>
+            </div>
+            <button className="text-white profile-buttons profile-button3 profile-sign-up cursor-pointer">
+              Sign Up
+            </button>
+          </form>
+        </div>
       </div>
     );
   }

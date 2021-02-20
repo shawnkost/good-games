@@ -238,53 +238,19 @@ body {
 }
 
 .profile-buttons {
-  position: relative;
-  padding-left: 10px;
   width: 309px;
   height: 46px;
-  left: 33px;
   border: 2px solid white;
   background-color: transparent;
   border-radius: 10px;
   outline: none;
 }
 
-.profile-button1 {
-  top: 185px;
-}
-
-.profile-button2 {
-  top: 200px;
-}
-
-.demo-user {
-  top: 215px;
-}
-
-.profile-button3 {
-  top: 240px;
-}
-
 .profile-inputs {
-  position: relative;
-  padding-left: 10px;
   width: 309px;
   height: 46px;
-  left: 33px;
   border-radius: 10px;
   outline: none;
-}
-
-.username-sign-up {
-  top: 185px;
-}
-
-.email {
-  top: 200px;
-}
-
-.password {
-  top: 220px;
 }
 
 .profile-login-container {
@@ -307,51 +273,6 @@ body {
 
   .review-submit {
     padding-right: 2.5rem !important;
-  }
-
-  .profile-text {
-    padding-top: 5%;
-  }
-
-  .profile-buttons {
-    left: 27%;
-  }
-
-  .profile-button1 {
-    top: 60px;
-  }
-
-  .profile-button2 {
-    top: 100px;
-  }
-
-  .demo-user {
-    top: 140px;
-  }
-
-  .profile-button3 {
-    top: 115px;
-  }
-
-  .profile-inputs {
-    left: 27%;
-    display: block;
-  }
-
-  .email {
-    top: 55px;
-  }
-
-  .password {
-    top: 80px;
-  }
-
-  .username-sign-up {
-    top: 30px;
-  }
-
-  .profile-sign-up {
-    top: 95px;
   }
 }
 
@@ -424,33 +345,14 @@ body {
 
   .profile-inputs {
     font-size: 24px;
-    left: 31%;
   }
 
   .profile-text {
-    padding-top: 20%;
     font-size: 42px;
-  }
-
-  .email {
-    top: 170px;
-  }
-
-  .password {
-    top: 205px;
-  }
-
-  .username-sign-up {
-    top: 135px;
   }
 
   .profile-buttons {
     font-size: 24px;
-    left: 31%;
-  }
-
-  .profile-button3 {
-    top: 240px;
   }
 
   .profile-game-title {
@@ -572,14 +474,6 @@ body {
     font-size: 42px;
   }
 
-  .profile-buttons {
-    left: 35%;
-  }
-
-  .profile-inputs {
-    left: 35%;
-  }
-
   .search-img-container {
     width: 15%;
     height: 120px;
@@ -610,14 +504,6 @@ body {
   .review-text-area {
     width: 92.3%;
   }
-
-  .profile-buttons {
-    left: 47%;
-  }
-
-  .profile-inputs {
-    left: 47%;
-  }
 }
 
 @media (min-width: 1800px) {
@@ -645,13 +531,5 @@ body {
   .menu-container {
     width: 45%;
     height: 65vh;
-  }
-
-  .profile-buttons {
-    left: 42%;
-  }
-
-  .profile-inputs {
-    left: 42%;
   }
 }

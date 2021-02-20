@@ -16,23 +16,33 @@ export default function Profile(props) {
         backgroundSize: 'cover'
       }}
     >
-      <a href="#">
-        <div className="text-white text-center font-32 font-Yeseva profile-text">GoodGames</div>
-      </a>
-      <div className="input-container">
-        <a href="#profile-sign-up">
-          <button className="profile-buttons profile-button1 cursor-pointer text-white">Create Account</button>
+      <div className="container text-center">
+        <a href="#">
+          <div className="mb-5 text-white text-center font-32 font-Yeseva profile-text">
+            GoodGames
+          </div>
         </a>
-      </div>
-      <div className="input-container">
-        <a href="#profile-login">
-          <button className="profile-buttons profile-button2 cursor-pointer text-white">Login</button>
-        </a>
-      </div>
-      <div className="input-container">
-        <a href="#profile-login-demo">
-          <button className="profile-buttons demo-user cursor-pointer text-white">Demo User</button>
-        </a>
+        <div className="input-container mb-3">
+          <a href="#profile-sign-up">
+            <button className="profile-buttons cursor-pointer text-white">
+              Create Account
+            </button>
+          </a>
+        </div>
+        <div className="input-container mb-3">
+          <a href="#profile-login">
+            <button className="profile-buttons cursor-pointer text-white">
+              Login
+            </button>
+          </a>
+        </div>
+        <div className="input-container mb-3">
+          <a href="#profile-login-demo">
+            <button className="profile-buttons demo-user cursor-pointer text-white">
+              Demo User
+            </button>
+          </a>
+        </div>
       </div>
     </div>
   );
