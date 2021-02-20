@@ -1,10 +1,6 @@
 import React from 'react';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import CreateGameCard from './createGameCard';
 import Loader from 'react-loader-spinner';
-
-dayjs.extend(relativeTime);
 
 export default class Games extends React.Component {
   constructor(props) {
@@ -12,9 +8,6 @@ export default class Games extends React.Component {
     this.state = {
       games: []
     };
-    this.todaysDate = dayjs().format('YYYY-MM-DD');
-    this.ninetyDaysAgo = dayjs().subtract(90, 'days').format('YYYY-MM-DD');
-    this.oneYearFromNow = dayjs().add(365, 'days').format('YYYY-MM-DD');
     this.mostPopularGames = this.mostPopularGames.bind(this);
     this.newlyReleasedGames = this.newlyReleasedGames.bind(this);
     this.upcomingGames = this.upcomingGames.bind(this);
@@ -62,9 +55,7 @@ export default class Games extends React.Component {
   }
 
   mostPopularGames() {
-    fetch(
-      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=2016-01-01,${this.todaysDate}&metacritic=10,100&ordering=-metacritic&key=${process.env.API_KEY}`
-    )
+    fetch(`/api/mostPopular/${this.props.platform}`)
       .then(response => response.json())
       .then(games =>
         this.setState({
@@ -74,9 +65,7 @@ export default class Games extends React.Component {
   }
 
   newlyReleasedGames() {
-    fetch(
-      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.ninetyDaysAgo},${this.todaysDate}&metacritic=1,100&ordering=-released&key=${process.env.API_KEY}`
-    )
+    fetch(`/api/newReleases/${this.props.platform}`)
       .then(response => response.json())
       .then(games =>
         this.setState({
@@ -86,9 +75,7 @@ export default class Games extends React.Component {
   }
 
   upcomingGames() {
-    fetch(
-      `https://api.rawg.io/api/games?platforms=${this.props.platform}&dates=${this.todaysDate},${this.oneYearFromNow}&ordering=released&key=${process.env.API_KEY}`
-    )
+    fetch(`/api/upcomingGames/${this.props.platform}`)
       .then(response => response.json())
       .then(games =>
         this.setState({
@@ -99,10 +86,12 @@ export default class Games extends React.Component {
 
   nextRequest() {
     if (this.state.games.next !== null) {
+      const nextURL = this.state.games.next.slice(8);
+      const encodedURL = encodeURIComponent(nextURL);
       this.setState({
         games: []
       });
-      fetch(`${this.state.games.next}`)
+      fetch(`/api/nextPage?url=${encodedURL}`)
         .then(response => response.json())
         .then(games => {
           this.setState({
