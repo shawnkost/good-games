@@ -47,32 +47,38 @@ export default class ProfileLogin extends React.Component {
           backgroundSize: 'cover'
         }}
       >
-        <a href="#">
-          <div className="text-white text-center font-32 font-Yeseva profile-text">
-            GoodGames
-          </div>
-        </a>
-        <form onSubmit={this.handleLogin}>
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            className="profile-inputs email"
-            onChange={this.handleChange}
-            value={this.state.email}
-          ></input>
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            className="profile-inputs password"
-            onChange={this.handleChange}
-            value={this.state.password}
-          ></input>
-          <button className="text-white profile-buttons profile-button3 cursor-pointer">
-            Login
-          </button>
-        </form>
+        <div className="container text-center">
+          <a href="#">
+            <div className="mb-5 text-white text-center font-32 font-Yeseva profile-text">
+              GoodGames
+            </div>
+          </a>
+          <form onSubmit={this.handleLogin}>
+            <div>
+              <input
+                type="email"
+                placeholder="Email"
+                name="email"
+                className="mb-3 profile-inputs email"
+                onChange={this.handleChange}
+                value={this.state.email}
+              ></input>
+            </div>
+            <div>
+              <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                className="mb-3 profile-inputs password"
+                onChange={this.handleChange}
+                value={this.state.password}
+              ></input>
+            </div>
+            <button className="text-white profile-buttons cursor-pointer">
+              Login
+            </button>
+          </form>
+        </div>
       </div>
     );
   }
