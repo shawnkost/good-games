@@ -35,7 +35,7 @@ export default class Home extends React.Component {
 
   searchGames() {
     fetch(
-      `https://api.rawg.io/api/games?search=${this.state.searchInput}&key=${process.env.API_KEY}`
+      `/api/searchGames/${this.state.searchInput}`
     )
       .then(response => response.json())
       .then(games =>

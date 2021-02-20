@@ -7,6 +7,10 @@ const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const dayjs = require('dayjs');
+const todaysDate = dayjs().format('YYYY-MM-DD');
+const ninetyDaysAgo = dayjs().subtract(90, 'days').format('YYYY-MM-DD');
+const oneYearFromNow = dayjs().add(365, 'days').format('YYYY-MM-DD');
+const fetch = require('node-fetch');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL
@@ -17,6 +21,86 @@ const app = express();
 app.use(express.json());
 
 app.use(staticMiddleware);
+
+app.get('/api/mostPopular/:platform', (req, res, next) => {
+  const platform = req.params.platform;
+  fetch(
+    `https://api.rawg.io/api/games?platforms=${platform}&dates=2016-01-01,${todaysDate}&metacritic=10,100&ordering=-metacritic&key=${process.env.API_KEY}`
+  )
+    .then(response => response.json())
+    .then(data => res.send(data))
+    .catch(err => next(err));
+});
+
+app.get('/api/newReleases/:platform', (req, res, next) => {
+  const platform = req.params.platform;
+  fetch(
+    `https://api.rawg.io/api/games?platforms=${platform}&dates=${ninetyDaysAgo},${todaysDate}&metacritic=1,100&ordering=-released&key=${process.env.API_KEY}`
+  )
+    .then(response => response.json())
+    .then(data => res.send(data))
+    .catch(err => next(err));
+});
+
+app.get('/api/upcomingGames/:platform', (req, res, next) => {
+  const platform = req.params.platform;
+  fetch(
+    `https://api.rawg.io/api/games?platforms=${platform}&dates=${todaysDate},${oneYearFromNow}&ordering=released&key=${process.env.API_KEY}`
+  )
+    .then(response => response.json())
+    .then(data => res.send(data))
+    .catch(err => next(err));
+});
+
+app.get('/api/nextPage', (req, res, next) => {
+  const request = req.query.url;
+  fetch(
+    `https://${request}`
+  )
+    .then(response => response.json())
+    .then(data => res.send(data))
+    .catch(err => next(err));
+});
+
+app.get('/api/gameDetails/:gameId', (req, res, next) => {
+  const gameId = req.params.gameId;
+  fetch(
+    `https://api.rawg.io/api/games/${gameId}?key=${process.env.API_KEY}`
+  )
+    .then(response => response.json())
+    .then(data => res.send(data))
+    .catch(err => next(err));
+});
+
+app.get('/api/gamePhotos/:gameId', (req, res, next) => {
+  const gameId = req.params.gameId;
+  fetch(
+    `https://api.rawg.io/api/games/${gameId}/screenshots?key=${process.env.API_KEY}`
+  )
+    .then(response => response.json())
+    .then(data => res.send(data))
+    .catch(err => next(err));
+});
+
+app.get('/api/youtubeVideo/:gameTitle', (req, res, next) => {
+  const gameTitle = req.params.gameTitle;
+  fetch(
+    `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${gameTitle}&key=${process.env.GOOGLEAPI}`
+  )
+    .then(response => response.json())
+    .then(data => res.send(data))
+    .catch(err => next(err));
+});
+
+app.get('/api/searchGames/:searchInput', (req, res, next) => {
+  const searchInput = req.params.searchInput;
+  fetch(
+    `https://api.rawg.io/api/games?search=${searchInput}&key=${process.env.API_KEY}`
+  )
+    .then(response => response.json())
+    .then(data => res.send(data))
+    .catch(err => next(err));
+});
 
 app.get('/api/games/gameList/:gameId/:userId', (req, res, next) => {
   const userId = req.params.userId;
