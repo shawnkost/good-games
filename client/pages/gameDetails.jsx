@@ -40,9 +40,7 @@ export default class GameDetails extends React.Component {
   }
 
   grabGameDetails() {
-    fetch(
-      `https://api.rawg.io/api/games/${this.props.gameId}?key=${process.env.API_KEY}`
-    )
+    fetch(`/api/gameDetails/${this.props.gameId}`)
       .then(response => response.json())
       .then(gameDetails => {
         this.setState({
@@ -53,15 +51,13 @@ export default class GameDetails extends React.Component {
   }
 
   grabGamePhotos() {
-    fetch(
-      `https://api.rawg.io/api/games/${this.props.gameId}/screenshots?key=${process.env.API_KEY}`
-    )
+    fetch(`/api/gamePhotos/${this.props.gameId}`)
       .then(response => response.json())
-      .then(gamePhotos =>
+      .then(gamePhotos => {
         this.setState({
           gamePhotos
-        })
-      );
+        });
+      });
   }
 
   grabYoutubeVideo() {
@@ -69,7 +65,7 @@ export default class GameDetails extends React.Component {
       let youtubeSearch = this.state.gameDetails.slug.split('-').join('%20');
       youtubeSearch = youtubeSearch + '%20Official%20Trailer';
       fetch(
-        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${youtubeSearch}&key=${process.env.GOOGLEAPI}`
+        `/api/youtubeVideo/${youtubeSearch}`
       )
         .then(response => response.json())
         .then(youtubeResults => {

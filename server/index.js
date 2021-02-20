@@ -62,6 +62,46 @@ app.get('/api/nextPage', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/gameDetails/:gameId', (req, res, next) => {
+  const gameId = req.params.gameId;
+  fetch(
+    `https://api.rawg.io/api/games/${gameId}?key=${process.env.API_KEY}`
+  )
+    .then(response => response.json())
+    .then(data => res.send(data))
+    .catch(err => next(err));
+});
+
+app.get('/api/gamePhotos/:gameId', (req, res, next) => {
+  const gameId = req.params.gameId;
+  fetch(
+    `https://api.rawg.io/api/games/${gameId}/screenshots?key=${process.env.API_KEY}`
+  )
+    .then(response => response.json())
+    .then(data => res.send(data))
+    .catch(err => next(err));
+});
+
+app.get('/api/youtubeVideo/:gameTitle', (req, res, next) => {
+  const gameTitle = req.params.gameTitle;
+  fetch(
+    `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${gameTitle}&key=${process.env.GOOGLEAPI}`
+  )
+    .then(response => response.json())
+    .then(data => res.send(data))
+    .catch(err => next(err));
+});
+
+app.get('/api/searchGames/:searchInput', (req, res, next) => {
+  const searchInput = req.params.searchInput;
+  fetch(
+    `https://api.rawg.io/api/games?search=${searchInput}&key=${process.env.API_KEY}`
+  )
+    .then(response => response.json())
+    .then(data => res.send(data))
+    .catch(err => next(err));
+});
+
 app.get('/api/games/gameList/:gameId/:userId', (req, res, next) => {
   const userId = req.params.userId;
   const gameId = req.params.gameId;
