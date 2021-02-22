@@ -161,7 +161,7 @@ export default class App extends React.Component {
       );
     }
     if (path === 'contact-me') {
-      return <ContactMe />;
+      return <ContactMe onChange={this.openMenu} click={this.closeMenu} menuClicked={this.state.menuClicked}/>;
     }
   }
 

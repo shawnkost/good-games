@@ -262,6 +262,23 @@ body {
   border-radius: 0 15px 15px 15px;
 }
 
+.page-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.avatar-container {
+  margin-top: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 25%;
+  height: 15%;
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
 @media (min-width: 576px) {
   .menu-container {
     height: 94vh;

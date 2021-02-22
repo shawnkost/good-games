@@ -13,6 +13,7 @@ export default class ProfileHome extends React.Component {
       searchInput: '',
       games: ''
     };
+    this.timeoutId = '';
     this.grabUserReviews = this.grabUserReviews.bind(this);
     this.updateValue = this.updateValue.bind(this);
     this.searchGames = this.searchGames.bind(this);
