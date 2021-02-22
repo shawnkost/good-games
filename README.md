@@ -2,7 +2,7 @@
 
 A web application for users to find new games to play, leave reviews for those games, and add games to their list.
 
-[Link to live demo](good-games-project.herokuapp.com)
+[Link to live demo](https://good-games-project.herokuapp.com/#)
 
 ## Current Features
 * User can view most popular games
