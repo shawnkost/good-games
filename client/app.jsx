@@ -10,6 +10,7 @@ import ProfileLoginDemo from './pages/profileLoginDemo';
 import ProfileSignUp from './pages/profileSignUp';
 import decodeToken from './lib/decode-token';
 import ProfileHome from './pages/profileHome';
+import ContactMe from './pages/contactMe';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -158,6 +159,9 @@ export default class App extends React.Component {
           handleSignOut={this.handleSignOut}
         />
       );
+    }
+    if (path === 'contact-me') {
+      return <ContactMe />;
     }
   }
 
