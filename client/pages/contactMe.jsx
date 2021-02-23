@@ -39,7 +39,7 @@ export default class ContactMe extends React.Component {
     if (this.state.searchInput !== '') {
       return (
         <>
-          <div className={this.props.menuClicked ? 'blur-container' : ''}>
+          <div className={this.props.menuClicked ? 'blur-container' : 'page-container'}>
             <Navbar
               onChange={this.props.onChange}
               updateValue={this.updateValue}
@@ -61,15 +61,15 @@ export default class ContactMe extends React.Component {
             onChange={this.props.onChange}
             updateValue={this.updateValue}
           />
-          <div className="pl-3 mr-3 mb-3 d-inline-block avatar-container">
+          <div className="pl-3 pl-md-5 mr-3 mr-sm-5 mb-3 d-inline-block avatar-container">
             <img
               src={FacebookPhoto}
               className="w-100 h-100 avatar"
               alt="avatar"
             ></img>
           </div>
-          <div className="d-inline-block text-white font-24 contact-name font-Yeseva">Shawn Kost</div>
-          <p className="pl-3 pr-3 text-white font-18 font-Josefin contact-bio">
+          <div className="pl-lg-5 d-inline-block text-white font-24 contact-name font-Yeseva">Shawn Kost</div>
+          <p className="pl-3 pl-md-5 pr-3 pr-md-5 text-white font-18 font-Josefin contact-bio">
             Hello! My name is Shawn Kost, and I am a full-stack web developer.
             GoodGames is a full stack web application for gamers to find new
             games to play, leave reviews about games, and add games to their

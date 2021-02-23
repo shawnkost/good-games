@@ -43,8 +43,8 @@ export default class Form extends React.Component {
 
   render() {
     return (
-      <form className="pl-3 pr-3 test-mailing">
-        <h4 className="text-white font-Yeseva">Contact Me!</h4>
+      <form className="pl-3 pl-md-5 pr-3 pr-md-5">
+        <h4 className="text-white font-Yeseva contact-me">Contact Me!</h4>
         <div className="font-18 font-Josefin">
           <input
             type="text"
@@ -78,7 +78,7 @@ export default class Form extends React.Component {
           <input
             type="button"
             value="Submit"
-            className="review-button text-white font-Yeseva"
+            className="review-button text-white font-Yeseva cursor-pointer"
             onClick={this.handleSubmit}
           />
         </div>
