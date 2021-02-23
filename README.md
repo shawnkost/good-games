@@ -5,9 +5,7 @@ A web application for users to find new games to play, leave reviews for those g
 [Link to live demo](https://good-games-project.herokuapp.com/#)
 
 ## Current Features
-* User can view most popular games
-* User can view newly released games
-* User can view upcoming games
+* User can view most popular/newly released/upcoming games
 * User can sort games by platform
 * User can view a game details page with a youtube video/info about the game
 * User can add games to their list
@@ -16,7 +14,6 @@ A web application for users to find new games to play, leave reviews for those g
 * User can create an account/sign in/use a demo account
 
 ## Planned Features
-* Add a contact me page where the user can read a description about the project/contact me with feedback
 * Show games on a users list on their profile page
 * Add more information to the game details page about genres, etc.
 
