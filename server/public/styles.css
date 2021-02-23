@@ -262,6 +262,27 @@ body {
   border-radius: 0 15px 15px 15px;
 }
 
+.avatar-container {
+  width: 30%;
+  height: 100px;
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
+.contact-form-name {
+  width: 50%;
+}
+
+.contact-form-email {
+  width: 50%;
+}
+
+.contact-bio {
+  line-height: 35px;
+}
+
 @media (min-width: 576px) {
   .menu-container {
     height: 94vh;
@@ -273,6 +294,10 @@ body {
 
   .review-submit {
     padding-right: 2.5rem !important;
+  }
+
+  .avatar-container {
+    height: 150px;
   }
 }
 
@@ -377,6 +402,23 @@ body {
 
   .game-title {
     font-size: 30px;
+  }
+
+  .avatar-container {
+    width: 35%;
+    height: 200px;
+  }
+
+  .contact-name {
+    font-size: 28px;
+  }
+
+  .contact-bio {
+    font-size: 24px;
+  }
+
+  .contact-me {
+    font-size: 28px;
   }
 }
 
@@ -486,6 +528,10 @@ body {
   .search-close {
     font-size: 28px;
   }
+
+  .avatar-container {
+    width: 28%;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -503,6 +549,14 @@ body {
 
   .review-text-area {
     width: 92.3%;
+  }
+
+  .avatar-container {
+    width: 22%;
+  }
+
+  .contact-name {
+    padding-left: 5rem !important;
   }
 }
 
@@ -531,5 +585,17 @@ body {
   .menu-container {
     width: 45%;
     height: 65vh;
+  }
+
+  .avatar-container {
+    width: 15%;
+  }
+
+  .contact-name {
+    font-size: 32px;
+  }
+
+  .contact-bio {
+    line-height: 75px;
   }
 }
