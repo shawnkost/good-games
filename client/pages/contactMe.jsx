@@ -61,19 +61,19 @@ export default class ContactMe extends React.Component {
             onChange={this.props.onChange}
             updateValue={this.updateValue}
           />
-          <div className="d-inline-block avatar-container">
+          <div className="pl-3 mr-3 mb-3 d-inline-block avatar-container">
             <img
               src={FacebookPhoto}
               className="w-100 h-100 avatar"
               alt="avatar"
             ></img>
           </div>
-          <div className="d-inline-block text-white font-24">Shawn Kost</div>
-          <p className="text-white">
+          <div className="d-inline-block text-white font-24 contact-name font-Yeseva">Shawn Kost</div>
+          <p className="pl-3 text-white font-18 font-Josefin">
             Hello! My name is Shawn Kost, and I am a full-stack web developer.
             GoodGames is a full stack web application for gamers to find new
             games to play, leave reviews about games, and add games to their
-            list. I began development on this project during my last two weeks of LearningFuze&apos;s full-time web development bootcamp.
+            list. I began development on this project during my last two weeks of LearningFuze&apos;s full-immersion web development bootcamp.
           </p>
           <Form />
         </div>

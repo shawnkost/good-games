@@ -268,15 +268,20 @@ body {
 }
 
 .avatar-container {
-  margin-top: 5%;
-  margin-left: 5%;
-  margin-right: 5%;
-  width: 25%;
+  width: 30%;
   height: 15%;
 }
 
 .avatar {
   border-radius: 50%;
+}
+
+.contact-form-name {
+  width: 50%;
+}
+
+.contact-form-email {
+  width: 50%;
 }
 
 @media (min-width: 576px) {

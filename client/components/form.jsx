@@ -13,7 +13,7 @@ export default class Form extends React.Component {
     this.setState({ [name]: value });
   }
 
-  handleSubmit(event) {
+  handleSubmit(event, form) {
     const templateId = 'contact_form';
     this.sendFeedback(templateId, {
       message_html: this.state.message,
@@ -28,26 +28,31 @@ export default class Form extends React.Component {
       .then(res => {
         alert('Email successfully sent!');
       })
-      // Handle errors here however you like, or use a React error boundary
       .catch(err =>
         console.error(
           'Oh well, you failed. Here some thoughts on the error that occurred:',
           err
         )
       );
+    this.setState({
+      message: '',
+      name: '',
+      email: ''
+    });
   }
 
   render() {
     return (
-      <form className="test-mailing">
-        <h1 className="text-white">Contact Me!</h1>
-        <div>
+      <form className="pl-3 pr-3 test-mailing">
+        <h4 className="text-white font-Yeseva">Contact Me!</h4>
+        <div className="font-18 font-Josefin">
           <input
             type="text"
             value={this.state.name}
             name="name"
             onChange={this.handleChange}
             placeholder="Your Name"
+            className="contact-form-name"
             required
           />
           <input
@@ -56,24 +61,27 @@ export default class Form extends React.Component {
             name="email"
             onChange={this.handleChange}
             placeholder="Your Email"
+            className="contact-form-email"
             required
           />
           <textarea
-            id="test-mailing"
             name="message"
             onChange={this.handleChange}
             placeholder="Send some feedback!"
             required
-            value={this.state.feedback}
+            value={this.state.message}
+            className="contact-form-message"
             style={{ width: '100%', height: '150px' }}
           />
         </div>
-        <input
-          type="button"
-          value="Submit"
-          className="btn btn--submit"
-          onClick={this.handleSubmit}
-        />
+        <div className="text-right">
+          <input
+            type="button"
+            value="Submit"
+            className="review-button text-white font-Yeseva"
+            onClick={this.handleSubmit}
+          />
+        </div>
       </form>
     );
   }
