@@ -284,6 +284,27 @@ body {
 }
 
 @media (min-width: 576px) {
+  .image-container {
+    height: 240px;
+  }
+
+  .game-card {
+    width: 65%;
+    margin-left: 18%;
+  }
+
+  .platform-label {
+    margin-left: 18%;
+  }
+
+  .platform-container {
+    width: 7%;
+  }
+
+  .sort-select {
+    margin-left: 18%;
+  }
+
   .menu-container {
     height: 94vh;
   }
@@ -302,23 +323,6 @@ body {
 }
 
 @media (min-width: 768px) {
-  .image-container {
-    height: 240px;
-  }
-
-  .game-card {
-    width: 65%;
-    margin-left: 18%;
-  }
-
-  .platform-label {
-    margin-left: 18%;
-  }
-
-  .sort-select {
-    margin-left: 18%;
-  }
-
   .menu-container {
     height: 55vh;
   }
