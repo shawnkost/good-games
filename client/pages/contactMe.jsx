@@ -69,11 +69,12 @@ export default class ContactMe extends React.Component {
             ></img>
           </div>
           <div className="d-inline-block text-white font-24 contact-name font-Yeseva">Shawn Kost</div>
-          <p className="pl-3 text-white font-18 font-Josefin">
+          <p className="pl-3 pr-3 text-white font-18 font-Josefin contact-bio">
             Hello! My name is Shawn Kost, and I am a full-stack web developer.
             GoodGames is a full stack web application for gamers to find new
             games to play, leave reviews about games, and add games to their
-            list. I began development on this project during my last two weeks of LearningFuze&apos;s full-immersion web development bootcamp.
+            list. I began development on this project during my last two weeks of LearningFuze&apos;s full-immersion web development bootcamp. If you have any feedback regarding the site,
+            or if you would like to contact me, please fill out the form below.
           </p>
           <Form />
         </div>

@@ -284,6 +284,10 @@ body {
   width: 50%;
 }
 
+.contact-bio {
+  line-height: 35px;
+}
+
 @media (min-width: 576px) {
   .menu-container {
     height: 94vh;
