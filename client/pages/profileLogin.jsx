@@ -30,7 +30,9 @@ export default class ProfileLogin extends React.Component {
       }
     )
       .then(response => response.json())
-      .then(result => this.props.handleSignIn(result));
+      .then(result => {
+        this.props.handleSignIn(result);
+      });
   }
 
   render() {

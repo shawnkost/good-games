@@ -211,7 +211,8 @@ app.post('/api/auth/sign-in', (req, res, next) => {
             const params = [newExpiration, user.token];
             db.query(sql, params)
               .then(result => {
-                const userInfo = Object.assign(user.token, payload);
+                const token = { token: user.token };
+                const userInfo = Object.assign(token, payload);
                 res.status(200).json(userInfo);
               })
               .catch(err => next(err));

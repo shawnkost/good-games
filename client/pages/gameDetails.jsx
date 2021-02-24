@@ -1,6 +1,8 @@
 import React from 'react';
 import Menu from '../components/menu';
+import Navbar from '../components/navbar';
 import CreateGameDetails from '../components/createGameDetails';
+import SearchResults from '../components/searchResults';
 import Loader from 'react-loader-spinner';
 
 export default class GameDetails extends React.Component {
@@ -11,8 +13,11 @@ export default class GameDetails extends React.Component {
       gamePhotos: '',
       youtubeURL: '',
       gameList: '',
-      reviews: []
+      reviews: [],
+      searchInput: '',
+      games: ''
     };
+    this.timeoutId = '';
     this.userId = '';
     this.createDescription = this.createDescription.bind(this);
     this.grabGameDetails = this.grabGameDetails.bind(this);
@@ -20,6 +25,8 @@ export default class GameDetails extends React.Component {
     this.grabYoutubeVideo = this.grabYoutubeVideo.bind(this);
     this.sendUserReview = this.sendUserReview.bind(this);
     this.grabUserReviews = this.grabUserReviews.bind(this);
+    this.updateValue = this.updateValue.bind(this);
+    this.searchGames = this.searchGames.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +39,15 @@ export default class GameDetails extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.gameDetails.slug !== this.state.gameDetails.slug) {
       this.grabYoutubeVideo();
+    }
+
+    if (prevProps.gameId !== this.props.gameId) {
+      this.setState({
+        gameDetails: '',
+        searchInput: ''
+      });
+      this.grabGameDetails();
+      this.grabUserReviews();
     }
   }
 
@@ -64,9 +80,7 @@ export default class GameDetails extends React.Component {
     if (this.state.gameDetails.slug) {
       let youtubeSearch = this.state.gameDetails.slug.split('-').join('%20');
       youtubeSearch = youtubeSearch + '%20Official%20Trailer';
-      fetch(
-        `/api/youtubeVideo/${youtubeSearch}`
-      )
+      fetch(`/api/youtubeVideo/${youtubeSearch}`)
         .then(response => response.json())
         .then(youtubeResults => {
           this.setState({
@@ -111,23 +125,74 @@ export default class GameDetails extends React.Component {
       });
   }
 
+  updateValue(searchInput) {
+    this.setState({
+      searchInput
+    });
+    if (this.timeoutId) clearTimeout(this.timeoutId);
+    this.timeoutId = setTimeout(this.searchGames, 800);
+  }
+
+  searchGames() {
+    fetch(
+      `https://api.rawg.io/api/games?search=${this.state.searchInput}&key=${process.env.API_KEY}`
+    )
+      .then(response => response.json())
+      .then(games =>
+        this.setState({
+          games
+        })
+      );
+  }
+
   render() {
-    if (this.state.gameDetails.slug) {
+    if (this.state.gameDetails.slug && this.state.searchInput === '') {
       return (
         <>
-          <CreateGameDetails
-            previousRoute={this.props.previousRoute}
-            menuClicked={this.props.menuClicked}
-            onChange={this.props.onChange}
-            gameDetails={this.state.gameDetails}
-            youtubeURL={this.state.youtubeURL}
-            gamePhotos={this.state.gamePhotos}
-            createDescription={this.createDescription}
-            submitForm={this.sendUserReview}
-            reviews={this.state.reviews}
-            user={this.props.user}
-          />
+          <div
+            className={
+              this.props.menuClicked ? 'blur-container' : 'page-container'
+            }
+          >
+            <Navbar
+              onChange={this.props.onChange}
+              updateValue={this.updateValue}
+              gameId={this.props.gameId}
+            />
+            <CreateGameDetails
+              previousRoute={this.props.previousRoute}
+              onChange={this.props.onChange}
+              gameDetails={this.state.gameDetails}
+              youtubeURL={this.state.youtubeURL}
+              gamePhotos={this.state.gamePhotos}
+              createDescription={this.createDescription}
+              submitForm={this.sendUserReview}
+              reviews={this.state.reviews}
+              user={this.props.user}
+            />
+          </div>
           <Menu click={this.props.click} menuClicked={this.props.menuClicked} />
+        </>
+      );
+    } else if (this.state.searchInput !== '') {
+      return (
+        <>
+          <div
+            className={
+              this.props.menuClicked ? 'blur-container' : 'page-container'
+            }
+          >
+            <Navbar
+              onChange={this.props.onChange}
+              updateValue={this.updateValue}
+              gameId={this.props.gameId}
+            />
+            <div className="mb-4 pl-3 text-white font-28">Games</div>
+            <SearchResults
+              games={this.state.games}
+              updateValue={this.updateValue}
+            />
+          </div>
         </>
       );
     } else {

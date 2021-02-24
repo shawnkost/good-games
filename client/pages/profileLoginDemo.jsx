@@ -22,7 +22,9 @@ export default class ProfileLoginDemo extends React.Component {
       body: JSON.stringify(this.state)
     })
       .then(response => response.json())
-      .then(result => this.props.handleSignIn(result));
+      .then(result => {
+        this.props.handleSignIn(result);
+      });
   }
 
   render() {
