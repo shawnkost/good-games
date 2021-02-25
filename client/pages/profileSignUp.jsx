@@ -43,6 +43,7 @@ export default class ProfileSignUp extends React.Component {
         }}
       >
         <div className="container text-center">
+          <div className="push-text-down"></div>
           <a href="#">
             <div className="mb-5 text-white text-center font-32 font-Yeseva profile-text">
               GoodGames
