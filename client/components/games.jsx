@@ -1,6 +1,10 @@
 import React from 'react';
 import CreateGameCard from './createGameCard';
 import Loader from 'react-loader-spinner';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
 
 export default class Games extends React.Component {
   constructor(props) {
@@ -8,6 +12,7 @@ export default class Games extends React.Component {
     this.state = {
       games: []
     };
+    this.handleError = this.handleError.bind(this);
     this.mostPopularGames = this.mostPopularGames.bind(this);
     this.newlyReleasedGames = this.newlyReleasedGames.bind(this);
     this.upcomingGames = this.upcomingGames.bind(this);
@@ -54,6 +59,10 @@ export default class Games extends React.Component {
     }
   }
 
+  handleError() {
+    toast.error('An unexpected error occurred retrieving data');
+  }
+
   mostPopularGames() {
     fetch(`/api/mostPopular/${this.props.platform}`)
       .then(response => response.json())
@@ -61,7 +70,8 @@ export default class Games extends React.Component {
         this.setState({
           games
         })
-      );
+      )
+      .catch(() => this.handleError());
   }
 
   newlyReleasedGames() {
@@ -71,7 +81,8 @@ export default class Games extends React.Component {
         this.setState({
           games
         })
-      );
+      )
+      .catch(() => this.handleError());
   }
 
   upcomingGames() {
@@ -81,7 +92,8 @@ export default class Games extends React.Component {
         this.setState({
           games
         })
-      );
+      )
+      .catch(() => this.handleError());
   }
 
   nextRequest() {
@@ -97,7 +109,8 @@ export default class Games extends React.Component {
           this.setState({
             games
           });
-        });
+        })
+        .catch(() => this.handleError());
     }
     window.scrollTo(0, 0);
   }
@@ -132,6 +145,7 @@ export default class Games extends React.Component {
     }
     return (
       <>
+      <ToastContainer />
         <div className="container-fluid game-container">{gameList}</div>
         <div
           className={
