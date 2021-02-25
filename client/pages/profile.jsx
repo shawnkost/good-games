@@ -17,8 +17,9 @@ export default function Profile(props) {
       }}
     >
       <div className="container text-center">
+        <div className="push-text-down"></div>
         <a href="#">
-          <div className="mb-5 text-white text-center font-32 font-Yeseva profile-text">
+          <div className="mb-5 text-white font-32 font-Yeseva profile-text">
             GoodGames
           </div>
         </a>
