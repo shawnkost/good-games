@@ -4,7 +4,7 @@ import Navbar from '../components/navbar';
 import CreateGameDetails from '../components/createGameDetails';
 import SearchResults from '../components/searchResults';
 import Loader from 'react-loader-spinner';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure();
@@ -165,7 +165,6 @@ export default class GameDetails extends React.Component {
               this.props.menuClicked ? 'blur-container' : 'page-container'
             }
           >
-            <ToastContainer />
             <Navbar
               onChange={this.props.onChange}
               updateValue={this.updateValue}
@@ -194,7 +193,6 @@ export default class GameDetails extends React.Component {
               this.props.menuClicked ? 'blur-container' : 'page-container'
             }
           >
-            <ToastContainer />
             <Navbar
               onChange={this.props.onChange}
               updateValue={this.updateValue}
