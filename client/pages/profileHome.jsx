@@ -4,6 +4,10 @@ import Navbar from '../components/navbar';
 import ProfileReviews from '../components/profileReviews';
 import Menu from '../components/menu';
 import SearchResults from '../components/searchResults';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
 
 export default class ProfileHome extends React.Component {
   constructor(props) {
@@ -14,6 +18,7 @@ export default class ProfileHome extends React.Component {
       games: ''
     };
     this.timeoutId = '';
+    this.handleError = this.handleError.bind(this);
     this.grabUserReviews = this.grabUserReviews.bind(this);
     this.updateValue = this.updateValue.bind(this);
     this.searchGames = this.searchGames.bind(this);
@@ -21,6 +26,10 @@ export default class ProfileHome extends React.Component {
 
   componentDidMount() {
     this.grabUserReviews();
+  }
+
+  handleError() {
+    toast.error('An unexpected error occurred retrieving data');
   }
 
   grabUserReviews() {
@@ -50,13 +59,16 @@ export default class ProfileHome extends React.Component {
   }
 
   searchGames() {
-    fetch(`/api/searchGames/${this.state.searchInput}`)
-      .then(response => response.json())
-      .then(games =>
-        this.setState({
-          games
-        })
-      );
+    if (this.state.searchInput !== '') {
+      fetch(`/api/searchGames/${this.state.searchInput}`)
+        .then(response => response.json())
+        .then(games =>
+          this.setState({
+            games
+          })
+        )
+        .catch(() => this.handleError());
+    }
   }
 
   render() {

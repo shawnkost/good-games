@@ -4,6 +4,10 @@ import Menu from '../components/menu';
 import Navbar from '../components/navbar';
 import SearchResults from '../components/searchResults';
 import FacebookPhoto from '../images/facebookPhoto.jpg';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
 
 export default class ContactMe extends React.Component {
   constructor(props) {
@@ -13,8 +17,13 @@ export default class ContactMe extends React.Component {
       games: ''
     };
     this.timeoutId = '';
+    this.handleError = this.handleError.bind(this);
     this.updateValue = this.updateValue.bind(this);
     this.searchGames = this.searchGames.bind(this);
+  }
+
+  handleError() {
+    toast.error('An unexpected error occurred retrieving data');
   }
 
   updateValue(searchInput) {
@@ -26,13 +35,16 @@ export default class ContactMe extends React.Component {
   }
 
   searchGames() {
-    fetch(`/api/searchGames/${this.state.searchInput}`)
-      .then(response => response.json())
-      .then(games =>
-        this.setState({
-          games
-        })
-      );
+    if (this.state.searchInput !== '') {
+      fetch(`/api/searchGames/${this.state.searchInput}`)
+        .then(response => response.json())
+        .then(games =>
+          this.setState({
+            games
+          })
+        )
+        .catch(() => this.handleError());
+    }
   }
 
   render() {

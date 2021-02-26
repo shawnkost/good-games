@@ -4,6 +4,10 @@ import Navbar from '../components/navbar';
 import CreateGameDetails from '../components/createGameDetails';
 import SearchResults from '../components/searchResults';
 import Loader from 'react-loader-spinner';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
 
 export default class GameDetails extends React.Component {
   constructor(props) {
@@ -46,9 +50,14 @@ export default class GameDetails extends React.Component {
         gameDetails: '',
         searchInput: ''
       });
+      this.handleError = this.handleError.bind(this);
       this.grabGameDetails();
       this.grabUserReviews();
     }
+  }
+
+  handleError() {
+    toast.error('An unexpected error occurred retrieving data');
   }
 
   createDescription() {
@@ -62,7 +71,8 @@ export default class GameDetails extends React.Component {
         this.setState({
           gameDetails
         });
-      });
+      })
+      .catch(() => this.handleError());
     this.grabGamePhotos();
   }
 
@@ -134,15 +144,16 @@ export default class GameDetails extends React.Component {
   }
 
   searchGames() {
-    fetch(
-      `https://api.rawg.io/api/games?search=${this.state.searchInput}&key=${process.env.API_KEY}`
-    )
-      .then(response => response.json())
-      .then(games =>
-        this.setState({
-          games
-        })
-      );
+    if (this.state.searchInput !== '') {
+      fetch(`/test/api/searchGames/${this.state.searchInput}`)
+        .then(response => response.json())
+        .then(games =>
+          this.setState({
+            games
+          })
+        )
+        .catch(() => this.handleError());
+    }
   }
 
   render() {
@@ -154,6 +165,7 @@ export default class GameDetails extends React.Component {
               this.props.menuClicked ? 'blur-container' : 'page-container'
             }
           >
+            <ToastContainer />
             <Navbar
               onChange={this.props.onChange}
               updateValue={this.updateValue}
@@ -182,6 +194,7 @@ export default class GameDetails extends React.Component {
               this.props.menuClicked ? 'blur-container' : 'page-container'
             }
           >
+            <ToastContainer />
             <Navbar
               onChange={this.props.onChange}
               updateValue={this.updateValue}

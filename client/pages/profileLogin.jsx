@@ -1,6 +1,10 @@
 import React from 'react';
 import Redirect from '../components/redirect';
 import ProfileBackground from '../images/profile-background.png';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
 
 export default class ProfileLogin extends React.Component {
   constructor(props) {
@@ -9,8 +13,13 @@ export default class ProfileLogin extends React.Component {
       email: '',
       password: ''
     };
+    this.handleError = this.handleError.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+  }
+
+  handleError() {
+    toast.error('Login failed');
   }
 
   handleChange(event) {
@@ -29,7 +38,13 @@ export default class ProfileLogin extends React.Component {
         body: JSON.stringify(this.state)
       }
     )
-      .then(response => response.json())
+      .then(response => {
+        if (response.status !== 401) {
+          response.json();
+        } else {
+          this.handleError();
+        }
+      })
       .then(result => {
         this.props.handleSignIn(result);
       });

@@ -6,9 +6,7 @@ const clientPath = path.join(__dirname, 'client');
 const serverPublicPath = path.join(__dirname, 'server/public');
 
 module.exports = {
-  plugins: [
-    new Dotenv()
-  ],
+  plugins: [new Dotenv()],
   resolve: {
     extensions: ['.js', '.jsx']
   },
@@ -33,6 +31,10 @@ module.exports = {
         use: {
           loader: 'url-loader'
         }
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
