@@ -4,7 +4,7 @@ import Menu from '../components/menu';
 import Navbar from '../components/navbar';
 import SearchResults from '../components/searchResults';
 import FacebookPhoto from '../images/facebookPhoto.jpg';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure();
@@ -35,21 +35,22 @@ export default class ContactMe extends React.Component {
   }
 
   searchGames() {
-    fetch(`/api/searchGames/${this.state.searchInput}`)
-      .then(response => response.json())
-      .then(games =>
-        this.setState({
-          games
-        })
-      )
-      .catch(() => this.handleError());
+    if (this.state.searchInput !== '') {
+      fetch(`/api/searchGames/${this.state.searchInput}`)
+        .then(response => response.json())
+        .then(games =>
+          this.setState({
+            games
+          })
+        )
+        .catch(() => this.handleError());
+    }
   }
 
   render() {
     if (this.state.searchInput !== '') {
       return (
         <>
-        <ToastContainer />
           <div className={this.props.menuClicked ? 'blur-container' : 'page-container'}>
             <Navbar
               onChange={this.props.onChange}
@@ -68,7 +69,6 @@ export default class ContactMe extends React.Component {
             this.props.menuClicked ? 'blur-container' : 'page-container'
           }
         >
-          <ToastContainer />
           <Navbar
             onChange={this.props.onChange}
             updateValue={this.updateValue}

@@ -4,7 +4,7 @@ import Navbar from '../components/navbar';
 import ProfileReviews from '../components/profileReviews';
 import Menu from '../components/menu';
 import SearchResults from '../components/searchResults';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure();
@@ -60,7 +60,7 @@ export default class ProfileHome extends React.Component {
 
   searchGames() {
     if (this.state.searchInput !== '') {
-      fetch(`/test/api/searchGames/${this.state.searchInput}`)
+      fetch(`/api/searchGames/${this.state.searchInput}`)
         .then(response => response.json())
         .then(games =>
           this.setState({
@@ -79,7 +79,6 @@ export default class ProfileHome extends React.Component {
     if (this.state.searchInput !== '') {
       return (
         <>
-        <ToastContainer />
           <div
             className={
               this.props.menuClicked ? 'blur-container' : 'page-container'
@@ -97,7 +96,6 @@ export default class ProfileHome extends React.Component {
     }
     return (
       <>
-      <ToastContainer />
         <div
           className={
             this.props.menuClicked ? 'blur-container' : 'page-container'

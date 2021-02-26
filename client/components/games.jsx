@@ -1,7 +1,7 @@
 import React from 'react';
 import CreateGameCard from './createGameCard';
 import Loader from 'react-loader-spinner';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure();
@@ -145,7 +145,6 @@ export default class Games extends React.Component {
     }
     return (
       <>
-      <ToastContainer />
         <div className="container-fluid game-container">{gameList}</div>
         <div
           className={
