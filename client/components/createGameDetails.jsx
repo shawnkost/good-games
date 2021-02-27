@@ -4,6 +4,10 @@ import CreateScrollingImages from '../components/createScrollingImages';
 import CheckPlatform from '../components/checkPlatforms';
 import WriteReview from './writeReview';
 import ShowReviews from './showReviews';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
 
 export default class CreateGameDetails extends React.Component {
   constructor(props) {
@@ -12,10 +16,15 @@ export default class CreateGameDetails extends React.Component {
       gameList: []
     };
     this.userId = '';
+    this.handleError = this.handleError.bind(this);
     this.grabUserGameList = this.grabUserGameList.bind(this);
     this.addPlayed = this.addPlayed.bind(this);
     this.addWantToPlay = this.addWantToPlay.bind(this);
     this.grabUserGameList();
+  }
+
+  handleError() {
+    toast.error('You must be signed in to add a game to your list');
   }
 
   grabUserGameList() {
@@ -36,14 +45,14 @@ export default class CreateGameDetails extends React.Component {
   }
 
   addPlayed(props) {
-    if (this.props) {
+    if (this.props.user) {
       if (this.props.user.user) {
         this.userId = this.props.user.user.userId;
       } else {
         this.userId = this.props.user.userId;
       }
     }
-    if (this.state.gameList.length === 0) {
+    if (this.state.gameList.length === 0 && this.userId) {
       const data = {
         userId: this.userId,
         gameId: this.props.gameDetails.id,
@@ -66,7 +75,7 @@ export default class CreateGameDetails extends React.Component {
       return;
     }
 
-    if (this.state.gameList[0].played) {
+    if (this.userId && this.state.gameList[0].played) {
       const data = {
         wantToPlay: false,
         played: false
@@ -87,7 +96,7 @@ export default class CreateGameDetails extends React.Component {
       return;
     }
 
-    if (!this.state.gameList[0].played) {
+    if (this.userId && !this.state.gameList[0].played) {
       const data = {
         wantToPlay: false,
         played: true
@@ -105,18 +114,20 @@ export default class CreateGameDetails extends React.Component {
             gameList: [gameList]
           })
         );
+      return;
     }
+    this.handleError();
   }
 
   addWantToPlay(props) {
-    if (this.props) {
+    if (this.props.user) {
       if (this.props.user.user) {
         this.userId = this.props.user.user.userId;
       } else {
         this.userId = this.props.user.userId;
       }
     }
-    if (this.state.gameList.length === 0) {
+    if (this.state.gameList.length === 0 && this.userId) {
       const data = {
         userId: this.userId,
         gameId: this.props.gameDetails.id,
@@ -136,10 +147,11 @@ export default class CreateGameDetails extends React.Component {
             gameList: [gameList]
           })
         );
+
       return;
     }
 
-    if (this.state.gameList[0].wantToPlay) {
+    if (this.userId && this.state.gameList[0].wantToPlay) {
       const data = {
         wantToPlay: false,
         played: false
@@ -157,10 +169,11 @@ export default class CreateGameDetails extends React.Component {
             gameList: [gameList]
           })
         );
+
       return;
     }
 
-    if (!this.state.gameList[0].wantToPlay) {
+    if (this.userId && !this.state.gameList[0].wantToPlay) {
       const data = {
         wantToPlay: true,
         played: false
@@ -178,7 +191,9 @@ export default class CreateGameDetails extends React.Component {
             gameList: [gameList]
           })
         );
+      return;
     }
+    this.handleError();
   }
 
   render() {
