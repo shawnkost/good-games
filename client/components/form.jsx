@@ -13,7 +13,7 @@ export default class Form extends React.Component {
     this.setState({ [name]: value });
   }
 
-  handleSubmit(event, form) {
+  handleSubmit(form) {
     const templateId = 'contact_form';
     this.sendFeedback(templateId, {
       message_html: this.state.message,
@@ -43,7 +43,7 @@ export default class Form extends React.Component {
 
   render() {
     return (
-      <form className="pl-3 pl-md-5 pr-3 pr-md-5">
+      <form className="pl-3 pl-md-5 pr-3 pr-md-5" onSubmit={this.handleSubmit}>
         <h4 className="text-white font-Yeseva contact-me">Contact Me!</h4>
         <div className="font-18 font-Josefin">
           <input
@@ -53,7 +53,7 @@ export default class Form extends React.Component {
             onChange={this.handleChange}
             placeholder="Your Name"
             className="contact-form-name"
-            required
+            required="required"
           />
           <input
             type="email"
@@ -62,24 +62,23 @@ export default class Form extends React.Component {
             onChange={this.handleChange}
             placeholder="Your Email"
             className="contact-form-email"
-            required
+            required="required"
           />
           <textarea
             name="message"
             onChange={this.handleChange}
             placeholder="Send some feedback!"
-            required
             value={this.state.message}
             className="contact-form-message"
             style={{ width: '100%', height: '150px' }}
+            required="required"
           />
         </div>
         <div className="text-right">
           <input
-            type="button"
+            type="submit"
             value="Submit"
             className="review-button text-white font-Yeseva cursor-pointer"
-            onClick={this.handleSubmit}
           />
         </div>
       </form>

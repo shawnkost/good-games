@@ -76,7 +76,7 @@ export default class ContactMe extends React.Component {
           <div className="pl-3 pl-md-5 mr-3 mr-sm-5 mb-3 d-inline-block avatar-container">
             <img
               src={FacebookPhoto}
-              className="w-100 h-100 avatar"
+              className="w-100 avatar"
               alt="avatar"
             ></img>
           </div>
