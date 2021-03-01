@@ -207,6 +207,10 @@ body {
   background-color: #3a3a3a;
 }
 
+span > a {
+  color: #4a88ff;
+}
+
 .list-button-container {
   border: 2px solid black;
   border-radius: 10px;
@@ -263,12 +267,14 @@ body {
 }
 
 .avatar-container {
-  width: 30%;
+  width: 100px;
   height: 100px;
-}
-
-.avatar {
-  border-radius: 50%;
+  -moz-border-radius: 100px;
+  -moz-background-clip: padding;
+  border-radius: 100px;
+  background-clip: padding-box;
+  background-size: cover;
+  background-position: center center;
 }
 
 .contact-form-name {
@@ -315,10 +321,6 @@ body {
 
   .review-submit {
     padding-right: 2.5rem !important;
-  }
-
-  .avatar-container {
-    height: 150px;
   }
 }
 
@@ -409,8 +411,8 @@ body {
   }
 
   .avatar-container {
-    width: 35%;
-    height: 200px;
+    width: 165px;
+    height: 165px;
   }
 
   .contact-name {
@@ -532,10 +534,6 @@ body {
   .search-close {
     font-size: 28px;
   }
-
-  .avatar-container {
-    width: 28%;
-  }
 }
 
 @media (min-width: 1200px) {
@@ -556,7 +554,8 @@ body {
   }
 
   .avatar-container {
-    width: 22%;
+    height: 200px;
+    width: 200px;
   }
 
   .contact-name {
@@ -591,15 +590,11 @@ body {
     height: 65vh;
   }
 
-  .avatar-container {
-    width: 15%;
-  }
-
   .contact-name {
     font-size: 32px;
   }
 
   .contact-bio {
-    line-height: 75px;
+    line-height: 45px;
   }
 }

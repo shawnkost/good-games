@@ -101,28 +101,28 @@ export default class GameDetails extends React.Component {
   }
 
   sendUserReview(review) {
-    if (this.props) {
+    if (this.props.user) {
       if (this.props.user.user) {
         this.userId = this.props.user.user.userId;
       } else {
         this.userId = this.props.user.userId;
       }
+      const data = {
+        gameId: this.state.gameDetails.id,
+        gameTitle: this.state.gameDetails.name,
+        details: review,
+        userId: this.userId
+      };
+      fetch('/api/games/reviews', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(this.grabUserReviews);
     }
-    const data = {
-      gameId: this.state.gameDetails.id,
-      gameTitle: this.state.gameDetails.name,
-      details: review,
-      userId: this.userId
-    };
-    fetch('/api/games/reviews', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(response => response.json())
-      .then(this.grabUserReviews);
   }
 
   grabUserReviews() {
