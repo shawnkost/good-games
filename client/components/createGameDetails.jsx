@@ -267,7 +267,7 @@ export default class CreateGameDetails extends React.Component {
             }}
           ></div>
         </div>
-        <WriteReview submitForm={this.props.submitForm} />
+        <WriteReview submitForm={this.props.submitForm} user={this.props.user} />
         <ShowReviews reviews={this.props.reviews} />
       </div>
     );

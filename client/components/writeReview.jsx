@@ -1,4 +1,8 @@
 import React from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
 
 export default class WriteReview extends React.Component {
   constructor(props) {
@@ -16,10 +20,14 @@ export default class WriteReview extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.submitForm(this.state.textAreaValue);
-    this.setState({
-      textAreaValue: ''
-    });
+    if (this.props.user) {
+      this.props.submitForm(this.state.textAreaValue);
+      this.setState({
+        textAreaValue: ''
+      });
+      return;
+    }
+    toast.error('You must be signed in to leave a review');
   }
 
   render() {
@@ -38,9 +46,15 @@ export default class WriteReview extends React.Component {
             className="ml-3 ml-md-5 mr-md-5 text-white font-24 font-Josefin review-text-area"
             value={this.state.textAreaValue}
             onChange={this.handleChange}
+            required
           ></textarea>
           <div className="text-right pr-3 pr-md-5 font-Yeseva review-submit">
-            <button type="submit" className="font-18 text-white review-button">Submit</button>
+            <button
+              type="submit"
+              className="font-18 text-white review-button cursor-pointer"
+            >
+              Submit
+            </button>
           </div>
         </form>
       </div>

@@ -263,8 +263,14 @@ body {
 }
 
 .avatar-container {
-  width: 30%;
+  width: 100px;
   height: 100px;
+  -moz-border-radius: 100px;
+  -moz-background-clip: padding;
+  border-radius: 100px;
+  background-clip: padding-box;
+  background-size: cover;
+  background-position: center center;
 }
 
 .avatar {
@@ -318,9 +324,10 @@ body {
     padding-right: 2.5rem !important;
   }
 
-  .avatar-container {
+  /* .avatar-container {
+    width: 26%;
     height: 150px;
-  }
+  } */
 
   .avatar {
     height: 150px;
@@ -414,8 +421,8 @@ body {
   }
 
   .avatar-container {
-    width: 35%;
-    height: 200px;
+    width: 165px;
+    height: 165px;
   }
 
   .avatar {
@@ -542,9 +549,9 @@ body {
     font-size: 28px;
   }
 
-  .avatar-container {
+  /* .avatar-container {
     width: 28%;
-  }
+  } */
 }
 
 @media (min-width: 1200px) {
@@ -565,7 +572,8 @@ body {
   }
 
   .avatar-container {
-    width: 22%;
+    height: 200px;
+    width: 200px;
   }
 
   .contact-name {
@@ -600,9 +608,9 @@ body {
     height: 65vh;
   }
 
-  .avatar-container {
+  /* .avatar-container {
     width: 15%;
-  }
+  } */
 
   .contact-name {
     font-size: 32px;
