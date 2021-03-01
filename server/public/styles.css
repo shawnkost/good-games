@@ -277,11 +277,6 @@ span > a {
   background-position: center center;
 }
 
-.avatar {
-  height: 100px;
-  border-radius: 50%;
-}
-
 .contact-form-name {
   width: 50%;
 }
@@ -326,10 +321,6 @@ span > a {
 
   .review-submit {
     padding-right: 2.5rem !important;
-  }
-
-  .avatar {
-    height: 150px;
   }
 }
 
@@ -422,10 +413,6 @@ span > a {
   .avatar-container {
     width: 165px;
     height: 165px;
-  }
-
-  .avatar {
-    height: 200px;
   }
 
   .contact-name {
