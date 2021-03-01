@@ -5,21 +5,20 @@ import Xbox from '../images/xbox.png';
 import Windows from '../images/windows.png';
 import Nintendo from '../images/nintendo.png';
 
-export default class CreateGameCard extends React.Component {
-  render() {
-    return (
+export default function CreateGameCard(props) {
+  return (
       <div className="game-card ml-lg-5 mb-3 mb-lg-5">
         <div className="w-100 image-container">
-          <a href={`#game-details?gameId=${this.props.value.id}`}>
+          <a href={`#game-details?gameId=${props.value.id}`}>
             <img
-              src={this.props.image}
+              src={ props.image}
               className="w-100 h-100 game-image"
             ></img>
           </a>
         </div>
         <div className="text-white font-24 font-Josefin details">
           <div className="all-platforms-container mb-2 pl-2 pt-2">
-            {this.props.value.parent_platforms.map((platform, index) => {
+            { props.value.parent_platforms.map((platform, index) => {
               let platformImg = null;
               let platformURL = null;
               switch (platform.platform.slug) {
@@ -54,27 +53,26 @@ export default class CreateGameCard extends React.Component {
           </div>
           <div className="details-container">
             <div className="pl-2 mb-2 font-weight-bold game-title">
-              {this.props.value.name}
+              { props.value.name}
             </div>
             <div className="pl-2 d-inline-block font-18 game-card-date">
               {'Release date: ' +
-                dayjs(this.props.value.released).format('MMM-DD-YYYY')}
+                dayjs(props.value.released).format('MMM-DD-YYYY')}
             </div>
-            <a href={`#game-details?gameId=${this.props.value.id}`}>
+            <a href={`#game-details?gameId=${props.value.id}`}>
               <div className="d-inline-block view-details pr-1 font-18">
                 View Details
               </div>
             </a>
             <div
               className={
-                this.props.value.metacritic !== null ? 'font-18 metacritic' : 'hide'
+                 props.value.metacritic !== null ? 'font-18 metacritic' : 'hide'
               }
             >
-              {this.props.value.metacritic}
+              { props.value.metacritic}
             </div>
           </div>
         </div>
       </div>
-    );
-  }
+  );
 }

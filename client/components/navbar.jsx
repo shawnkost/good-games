@@ -1,41 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default class Navbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      input: ''
-    };
-    this.handleClick = this.handleClick.bind(this);
-    this.updateValue = this.updateValue.bind(this);
-    this.resetValue = this.resetValue.bind(this);
+export default function Navbar(props) {
+  const [input, setInput] = useState('');
+
+  function handleClick(event) {
+    props.onChange(event);
   }
 
-  handleClick(event) {
-    this.props.onChange(event);
+  function updateValue(event) {
+    setInput(event.target.value);
+    props.updateValue(event.target.value);
   }
 
-  updateValue(event) {
-    this.setState({
-      input: event.target.value
-    });
-    this.props.updateValue(event.target.value);
+  function resetValue() {
+    setInput('');
+    props.updateValue('');
   }
 
-  resetValue() {
-    this.setState({
-      input: ''
-    });
-    this.props.updateValue('');
-  }
-
-  render() {
-    return (
+  return (
       <div className="container-fluid mb-4">
         <div className="row py-2 align-items-center font-Yeseva">
           <a
             href="#"
-            className={this.state.input !== '' ? 'hide' : 'col-4 col-md pl-md-5 text-white font-24 logo'}
+            className={input !== '' ? 'hide' : 'col-4 col-md pl-md-5 text-white font-24 logo'}
           >
             GG
           </a>
@@ -44,23 +31,22 @@ export default class Navbar extends React.Component {
             id="search"
             name="search"
             placeholder="Search"
-            value={this.state.input}
+            value={input}
             className={
-              this.state.input !== ''
+              input !== ''
                 ? 'ml-3 mr-3 w-100 search-input text-white'
                 : 'col-4 col-md-4 search-input text-white'
             }
-            onChange={this.updateValue}
+            onChange={updateValue}
           ></input>
-          <i className={this.state.input !== '' ? 'fas fa-times text-white search-close cursor-pointer' : 'hide'} onClick={this.resetValue}></i>
-          <a className={this.state.input !== '' ? 'hide' : 'col-4 col-md pr-md-5 text-right menu-icon'}>
+          <i className={input !== '' ? 'fas fa-times text-white search-close cursor-pointer' : 'hide'} onClick={resetValue}></i>
+          <a className={input !== '' ? 'hide' : 'col-4 col-md pr-md-5 text-right menu-icon'}>
             <i
               className="fas fa-bars text-white font-24 menu-icon2 cursor-pointer"
-              onClick={this.handleClick}
+              onClick={handleClick}
             ></i>
           </a>
         </div>
       </div>
-    );
-  }
+  );
 }
