@@ -207,6 +207,10 @@ body {
   background-color: #3a3a3a;
 }
 
+span > a {
+  color: #4a88ff;
+}
+
 .list-button-container {
   border: 2px solid black;
   border-radius: 10px;
@@ -323,11 +327,6 @@ body {
   .review-submit {
     padding-right: 2.5rem !important;
   }
-
-  /* .avatar-container {
-    width: 26%;
-    height: 150px;
-  } */
 
   .avatar {
     height: 150px;
@@ -548,10 +547,6 @@ body {
   .search-close {
     font-size: 28px;
   }
-
-  /* .avatar-container {
-    width: 28%;
-  } */
 }
 
 @media (min-width: 1200px) {
@@ -607,10 +602,6 @@ body {
     width: 45%;
     height: 65vh;
   }
-
-  /* .avatar-container {
-    width: 15%;
-  } */
 
   .contact-name {
     font-size: 32px;
