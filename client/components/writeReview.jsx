@@ -7,11 +7,11 @@ toast.configure();
 export default function WriteReview(props) {
   const [textArea, setTextArea] = useState('');
 
-  function handleChange(event) {
+  const handleChange = event => {
     setTextArea(event.target.value);
-  }
+  };
 
-  function handleSubmit(event) {
+  const handleSubmit = event => {
     event.preventDefault();
     if (props.user) {
       props.submitForm(textArea);
@@ -19,7 +19,7 @@ export default function WriteReview(props) {
       return;
     }
     toast.error('You must be signed in to leave a review');
-  }
+  };
 
   return (
     <div className="mb-5 review-container">

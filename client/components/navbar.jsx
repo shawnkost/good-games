@@ -3,19 +3,19 @@ import React, { useState } from 'react';
 export default function Navbar(props) {
   const [input, setInput] = useState('');
 
-  function handleClick(event) {
+  const handleClick = event => {
     props.onChange(event);
-  }
+  };
 
-  function updateValue(event) {
+  const updateValue = event => {
     setInput(event.target.value);
     props.updateValue(event.target.value);
-  }
+  };
 
-  function resetValue() {
+  const resetValue = () => {
     setInput('');
     props.updateValue('');
-  }
+  };
 
   return (
       <div className="container-fluid mb-4">

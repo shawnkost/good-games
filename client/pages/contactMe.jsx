@@ -19,21 +19,18 @@ export default function ContactMe(props) {
   }
 
   const handleDebounce = useCallback(
-    debounce(searchGames, 800),
+    debounce(value => searchGames(value), 800),
     []
   );
 
   function updateValue(value) {
-    // console.log('searchInput-updateValue', value);
     setSearchInput(value);
-    handleDebounce();
+    handleDebounce(value);
   }
 
-  function searchGames() {
-    // console.log('searchInput', { searchInput });
-    if (searchInput !== '') {
-      // console.log('searchInput2', searchInput);
-      fetch(`/api/searchGames/${searchInput}`)
+  function searchGames(value) {
+    if (value !== '') {
+      fetch(`/api/searchGames/${value}`)
         .then(response => response.json())
         .then(games =>
           setGames(games)
