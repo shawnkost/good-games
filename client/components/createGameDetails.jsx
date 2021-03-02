@@ -33,7 +33,7 @@ export default function CreateGameDetails(props) {
   const addPlayed = () => {
     if (props.user) {
       const userId = props.user.userId;
-      if (gameList.length === 0 || !gameList[0].played) {
+      if (gameList.length === 0) {
         const data = {
           userId: userId,
           gameId: props.gameDetails.id,
@@ -67,6 +67,22 @@ export default function CreateGameDetails(props) {
           .then(gameList => setGameList([gameList]));
         return;
       }
+      if (!gameList[0].played) {
+        const data = {
+          wantToPlay: false,
+          played: true
+        };
+        fetch(`/api/games/gameList/${props.gameDetails.id}/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+          .then(response => response.json())
+          .then(gameList => setGameList([gameList]));
+        return;
+      }
     }
     handleError();
   };
@@ -74,7 +90,7 @@ export default function CreateGameDetails(props) {
   const addWantToPlay = () => {
     if (props.user) {
       const userId = props.user.userId;
-      if (gameList.length === 0 || !gameList[0].wantToPlay) {
+      if (gameList.length === 0) {
         const data = {
           userId: userId,
           gameId: props.gameDetails.id,
@@ -95,6 +111,22 @@ export default function CreateGameDetails(props) {
       if (gameList[0].wantToPlay) {
         const data = {
           wantToPlay: false,
+          played: false
+        };
+        fetch(`/api/games/gameList/${props.gameDetails.id}/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+          .then(response => response.json())
+          .then(gameList => setGameList([gameList]));
+        return;
+      }
+      if (!gameList[0].wantToPlay) {
+        const data = {
+          wantToPlay: true,
           played: false
         };
         fetch(`/api/games/gameList/${props.gameDetails.id}/${userId}`, {

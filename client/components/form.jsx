@@ -6,14 +6,14 @@ export default function Form(props) {
   const name = state.name;
   const email = state.email;
 
-  function handleChange(event) {
+  const handleChange = event => {
     const { name, value } = event.target;
     setState(prevState => {
       return { ...prevState, [name]: value };
     });
-  }
+  };
 
-  function handleSubmit(form) {
+  const handleSubmit = form => {
     event.preventDefault();
     const templateId = 'contact_form';
     sendFeedback(templateId, {
@@ -21,9 +21,9 @@ export default function Form(props) {
       from_name: { name },
       reply_to: { email }
     });
-  }
+  };
 
-  function sendFeedback(templateId, variables) {
+  const sendFeedback = (templateId, variables) => {
     window.emailjs
       .send('service_g4tq3tj', 'contact_form', variables)
       .then(res => {
@@ -36,7 +36,7 @@ export default function Form(props) {
         )
       );
     setState({ message: '', name: '', email: '' });
-  }
+  };
 
   return (
       <form className="pl-3 pl-md-5 pr-3 pr-md-5" onSubmit={handleSubmit}>

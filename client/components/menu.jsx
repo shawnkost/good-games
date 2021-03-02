@@ -2,9 +2,9 @@ import React from 'react';
 
 export default function Menu(props) {
 
-  function handleClick(event) {
+  const handleClick = event => {
     props.click(event);
-  }
+  };
 
   return (
     <>

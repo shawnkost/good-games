@@ -1,9 +1,9 @@
 import React from 'react';
 
 export default function GameSort(props) {
-  function handleClick(event) {
+  const handleClick = event => {
     props.onChange(event.target.value);
-  }
+  };
 
   return (
     <div className="container-fluid">
