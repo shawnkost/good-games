@@ -13,27 +13,26 @@ toast.configure();
 export default function ContactMe(props) {
   const [searchInput, setSearchInput] = useState('');
   const [games, setGames] = useState('');
-  // const timeoutId = null;
 
   function handleError() {
     toast.error('An unexpected error occurred retrieving data');
   }
 
-  const test = useCallback(
+  const handleDebounce = useCallback(
     debounce(searchGames, 800),
     []
   );
 
-  function updateValue(searchInput) {
-    // console.log('searchInput-updateValue', searchInput);
-    setSearchInput(searchInput);
-    test();
+  function updateValue(value) {
+    // console.log('searchInput-updateValue', value);
+    setSearchInput(value);
+    handleDebounce();
   }
 
   function searchGames() {
     // console.log('searchInput', { searchInput });
     if (searchInput !== '') {
-      // console.log('searchInput', searchInput);
+      // console.log('searchInput2', searchInput);
       fetch(`/api/searchGames/${searchInput}`)
         .then(response => response.json())
         .then(games =>
