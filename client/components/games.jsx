@@ -31,27 +31,21 @@ export default function Games(props) {
   const mostPopularGames = () => {
     fetch(`/api/mostPopular/${props.platform}`)
       .then(response => response.json())
-      .then(games =>
-        setGames(games)
-      )
+      .then(games => setGames(games))
       .catch(() => handleError());
   };
 
   const newlyReleasedGames = () => {
     fetch(`/api/newReleases/${props.platform}`)
       .then(response => response.json())
-      .then(games =>
-        setGames(games)
-      )
+      .then(games => setGames(games))
       .catch(() => handleError());
   };
 
   const upcomingGames = () => {
     fetch(`/api/upcomingGames/${props.platform}`)
       .then(response => response.json())
-      .then(games =>
-        setGames(games)
-      )
+      .then(games => setGames(games))
       .catch(() => handleError());
   };
 
@@ -89,28 +83,28 @@ export default function Games(props) {
     gameList = mapGames();
   } else {
     return (
-        <Loader
-          className="text-center"
-          type="Rings"
-          color="White"
-          height={175}
-          width={175}
-        />
+      <Loader
+        className="text-center"
+        type="Rings"
+        color="White"
+        height={175}
+        width={175}
+      />
     );
   }
   return (
-      <>
-        <div className="container-fluid game-container">{gameList}</div>
-        <div
-          className={
-            games.results
-              ? 'show text-white text-center mb-3 font-24 font-Yeseva cursor-pointer next-button'
-              : 'hide'
-          }
-          onClick={nextRequest}
-        >
-          {games.next !== null ? 'Next Page' : 'Back to top'}
-        </div>
-      </>
+    <>
+      <div className="container-fluid game-container">{gameList}</div>
+      <div
+        className={
+          games.results
+            ? 'show text-white text-center mb-3 font-24 font-Yeseva cursor-pointer next-button'
+            : 'hide'
+        }
+        onClick={nextRequest}
+      >
+        {games.next !== null ? 'Next Page' : 'Back to top'}
+      </div>
+    </>
   );
 }

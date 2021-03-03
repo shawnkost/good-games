@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function Menu(props) {
-
   const handleClick = event => {
     props.click(event);
   };

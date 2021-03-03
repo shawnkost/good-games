@@ -7,72 +7,69 @@ import Nintendo from '../images/nintendo.png';
 
 export default function CreateGameCard(props) {
   return (
-      <div className="game-card ml-lg-5 mb-3 mb-lg-5">
-        <div className="w-100 image-container">
-          <a href={`#game-details?gameId=${props.value.id}`}>
-            <img
-              src={ props.image}
-              className="w-100 h-100 game-image"
-            ></img>
-          </a>
-        </div>
-        <div className="text-white font-24 font-Josefin details">
-          <div className="all-platforms-container mb-2 pl-2 pt-2">
-            { props.value.parent_platforms.map((platform, index) => {
-              let platformImg = null;
-              let platformURL = null;
-              switch (platform.platform.slug) {
-                case 'pc':
-                  platformImg = Windows;
-                  platformURL =
-                    'https://www.microsoft.com/en-us/store/games/windows';
-                  break;
-                case 'xbox':
-                  platformImg = Xbox;
-                  platformURL = 'https://www.xbox.com/en-US/microsoft-store';
-                  break;
-                case 'playstation':
-                  platformImg = Playstation;
-                  platformURL = 'https://store.playstation.com/en-us/latest';
-                  break;
-                case 'nintendo':
-                  platformImg = Nintendo;
-                  platformURL = 'https://www.nintendo.com/games/';
-                  break;
-                default:
-                  return null;
-              }
-              return (
-                <div className="platform-container" key={index}>
-                  <a href={platformURL} target="_blank" rel="noreferrer">
-                    <img src={platformImg} className="w-100 mb-2"></img>
-                  </a>
-                </div>
-              );
-            })}
-          </div>
-          <div className="details-container">
-            <div className="pl-2 mb-2 font-weight-bold game-title">
-              { props.value.name}
-            </div>
-            <div className="pl-2 d-inline-block font-18 game-card-date">
-              {'Release date: ' +
-                dayjs(props.value.released).format('MMM-DD-YYYY')}
-            </div>
-            <a href={`#game-details?gameId=${props.value.id}`}>
-              <div className="d-inline-block view-details pr-1 font-18">
-                View Details
+    <div className="game-card ml-lg-5 mb-3 mb-lg-5">
+      <div className="w-100 image-container">
+        <a href={`#game-details?gameId=${props.value.id}`}>
+          <img src={props.image} className="w-100 h-100 game-image"></img>
+        </a>
+      </div>
+      <div className="text-white font-24 font-Josefin details">
+        <div className="all-platforms-container mb-2 pl-2 pt-2">
+          {props.value.parent_platforms.map((platform, index) => {
+            let platformImg = null;
+            let platformURL = null;
+            switch (platform.platform.slug) {
+              case 'pc':
+                platformImg = Windows;
+                platformURL =
+                  'https://www.microsoft.com/en-us/store/games/windows';
+                break;
+              case 'xbox':
+                platformImg = Xbox;
+                platformURL = 'https://www.xbox.com/en-US/microsoft-store';
+                break;
+              case 'playstation':
+                platformImg = Playstation;
+                platformURL = 'https://store.playstation.com/en-us/latest';
+                break;
+              case 'nintendo':
+                platformImg = Nintendo;
+                platformURL = 'https://www.nintendo.com/games/';
+                break;
+              default:
+                return null;
+            }
+            return (
+              <div className="platform-container" key={index}>
+                <a href={platformURL} target="_blank" rel="noreferrer">
+                  <img src={platformImg} className="w-100 mb-2"></img>
+                </a>
               </div>
-            </a>
-            <div
-              className={
-                 props.value.metacritic !== null ? 'font-18 metacritic' : 'hide'
-              }
-            >
-              { props.value.metacritic}
+            );
+          })}
+        </div>
+        <div className="details-container">
+          <div className="pl-2 mb-2 font-weight-bold game-title">
+            {props.value.name}
+          </div>
+          <div className="pl-2 d-inline-block font-18 game-card-date">
+            {'Release date: ' +
+              dayjs(props.value.released).format('MMM-DD-YYYY')}
+          </div>
+          <a href={`#game-details?gameId=${props.value.id}`}>
+            <div className="d-inline-block view-details pr-1 font-18">
+              View Details
             </div>
+          </a>
+          <div
+            className={
+              props.value.metacritic !== null ? 'font-18 metacritic' : 'hide'
+            }
+          >
+            {props.value.metacritic}
           </div>
         </div>
       </div>
+    </div>
   );
 }

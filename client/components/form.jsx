@@ -39,44 +39,44 @@ export default function Form(props) {
   };
 
   return (
-      <form className="pl-3 pl-md-5 pr-3 pr-md-5" onSubmit={handleSubmit}>
-        <h4 className="text-white font-Yeseva contact-me">Contact Me!</h4>
-        <div className="font-18 font-Josefin">
-          <input
-            type="text"
-            value={name}
-            name="name"
-            onChange={handleChange}
-            placeholder="Your Name"
-            className="contact-form-name"
-            required="required"
-          />
-          <input
-            type="email"
-            value={email}
-            name="email"
-            onChange={handleChange}
-            placeholder="Your Email"
-            className="contact-form-email"
-            required="required"
-          />
-          <textarea
-            name="message"
-            onChange={handleChange}
-            placeholder="Send some feedback!"
-            value={message}
-            className="contact-form-message"
-            style={{ width: '100%', height: '150px' }}
-            required="required"
-          />
-        </div>
-        <div className="text-right">
-          <input
-            type="submit"
-            value="Submit"
-            className="review-button text-white font-Yeseva cursor-pointer"
-          />
-        </div>
-      </form>
+    <form className="pl-3 pl-md-5 pr-3 pr-md-5" onSubmit={handleSubmit}>
+      <h4 className="text-white font-Yeseva contact-me">Contact Me!</h4>
+      <div className="font-18 font-Josefin">
+        <input
+          type="text"
+          value={name}
+          name="name"
+          onChange={handleChange}
+          placeholder="Your Name"
+          className="contact-form-name"
+          required="required"
+        />
+        <input
+          type="email"
+          value={email}
+          name="email"
+          onChange={handleChange}
+          placeholder="Your Email"
+          className="contact-form-email"
+          required="required"
+        />
+        <textarea
+          name="message"
+          onChange={handleChange}
+          placeholder="Send some feedback!"
+          value={message}
+          className="contact-form-message"
+          style={{ width: '100%', height: '150px' }}
+          required="required"
+        />
+      </div>
+      <div className="text-right">
+        <input
+          type="submit"
+          value="Submit"
+          className="review-button text-white font-Yeseva cursor-pointer"
+        />
+      </div>
+    </form>
   );
 }

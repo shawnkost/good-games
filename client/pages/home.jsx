@@ -37,47 +37,35 @@ export default function Home(props) {
     if (value !== '') {
       fetch(`/api/searchGames/${value}`)
         .then(response => response.json())
-        .then(games =>
-          setGames(games)
-        )
+        .then(games => setGames(games))
         .catch(() => handleError());
     }
   };
 
   if (searchInput === '') {
     return (
-        <>
-          <div
-            className={
-              props.menuClicked ? 'blur-container' : 'page-container'
-            }
-          >
-            <Navbar
-              onChange={props.onChange}
-              updateValue={updateValue}
-            />
-            <GameSort onChange={savePlatform} path={props.path} />
-            <Games platform={platform} path={props.path} />
-          </div>
-          <Menu click={props.click} menuClicked={props.menuClicked} />
-        </>
+      <>
+        <div
+          className={props.menuClicked ? 'blur-container' : 'page-container'}
+        >
+          <Navbar onChange={props.onChange} updateValue={updateValue} />
+          <GameSort onChange={savePlatform} path={props.path} />
+          <Games platform={platform} path={props.path} />
+        </div>
+        <Menu click={props.click} menuClicked={props.menuClicked} />
+      </>
     );
   } else {
     return (
-        <>
-          <div
-            className={
-              props.menuClicked ? 'blur-container' : 'page-container'
-            }
-          >
-            <Navbar
-              onChange={props.onChange}
-              updateValue={updateValue}
-            />
-            <div className="mb-4 pl-3 text-white search-games">Games</div>
-            <SearchResults games={games} />
-          </div>
-        </>
+      <>
+        <div
+          className={props.menuClicked ? 'blur-container' : 'page-container'}
+        >
+          <Navbar onChange={props.onChange} updateValue={updateValue} />
+          <div className="mb-4 pl-3 text-white search-games">Games</div>
+          <SearchResults games={games} />
+        </div>
+      </>
     );
   }
 }

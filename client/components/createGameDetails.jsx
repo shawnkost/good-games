@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
 
 export default function CreateGameDetails(props) {
-
   const [gameList, setGameList] = useState([]);
 
   useEffect(() => {

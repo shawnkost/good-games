@@ -5,7 +5,10 @@ export default function CreateScrollingImages(props) {
     const screenshots = props.images.results.map((image, index) => {
       return (
         <div className="screenshot mr-2" key={index}>
-          <img className="w-100 h-100 game-details-images" src={image.image}></img>
+          <img
+            className="w-100 h-100 game-details-images"
+            src={image.image}
+          ></img>
         </div>
       );
     });

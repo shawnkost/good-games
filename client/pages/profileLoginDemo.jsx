@@ -3,7 +3,10 @@ import Redirect from '../components/redirect';
 import ProfileBackground from '../images/profile-background.png';
 
 export default function ProfileLoginDemo(props) {
-  const [state] = useState({ email: 'demo@goodgames.com', password: 'password1' });
+  const [state] = useState({
+    email: 'demo@goodgames.com',
+    password: 'password1'
+  });
   const email = state.email;
   const password = state.password;
 
