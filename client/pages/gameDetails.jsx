@@ -145,7 +145,7 @@ export default class GameDetails extends React.Component {
 
   searchGames() {
     if (this.state.searchInput !== '') {
-      fetch(`/test/api/searchGames/${this.state.searchInput}`)
+      fetch(`/api/searchGames/${this.state.searchInput}`)
         .then(response => response.json())
         .then(games =>
           this.setState({

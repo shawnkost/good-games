@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Redirect from '../components/redirect';
 import Navbar from '../components/navbar';
 import ProfileReviews from '../components/profileReviews';
@@ -6,33 +6,23 @@ import Menu from '../components/menu';
 import SearchResults from '../components/searchResults';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import debounce from 'lodash.debounce';
 toast.configure();
 
-export default class ProfileHome extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      reviews: '',
-      searchInput: '',
-      games: ''
-    };
-    this.timeoutId = '';
-    this.handleError = this.handleError.bind(this);
-    this.grabUserReviews = this.grabUserReviews.bind(this);
-    this.updateValue = this.updateValue.bind(this);
-    this.searchGames = this.searchGames.bind(this);
-  }
+export default function ProfileHome(props) {
+  const [reviews, setReviews] = useState('');
+  const [searchInput, setSearchInput] = useState('');
+  const [games, setGames] = useState('');
 
-  componentDidMount() {
-    this.grabUserReviews();
-  }
+  useEffect(() => {
+    grabUserReviews();
+  }, []);
 
-  handleError() {
+  const handleError = () => {
     toast.error('An unexpected error occurred retrieving data');
-  }
+  };
 
-  grabUserReviews() {
+  const grabUserReviews = () => {
     const token = window.localStorage.getItem('jwt-token');
     fetch('/api/games/reviews/', {
       headers: {
@@ -42,82 +32,64 @@ export default class ProfileHome extends React.Component {
       .then(response => response.json())
       .then(reviews => {
         if (reviews.error) {
-          this.props.handleSignOut();
+          props.handleSignOut();
         }
-        this.setState({
-          reviews
-        });
+        setReviews(reviews);
       });
-  }
+  };
 
-  updateValue(searchInput) {
-    this.setState({
-      searchInput
-    });
-    if (this.timeoutId) clearTimeout(this.timeoutId);
-    this.timeoutId = setTimeout(this.searchGames, 800);
-  }
+  const handleDebounce = useCallback(
+    debounce(value => searchGames(value), 800),
+    []
+  );
 
-  searchGames() {
-    if (this.state.searchInput !== '') {
-      fetch(`/api/searchGames/${this.state.searchInput}`)
+  const updateValue = value => {
+    setSearchInput(value);
+    handleDebounce(value);
+  };
+
+  const searchGames = value => {
+    if (value !== '') {
+      fetch(`/api/searchGames/${value}`)
         .then(response => response.json())
-        .then(games =>
-          this.setState({
-            games
-          })
-        )
-        .catch(() => this.handleError());
+        .then(games => setGames(games))
+        .catch(() => handleError());
     }
+  };
+
+  if (!props.user) {
+    return <Redirect to="#profile-login" />;
   }
 
-  render() {
-    if (!this.props.user) {
-      return <Redirect to="#profile-login" />;
-    }
-
-    if (this.state.searchInput !== '') {
-      return (
-        <>
-          <div
-            className={
-              this.props.menuClicked ? 'blur-container' : 'page-container'
-            }
-          >
-            <Navbar
-              onChange={this.props.onChange}
-              updateValue={this.updateValue}
-            />
-          </div>
-          <SearchResults games={this.state.games} />
-          <Menu click={this.props.click} menuClicked={this.props.menuClicked} />
-        </>
-      );
-    }
+  if (searchInput !== '') {
     return (
       <>
         <div
-          className={
-            this.props.menuClicked ? 'blur-container' : 'page-container'
-          }
+          className={props.menuClicked ? 'blur-container' : 'page-container'}
         >
-          <Navbar
-            onChange={this.props.onChange}
-            updateValue={this.updateValue}
-          />
-          <div className="pl-3 mb-4 text-white text-center font-36 font-Yeseva">
-            My Reviews
-          </div>
-          <ProfileReviews reviews={this.state.reviews} />
-          <div
-            className="pr-2 mb-4 text-white text-center font-24 font-Yeseva cursor-pointer"
-            onClick={this.props.handleSignOut}
-          >
-            Sign Out
-          </div>
+          <Navbar onChange={props.onChange} updateValue={updateValue} />
         </div>
-        <Menu click={this.props.click} menuClicked={this.props.menuClicked} />
+        <SearchResults games={games} />
+        <Menu click={props.click} menuClicked={props.menuClicked} />
       </>
     );
   }
+  return (
+    <>
+      <div className={props.menuClicked ? 'blur-container' : 'page-container'}>
+        <Navbar onChange={props.onChange} updateValue={updateValue} />
+        <div className="pl-3 mb-4 text-white text-center font-36 font-Yeseva">
+          My Reviews
+        </div>
+        <ProfileReviews reviews={reviews} />
+        <div
+          className="pr-2 mb-4 text-white text-center font-24 font-Yeseva cursor-pointer"
+          onClick={props.handleSignOut}
+        >
+          Sign Out
+        </div>
+      </div>
+      <Menu click={props.click} menuClicked={props.menuClicked} />
+    </>
+  );
 }

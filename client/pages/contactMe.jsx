@@ -14,43 +14,36 @@ export default function ContactMe(props) {
   const [searchInput, setSearchInput] = useState('');
   const [games, setGames] = useState('');
 
-  function handleError() {
+  const handleError = () => {
     toast.error('An unexpected error occurred retrieving data');
-  }
+  };
 
   const handleDebounce = useCallback(
     debounce(value => searchGames(value), 800),
     []
   );
 
-  function updateValue(value) {
+  const updateValue = value => {
     setSearchInput(value);
     handleDebounce(value);
-  }
+  };
 
-  function searchGames(value) {
+  const searchGames = value => {
     if (value !== '') {
       fetch(`/api/searchGames/${value}`)
         .then(response => response.json())
-        .then(games =>
-          setGames(games)
-        )
+        .then(games => setGames(games))
         .catch(() => handleError());
     }
-  }
+  };
 
   if (searchInput !== '') {
     return (
       <>
         <div
-          className={
-            props.menuClicked ? 'blur-container' : 'page-container'
-          }
+          className={props.menuClicked ? 'blur-container' : 'page-container'}
         >
-          <Navbar
-            onChange={props.onChange}
-            updateValue={updateValue}
-          />
+          <Navbar onChange={props.onChange} updateValue={updateValue} />
         </div>
         <SearchResults games={games} />
         <Menu click={props.click} menuClicked={props.menuClicked} />
