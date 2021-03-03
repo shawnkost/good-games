@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Home from './pages/home';
 import NewReleases from './pages/newReleases';
 import parseRoute from './lib/parse-route';
@@ -12,60 +12,46 @@ import decodeToken from './lib/decode-token';
 import ProfileHome from './pages/profileHome';
 import ContactMe from './pages/contactMe';
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null,
-      isAuthorizing: true,
-      route: parseRoute(window.location.hash),
-      menuClicked: false
-    };
-    this.previousRoute = '';
-    this.openMenu = this.openMenu.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
-    this.handleSignIn = this.handleSignIn.bind(this);
-    this.handleSignOut = this.handleSignOut.bind(this);
-  }
+export default function App(props) {
+  const [user, setUser] = useState(null);
+  const [prevRoute, setPrevRoute] = useState(null);
+  const [route, setRoute] = useState(parseRoute(window.location.hash));
+  const [menuClicked, setMenuClicked] = useState(false);
 
-  componentDidMount() {
-    window.addEventListener('hashchange', () => {
-      this.previousRoute = this.state.route;
-      this.setState({
-        route: parseRoute(location.hash)
-      });
-    });
+  const updateRoute = () => {
+    setPrevRoute(route);
+    setRoute(parseRoute(location.hash));
+  };
+
+  useEffect(() => {
+    window.addEventListener('hashchange', updateRoute);
     const token = window.localStorage.getItem('jwt-token');
     const user = token ? decodeToken(token) : null;
     if (user) {
-      this.setState({ user, isAuthorizing: false });
+      setUser(user.user);
     }
-  }
+  }, []);
 
-  openMenu(clicked) {
+  const openMenu = clicked => {
     document.body.style.overflow = 'hidden';
-    this.setState({
-      menuClicked: true
-    });
-  }
+    setMenuClicked(true);
+  };
 
-  closeMenu(clicked) {
+  const closeMenu = clicked => {
     document.body.style.overflow = '';
-    this.setState({
-      menuClicked: false
-    });
-  }
+    setMenuClicked(false);
+  };
 
-  handleSignIn(result) {
+  const handleSignIn = result => {
     const { user, token } = result;
     if (token) {
       window.localStorage.setItem('jwt-token', token);
       window.location.hash = '#profile-home';
     }
-    this.setState({ user });
-  }
+    setUser(user);
+  };
 
-  handleSignOut(event) {
+  const handleSignOut = event => {
     const token = window.localStorage.getItem('jwt-token');
     if (event) {
       fetch('/api/users/session', {
@@ -73,27 +59,23 @@ export default class App extends React.Component {
         headers: {
           'X-ACCESS-TOKEN': token
         }
-      })
-        .then(response => {
-          window.localStorage.removeItem('jwt-token');
-          this.setState({ user: null });
-        });
+      });
     }
     window.localStorage.removeItem('jwt-token');
-    this.setState({ user: null });
+    setUser(null);
     window.location.hash = '#profile-login';
-  }
+  };
 
-  renderPage() {
-    const { path, params } = this.state.route;
+  const renderPage = () => {
+    const { path, params } = route;
     if (path === '') {
       return (
         <Home
           path={path}
-          onChange={this.openMenu}
-          click={this.closeMenu}
-          menuClicked={this.state.menuClicked}
-          user={this.state.user}
+          onChange={openMenu}
+          click={closeMenu}
+          menuClicked={menuClicked}
+          user={user}
         />
       );
     }
@@ -101,10 +83,10 @@ export default class App extends React.Component {
       return (
         <NewReleases
           path={path}
-          onChange={this.openMenu}
-          click={this.closeMenu}
-          menuClicked={this.state.menuClicked}
-          user={this.state.user}
+          onChange={openMenu}
+          click={closeMenu}
+          menuClicked={menuClicked}
+          user={user}
         />
       );
     }
@@ -112,10 +94,10 @@ export default class App extends React.Component {
       return (
         <UpcomingGames
           path={path}
-          onChange={this.openMenu}
-          click={this.closeMenu}
-          menuClicked={this.state.menuClicked}
-          user={this.state.user}
+          onChange={openMenu}
+          click={closeMenu}
+          menuClicked={menuClicked}
+          user={user}
         />
       );
     }
@@ -124,48 +106,47 @@ export default class App extends React.Component {
       return (
         <GameDetails
           path={path}
-          previousRoute={this.previousRoute}
-          onChange={this.openMenu}
-          click={this.closeMenu}
-          menuClicked={this.state.menuClicked}
+          prevRoute={prevRoute}
+          onChange={openMenu}
+          click={closeMenu}
+          menuClicked={menuClicked}
           gameId={gameID}
-          user={this.state.user}
+          user={user}
         />
       );
     }
     if (path === 'profile') {
-      return <Profile user={this.state.user} />;
+      return <Profile user={user} />;
     }
     if (path === 'profile-login') {
-      return (
-        <ProfileLogin handleSignIn={this.handleSignIn} user={this.state.user} />
-      );
+      return <ProfileLogin handleSignIn={handleSignIn} user={user} />;
     }
     if (path === 'profile-login-demo') {
-      return (
-        <ProfileLoginDemo handleSignIn={this.handleSignIn} user={this.state.user} />
-      );
+      return <ProfileLoginDemo handleSignIn={handleSignIn} user={user} />;
     }
     if (path === 'profile-sign-up') {
       return <ProfileSignUp />;
     }
-    if (path === 'profile-home' && this.state.user) {
+    if (path === 'profile-home' && user) {
       return (
         <ProfileHome
-          user={this.state.user}
-          onChange={this.openMenu}
-          click={this.closeMenu}
-          menuClicked={this.state.menuClicked}
-          handleSignOut={this.handleSignOut}
+          user={user}
+          onChange={openMenu}
+          click={closeMenu}
+          menuClicked={menuClicked}
+          handleSignOut={handleSignOut}
         />
       );
     }
     if (path === 'contact-me') {
-      return <ContactMe onChange={this.openMenu} click={this.closeMenu} menuClicked={this.state.menuClicked}/>;
+      return (
+        <ContactMe
+          onChange={openMenu}
+          click={closeMenu}
+          menuClicked={menuClicked}
+        />
+      );
     }
-  }
-
-  render() {
-    return <>{this.renderPage()}</>;
-  }
+  };
+  return <>{renderPage()}</>;
 }

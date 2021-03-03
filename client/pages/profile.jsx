@@ -3,7 +3,6 @@ import ProfileBackground from '../images/profile-background.png';
 import Redirect from '../components/redirect';
 
 export default function Profile(props) {
-
   if (props.user) {
     return <Redirect to="profile-home" />;
   }

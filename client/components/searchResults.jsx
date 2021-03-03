@@ -20,12 +20,14 @@ export default function SearchResults(props) {
     });
     return listOfGames;
   } else {
-    return <Loader
-      className="text-center"
-      type="Rings"
-      color="White"
-      height={175}
-      width={175}
-    />;
+    return (
+      <Loader
+        className="text-center"
+        type="Rings"
+        color="White"
+        height={175}
+        width={175}
+      />
+    );
   }
 }

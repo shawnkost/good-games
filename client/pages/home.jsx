@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import Games from '../components/games';
 import GameSort from '../components/gameSort';
 import Menu from '../components/menu';
@@ -6,91 +6,66 @@ import Navbar from '../components/navbar';
 import SearchResults from '../components/searchResults';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import debounce from 'lodash.debounce';
 
 toast.configure();
 
-export default class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      platform: 4,
-      searchInput: '',
-      games: ''
-    };
-    this.handleError = this.handleError.bind(this);
-    this.timeoutId = '';
-    this.savePlatform = this.savePlatform.bind(this);
-    this.updateValue = this.updateValue.bind(this);
-    this.searchGames = this.searchGames.bind(this);
-  }
+export default function Home(props) {
+  const [platform, setPlatform] = useState(4);
+  const [searchInput, setSearchInput] = useState('');
+  const [games, setGames] = useState('');
 
-  handleError() {
+  const handleError = () => {
     toast.error('An unexpected error occurred retrieving data');
-  }
+  };
 
-  savePlatform(value) {
-    this.setState({
-      platform: value
-    });
-  }
+  const handleDebounce = useCallback(
+    debounce(value => searchGames(value), 800),
+    []
+  );
 
-  updateValue(searchInput) {
-    this.setState({
-      searchInput
-    });
-    if (this.timeoutId) clearTimeout(this.timeoutId);
-    this.timeoutId = setTimeout(this.searchGames, 800);
-  }
+  const savePlatform = value => {
+    setPlatform(value);
+  };
 
-  searchGames() {
-    if (this.state.searchInput !== '') {
-      fetch(`/api/searchGames/${this.state.searchInput}`)
+  const updateValue = value => {
+    setSearchInput(value);
+    handleDebounce(value);
+  };
+
+  const searchGames = value => {
+    if (value !== '') {
+      fetch(`/api/searchGames/${value}`)
         .then(response => response.json())
-        .then(games =>
-          this.setState({
-            games
-          })
-        )
-        .catch(() => this.handleError());
+        .then(games => setGames(games))
+        .catch(() => handleError());
     }
-  }
+  };
 
-  render() {
-    if (this.state.searchInput === '') {
-      return (
-        <>
-          <div
-            className={
-              this.props.menuClicked ? 'blur-container' : 'page-container'
-            }
-          >
-            <Navbar
-              onChange={this.props.onChange}
-              updateValue={this.updateValue}
-            />
-            <GameSort onChange={this.savePlatform} path={this.props.path} />
-            <Games platform={this.state.platform} path={this.props.path} />
-          </div>
-          <Menu click={this.props.click} menuClicked={this.props.menuClicked} />
-        </>
-      );
-    } else {
-      return (
-        <>
-          <div
-            className={
-              this.props.menuClicked ? 'blur-container' : 'page-container'
-            }
-          >
-            <Navbar
-              onChange={this.props.onChange}
-              updateValue={this.updateValue}
-            />
-            <div className="mb-4 pl-3 text-white search-games">Games</div>
-            <SearchResults games={this.state.games} />
-          </div>
-        </>
-      );
-    }
+  if (searchInput === '') {
+    return (
+      <>
+        <div
+          className={props.menuClicked ? 'blur-container' : 'page-container'}
+        >
+          <Navbar onChange={props.onChange} updateValue={updateValue} />
+          <GameSort onChange={savePlatform} path={props.path} />
+          <Games platform={platform} path={props.path} />
+        </div>
+        <Menu click={props.click} menuClicked={props.menuClicked} />
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div
+          className={props.menuClicked ? 'blur-container' : 'page-container'}
+        >
+          <Navbar onChange={props.onChange} updateValue={updateValue} />
+          <div className="mb-4 pl-3 text-white search-games">Games</div>
+          <SearchResults games={games} />
+        </div>
+      </>
+    );
   }
 }

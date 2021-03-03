@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import Form from '../components/form';
 import Menu from '../components/menu';
 import Navbar from '../components/navbar';
@@ -6,73 +6,56 @@ import SearchResults from '../components/searchResults';
 import FacebookPhoto from '../images/facebookPhoto.jpg';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import debounce from 'lodash.debounce';
 
 toast.configure();
 
-export default class ContactMe extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchInput: '',
-      games: ''
-    };
-    this.timeoutId = '';
-    this.handleError = this.handleError.bind(this);
-    this.updateValue = this.updateValue.bind(this);
-    this.searchGames = this.searchGames.bind(this);
-  }
+export default function ContactMe(props) {
+  const [searchInput, setSearchInput] = useState('');
+  const [games, setGames] = useState('');
 
-  handleError() {
+  const handleError = () => {
     toast.error('An unexpected error occurred retrieving data');
-  }
+  };
 
-  updateValue(searchInput) {
-    this.setState({
-      searchInput
-    });
-    if (this.timeoutId) clearTimeout(this.timeoutId);
-    this.timeoutId = setTimeout(this.searchGames, 800);
-  }
+  const handleDebounce = useCallback(
+    debounce(value => searchGames(value), 800),
+    []
+  );
 
-  searchGames() {
-    if (this.state.searchInput !== '') {
-      fetch(`/api/searchGames/${this.state.searchInput}`)
+  const updateValue = value => {
+    setSearchInput(value);
+    handleDebounce(value);
+  };
+
+  const searchGames = value => {
+    if (value !== '') {
+      fetch(`/api/searchGames/${value}`)
         .then(response => response.json())
-        .then(games =>
-          this.setState({
-            games
-          })
-        )
-        .catch(() => this.handleError());
+        .then(games => setGames(games))
+        .catch(() => handleError());
     }
-  }
+  };
 
-  render() {
-    if (this.state.searchInput !== '') {
-      return (
-        <>
-          <div className={this.props.menuClicked ? 'blur-container' : 'page-container'}>
-            <Navbar
-              onChange={this.props.onChange}
-              updateValue={this.updateValue}
-            />
-          </div>
-          <SearchResults games={this.state.games} />
-          <Menu click={this.props.click} menuClicked={this.props.menuClicked} />
-        </>
-      );
-    }
+  if (searchInput !== '') {
     return (
       <>
         <div
-          className={
-            this.props.menuClicked ? 'blur-container' : 'page-container'
-          }
+          className={props.menuClicked ? 'blur-container' : 'page-container'}
         >
-          <Navbar
-            onChange={this.props.onChange}
-            updateValue={this.updateValue}
-          />
+          <Navbar onChange={props.onChange} updateValue={updateValue} />
+        </div>
+        <SearchResults games={games} />
+        <Menu click={props.click} menuClicked={props.menuClicked} />
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div
+          className={props.menuClicked ? 'blur-container' : 'page-container'}
+        >
+          <Navbar onChange={props.onChange} updateValue={updateValue} />
           <div className="d-flex align-items-center pl-3 pl-md-5 mb-3">
             <div
               className="mr-3 mr-sm-5 avatar-container"
@@ -93,7 +76,7 @@ export default class ContactMe extends React.Component {
           </p>
           <Form />
         </div>
-        <Menu click={this.props.click} menuClicked={this.props.menuClicked} />
+        <Menu click={props.click} menuClicked={props.menuClicked} />
       </>
     );
   }

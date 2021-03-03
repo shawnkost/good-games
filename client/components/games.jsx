@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CreateGameCard from './createGameCard';
 import Loader from 'react-loader-spinner';
 import { toast } from 'react-toastify';
@@ -6,117 +6,66 @@ import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure();
 
-export default class Games extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      games: []
-    };
-    this.handleError = this.handleError.bind(this);
-    this.mostPopularGames = this.mostPopularGames.bind(this);
-    this.newlyReleasedGames = this.newlyReleasedGames.bind(this);
-    this.upcomingGames = this.upcomingGames.bind(this);
-    this.nextRequest = this.nextRequest.bind(this);
-    this.mapGames = this.mapGames.bind(this);
-  }
+export default function Games(props) {
+  const [games, setGames] = useState([]);
 
-  componentDidMount() {
-    if (this.props.path === '') {
-      this.mostPopularGames();
+  useEffect(() => {
+    if (props.path === '') {
+      setGames([]);
+      mostPopularGames();
     }
-    if (this.props.path === 'new-releases') {
-      this.newlyReleasedGames();
+    if (props.path === 'new-releases') {
+      setGames([]);
+      newlyReleasedGames();
     }
-    if (this.props.path === 'upcoming-games') {
-      this.upcomingGames();
+    if (props.path === 'upcoming-games') {
+      setGames([]);
+      upcomingGames();
     }
-  }
+  }, [props.platform]);
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.platform !== this.props.platform && this.props.path === '') {
-      this.setState({
-        games: []
-      });
-      this.mostPopularGames();
-    }
-    if (
-      prevProps.platform !== this.props.platform &&
-      this.props.path === 'new-releases'
-    ) {
-      this.setState({
-        games: []
-      });
-      this.newlyReleasedGames();
-    }
-    if (
-      prevProps.platform !== this.props.platform &&
-      this.props.path === 'upcoming-games'
-    ) {
-      this.setState({
-        games: []
-      });
-      this.upcomingGames();
-    }
-  }
-
-  handleError() {
+  const handleError = () => {
     toast.error('An unexpected error occurred retrieving data');
-  }
+  };
 
-  mostPopularGames() {
-    fetch(`/api/mostPopular/${this.props.platform}`)
+  const mostPopularGames = () => {
+    fetch(`/api/mostPopular/${props.platform}`)
       .then(response => response.json())
-      .then(games =>
-        this.setState({
-          games
-        })
-      )
-      .catch(() => this.handleError());
-  }
+      .then(games => setGames(games))
+      .catch(() => handleError());
+  };
 
-  newlyReleasedGames() {
-    fetch(`/api/newReleases/${this.props.platform}`)
+  const newlyReleasedGames = () => {
+    fetch(`/api/newReleases/${props.platform}`)
       .then(response => response.json())
-      .then(games =>
-        this.setState({
-          games
-        })
-      )
-      .catch(() => this.handleError());
-  }
+      .then(games => setGames(games))
+      .catch(() => handleError());
+  };
 
-  upcomingGames() {
-    fetch(`/api/upcomingGames/${this.props.platform}`)
+  const upcomingGames = () => {
+    fetch(`/api/upcomingGames/${props.platform}`)
       .then(response => response.json())
-      .then(games =>
-        this.setState({
-          games
-        })
-      )
-      .catch(() => this.handleError());
-  }
+      .then(games => setGames(games))
+      .catch(() => handleError());
+  };
 
-  nextRequest() {
-    if (this.state.games.next !== null) {
-      const nextURL = this.state.games.next.slice(8);
+  const nextRequest = () => {
+    if (games.next !== null) {
+      const nextURL = games.next.slice(8);
       const encodedURL = encodeURIComponent(nextURL);
-      this.setState({
-        games: []
-      });
+      setGames([]);
       fetch(`/api/nextPage?url=${encodedURL}`)
         .then(response => response.json())
         .then(games => {
-          this.setState({
-            games
-          });
+          setGames(games);
         })
-        .catch(() => this.handleError());
+        .catch(() => handleError());
     }
     window.scrollTo(0, 0);
-  }
+  };
 
-  mapGames() {
-    const listOfGames = this.state.games.results.map((game, index) => {
+  const mapGames = () => {
+    const listOfGames = games.results.map((game, index) => {
       return (
         <CreateGameCard
           value={game}
@@ -126,37 +75,36 @@ export default class Games extends React.Component {
       );
     });
     return listOfGames;
-  }
+  };
 
-  render() {
-    let gameList = '';
-    if (this.state.games.results && this.state.games.results.length > 0) {
-      gameList = this.mapGames();
-    } else {
-      return (
-        <Loader
-          className="text-center"
-          type="Rings"
-          color="White"
-          height={175}
-          width={175}
-        />
-      );
-    }
+  let gameList = '';
+
+  if (games.results && games.results.length > 0) {
+    gameList = mapGames();
+  } else {
     return (
-      <>
-        <div className="container-fluid game-container">{gameList}</div>
-        <div
-          className={
-            this.state.games.results
-              ? 'show text-white text-center mb-3 font-24 font-Yeseva cursor-pointer next-button'
-              : 'hide'
-          }
-          onClick={this.nextRequest}
-        >
-          {this.state.games.next !== null ? 'Next Page' : 'Back to top'}
-        </div>
-      </>
+      <Loader
+        className="text-center"
+        type="Rings"
+        color="White"
+        height={175}
+        width={175}
+      />
     );
   }
+  return (
+    <>
+      <div className="container-fluid game-container">{gameList}</div>
+      <div
+        className={
+          games.results
+            ? 'show text-white text-center mb-3 font-24 font-Yeseva cursor-pointer next-button'
+            : 'hide'
+        }
+        onClick={nextRequest}
+      >
+        {games.next !== null ? 'Next Page' : 'Back to top'}
+      </div>
+    </>
+  );
 }
