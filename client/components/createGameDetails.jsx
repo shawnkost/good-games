@@ -20,16 +20,18 @@ export default function CreateGameDetails(props) {
     toast.error('You must be signed in to add a game to your list');
   };
 
-  const grabUserGameList = () => {
+  const grabUserGameList = async () => {
     if (props.user) {
       const userId = props.user.userId;
-      fetch(`/api/games/gameList/${props.gameDetails.id}/${userId}`)
-        .then(response => response.json())
-        .then(gameList => setGameList(gameList));
+      const response = await fetch(
+        `/api/games/gameList/${props.gameDetails.id}/${userId}`
+      );
+      const gameList = await response.json();
+      setGameList(gameList);
     }
   };
 
-  const addPlayed = () => {
+  const addPlayed = async () => {
     if (props.user) {
       const userId = props.user.userId;
       if (gameList.length === 0) {
@@ -39,15 +41,15 @@ export default function CreateGameDetails(props) {
           wantToPlay: false,
           played: true
         };
-        fetch('/api/games/gameList', {
+        const response = await fetch('/api/games/gameList', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(data)
-        })
-          .then(response => response.json())
-          .then(gameList => setGameList([gameList]));
+        });
+        const gameList = await response.json();
+        setGameList([gameList]);
         return;
       }
       if (gameList[0].played) {
@@ -55,15 +57,18 @@ export default function CreateGameDetails(props) {
           wantToPlay: false,
           played: false
         };
-        fetch(`/api/games/gameList/${props.gameDetails.id}/${userId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        })
-          .then(response => response.json())
-          .then(gameList => setGameList([gameList]));
+        const response = await fetch(
+          `/api/games/gameList/${props.gameDetails.id}/${userId}`,
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          }
+        );
+        const gameList = await response.json();
+        setGameList([gameList]);
         return;
       }
       if (!gameList[0].played) {
@@ -71,22 +76,25 @@ export default function CreateGameDetails(props) {
           wantToPlay: false,
           played: true
         };
-        fetch(`/api/games/gameList/${props.gameDetails.id}/${userId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        })
-          .then(response => response.json())
-          .then(gameList => setGameList([gameList]));
+        const response = await fetch(
+          `/api/games/gameList/${props.gameDetails.id}/${userId}`,
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          }
+        );
+        const gameList = await response.json();
+        setGameList([gameList]);
         return;
       }
     }
     handleError();
   };
 
-  const addWantToPlay = () => {
+  const addWantToPlay = async () => {
     if (props.user) {
       const userId = props.user.userId;
       if (gameList.length === 0) {
@@ -96,15 +104,15 @@ export default function CreateGameDetails(props) {
           wantToPlay: true,
           played: false
         };
-        fetch('/api/games/gameList', {
+        const response = await fetch('/api/games/gameList', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(data)
-        })
-          .then(response => response.json())
-          .then(gameList => setGameList([gameList]));
+        });
+        const gameList = await response.json();
+        setGameList([gameList]);
         return;
       }
       if (gameList[0].wantToPlay) {
@@ -112,15 +120,18 @@ export default function CreateGameDetails(props) {
           wantToPlay: false,
           played: false
         };
-        fetch(`/api/games/gameList/${props.gameDetails.id}/${userId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        })
-          .then(response => response.json())
-          .then(gameList => setGameList([gameList]));
+        const response = await fetch(
+          `/api/games/gameList/${props.gameDetails.id}/${userId}`,
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          }
+        );
+        const gameList = response.json();
+        setGameList([gameList]);
         return;
       }
       if (!gameList[0].wantToPlay) {
@@ -128,15 +139,18 @@ export default function CreateGameDetails(props) {
           wantToPlay: true,
           played: false
         };
-        fetch(`/api/games/gameList/${props.gameDetails.id}/${userId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        })
-          .then(response => response.json())
-          .then(gameList => setGameList([gameList]));
+        const response = await fetch(
+          `/api/games/gameList/${props.gameDetails.id}/${userId}`,
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          }
+        );
+        const gameList = await response.json();
+        setGameList([gameList]);
         return;
       }
     }
@@ -149,7 +163,7 @@ export default function CreateGameDetails(props) {
         <a href="#" className="detail-links">
           <span>Home /</span>
         </a>
-        <a href={`#${props.prevRoute.path}`} className="detail-links">
+        <a href={props.prevRoute ? `#${props.prevRoute.path}` : '#'} className="detail-links">
           <span> Games /</span>
         </a>
         <div className="d-inline-block">&nbsp;{props.gameDetails.name}</div>
