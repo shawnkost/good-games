@@ -47,26 +47,13 @@ export default function CreateGameDetails(props) {
         });
         setGameList([response.data]);
         return;
-      }
-      if (gameList[0].played) {
+      } else {
         const response = await axios({
           method: 'PATCH',
           url: `/api/games/gameList/${props.gameDetails.id}/${userId}`,
           data: {
             wantToPlay: false,
-            played: false
-          }
-        });
-        setGameList([response.data]);
-        return;
-      }
-      if (!gameList[0].played) {
-        const response = await axios({
-          method: 'PATCH',
-          url: `/api/games/gameList/${props.gameDetails.id}/${userId}`,
-          data: {
-            wantToPlay: false,
-            played: true
+            played: !gameList[0].played
           }
         });
         setGameList([response.data]);
@@ -80,21 +67,17 @@ export default function CreateGameDetails(props) {
     if (props.user) {
       const userId = props.user.userId;
       if (gameList.length === 0) {
-        const data = {
-          userId: userId,
-          gameId: props.gameDetails.id,
-          wantToPlay: true,
-          played: false
-        };
-        const response = await fetch('/api/games/gameList', {
+        const response = await axios({
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
+          url: '/api/games/gameList',
+          data: {
+            userId: userId,
+            gameId: props.gameDetails.id,
+            wantToPlay: true,
+            played: false
+          }
         });
-        const gameList = await response.json();
-        setGameList([gameList]);
+        setGameList([response.data]);
         return;
       }
       if (gameList[0].wantToPlay) {
