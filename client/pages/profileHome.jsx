@@ -7,6 +7,8 @@ import SearchResults from '../components/searchResults';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import debounce from 'lodash.debounce';
+import axios from 'axios';
+
 toast.configure();
 
 export default function ProfileHome(props) {
@@ -18,22 +20,26 @@ export default function ProfileHome(props) {
     grabUserReviews();
   }, []);
 
+  if (!props.user) {
+    return <Redirect to="#profile-login" />;
+  }
+
   const handleError = () => {
     toast.error('An unexpected error occurred retrieving data');
   };
 
   const grabUserReviews = async () => {
     const token = window.localStorage.getItem('jwt-token');
-    const response = await fetch('/api/games/reviews/', {
-      headers: {
-        'X-Access-Token': token
-      }
-    });
-    const reviews = await response.json();
-    if (reviews.error) {
-      props.handleSignOut();
+    try {
+      const response = await axios.get('/api/games/reviews/', {
+        headers: {
+          'X-Access-Token': token
+        }
+      });
+      setReviews(response.data);
+    } catch {
+      return props.handleSignOut();
     }
-    setReviews(reviews);
   };
 
   const handleDebounce = useCallback(
@@ -49,18 +55,13 @@ export default function ProfileHome(props) {
   const searchGames = async value => {
     if (value !== '') {
       try {
-        const response = await fetch(`/api/searchGames/${value}`);
-        const games = await response.json();
-        setGames(games);
+        const response = await axios.get(`/api/searchGames/${value}`);
+        setGames(response.data);
       } catch {
         handleError();
       }
     }
   };
-
-  if (!props.user) {
-    return <Redirect to="#profile-login" />;
-  }
 
   if (searchInput !== '') {
     return (

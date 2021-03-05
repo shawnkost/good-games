@@ -7,6 +7,7 @@ import Loader from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import debounce from 'lodash.debounce';
+import axios from 'axios';
 
 toast.configure();
 
@@ -27,7 +28,6 @@ export default function GameDetails(props) {
     setSearchInput('');
     grabGameDetails();
     grabUserReviews();
-    grabYoutubeVideo();
   }, [props.gameId]);
 
   const handleError = () => {
@@ -40,9 +40,8 @@ export default function GameDetails(props) {
 
   const grabGameDetails = async () => {
     try {
-      const response = await fetch(`/api/gameDetails/${props.gameId}`);
-      const gameDetails = await response.json();
-      setGameDetails(gameDetails);
+      const response = await axios.get(`/api/gameDetails/${props.gameId}`);
+      setGameDetails(response.data);
     } catch {
       handleError();
     }
@@ -50,46 +49,39 @@ export default function GameDetails(props) {
   };
 
   const grabGamePhotos = async () => {
-    const response = await fetch(`/api/gamePhotos/${props.gameId}`);
-    const gamePhotos = await response.json();
-    setGamePhotos(gamePhotos);
+    const response = await axios.get(`/api/gamePhotos/${props.gameId}`);
+    setGamePhotos(response.data);
   };
 
   const grabYoutubeVideo = async () => {
     if (gameDetails.slug) {
       let youtubeSearch = gameDetails.slug.split('-').join('%20');
       youtubeSearch = youtubeSearch + '%20Official%20Trailer';
-      const response = await fetch(`/api/youtubeVideo/${youtubeSearch}`);
-      const youtubeResults = await response.json();
-      setYoutubeURL(youtubeResults.items[0].id.videoId);
+      const response = await axios.get(`/api/youtubeVideo/${youtubeSearch}`);
+      setYoutubeURL(response.data.items[0].id.videoId);
     }
   };
 
   const sendUserReview = async review => {
     if (props.user) {
       const userId = props.user.userId;
-      const data = {
-        gameId: gameDetails.id,
-        gameTitle: gameDetails.name,
-        details: review,
-        userId: userId
-      };
-      const response = await fetch('/api/games/reviews', {
+      await axios({
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+        url: '/api/games/reviews',
+        data: {
+          gameId: gameDetails.id,
+          gameTitle: gameDetails.name,
+          details: review,
+          userId: userId
+        }
       });
-      await response.json();
       grabUserReviews();
     }
   };
 
   const grabUserReviews = async () => {
-    const response = await fetch(`/api/games/reviews/${props.gameId}`);
-    const reviews = await response.json();
-    setReviews(reviews);
+    const response = await axios.get(`/api/games/reviews/${props.gameId}`);
+    setReviews(response.data);
   };
 
   const handleDebounce = useCallback(
@@ -105,9 +97,8 @@ export default function GameDetails(props) {
   const searchGames = async value => {
     if (value !== '') {
       try {
-        const response = await fetch(`/api/searchGames/${value}`);
-        const games = await response.json();
-        setGames(games);
+        const response = await axios.get(`/api/searchGames/${value}`);
+        setGames(response.data);
       } catch {
         handleError();
       }

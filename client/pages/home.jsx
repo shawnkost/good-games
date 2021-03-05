@@ -7,6 +7,7 @@ import SearchResults from '../components/searchResults';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import debounce from 'lodash.debounce';
+import axios from 'axios';
 
 toast.configure();
 
@@ -36,9 +37,8 @@ export default function Home(props) {
   const searchGames = async value => {
     if (value !== '') {
       try {
-        const response = await fetch(`/api/searchGames/${value}`);
-        const games = await response.json();
-        setGames(games);
+        const response = await axios.get(`/api/searchGames/${value}`);
+        setGames(response.data);
       } catch {
         handleError();
       }

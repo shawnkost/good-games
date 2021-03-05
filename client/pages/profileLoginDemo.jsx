@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Redirect from '../components/redirect';
 import ProfileBackground from '../images/profile-background.png';
+import axios from 'axios';
 
 export default function ProfileLoginDemo(props) {
   const [state] = useState({
@@ -12,15 +13,12 @@ export default function ProfileLoginDemo(props) {
 
   const handleLogin = async event => {
     event.preventDefault();
-    const response = await fetch('/api/auth/sign-in', {
+    const response = await axios({
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(state)
+      url: '/api/auth/sign-in',
+      data: state
     });
-    const result = await response.json();
-    props.handleSignIn(result);
+    props.handleSignIn(response.data);
   };
 
   if (props.user) {

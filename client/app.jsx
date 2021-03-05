@@ -11,6 +11,7 @@ import ProfileSignUp from './pages/profileSignUp';
 import decodeToken from './lib/decode-token';
 import ProfileHome from './pages/profileHome';
 import ContactMe from './pages/contactMe';
+import axios from 'axios';
 
 export default function App(props) {
   const [user, setUser] = useState(null);
@@ -51,19 +52,18 @@ export default function App(props) {
     setUser(user);
   };
 
-  const handleSignOut = async event => {
+  const handleSignOut = async () => {
     const token = window.localStorage.getItem('jwt-token');
-    if (event) {
-      await fetch('/api/users/session', {
-        method: 'DELETE',
-        headers: {
-          'X-ACCESS-TOKEN': token
-        }
-      });
-      window.localStorage.removeItem('jwt-token');
-      setUser(null);
-      window.location.hash = '#profile-login';
-    }
+    await axios({
+      method: 'DELETE',
+      url: '/api/users/session',
+      headers: {
+        'X-ACCESS-TOKEN': token
+      }
+    });
+    window.localStorage.removeItem('jwt-token');
+    setUser(null);
+    window.location.hash = '#profile-login';
   };
 
   const renderPage = () => {

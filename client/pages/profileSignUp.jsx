@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ProfileBackground from '../images/profile-background.png';
+import axios from 'axios';
 
 export default function ProfileSignUp(props) {
   const [state, setState] = useState({ username: '', email: '', password: '' });
@@ -16,14 +17,11 @@ export default function ProfileSignUp(props) {
 
   const handleSignUp = async event => {
     event.preventDefault();
-    const response = await fetch('/api/auth/sign-up', {
+    await axios({
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(state)
+      url: '/api/auth/sign-up',
+      data: state
     });
-    await response.json();
     window.location.hash = 'profile-login';
   };
 
