@@ -158,7 +158,7 @@ export default function GameDetails(props) {
     );
   } else {
     return (
-      <div className={props.menuClicked ? 'blur- container' : 'page-container'}>
+      <div className={props.menuClicked ? 'blur-container' : 'page-container'}>
         <Navbar
           onChange={props.onChange}
           updateValue={updateValue}
