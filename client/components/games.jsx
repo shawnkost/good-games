@@ -3,6 +3,7 @@ import CreateGameCard from './createGameCard';
 import Loader from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 toast.configure();
 
@@ -30,9 +31,8 @@ export default function Games(props) {
 
   const mostPopularGames = async () => {
     try {
-      const response = await fetch(`/api/mostPopular/${props.platform}`);
-      const games = await response.json();
-      setGames(games);
+      const response = await axios.get(`/api/mostPopular/${props.platform}`);
+      setGames(response.data);
     } catch {
       handleError();
     }
@@ -40,9 +40,8 @@ export default function Games(props) {
 
   const newlyReleasedGames = async () => {
     try {
-      const response = await fetch(`/api/newReleases/${props.platform}`);
-      const games = await response.json();
-      setGames(games);
+      const response = await axios.get(`/api/newReleases/${props.platform}`);
+      setGames(response.data);
     } catch {
       handleError();
     }
@@ -50,9 +49,8 @@ export default function Games(props) {
 
   const upcomingGames = async () => {
     try {
-      const response = await fetch(`/api/upcomingGames/${props.platform}`);
-      const games = await response.json();
-      setGames(games);
+      const response = await axios.get(`/api/upcomingGames/${props.platform}`);
+      setGames(response.data);
     } catch {
       handleError();
     }
@@ -64,9 +62,8 @@ export default function Games(props) {
       const encodedURL = encodeURIComponent(nextURL);
       setGames([]);
       try {
-        const response = await fetch(`/api/nextPage?url=${encodedURL}`);
-        const games = await response.json();
-        setGames(games);
+        const response = await axios.get(`/api/nextPage?url=${encodedURL}`);
+        setGames(response.data);
       } catch {
         handleError();
       }
