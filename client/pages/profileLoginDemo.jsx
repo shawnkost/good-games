@@ -10,19 +10,17 @@ export default function ProfileLoginDemo(props) {
   const email = state.email;
   const password = state.password;
 
-  const handleLogin = event => {
+  const handleLogin = async event => {
     event.preventDefault();
-    fetch('/api/auth/sign-in', {
+    const response = await fetch('/api/auth/sign-in', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(state)
-    })
-      .then(response => response.json())
-      .then(result => {
-        props.handleSignIn(result);
-      });
+    });
+    const result = await response.json();
+    props.handleSignIn(result);
   };
 
   if (props.user) {

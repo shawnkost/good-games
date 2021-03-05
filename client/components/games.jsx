@@ -28,38 +28,48 @@ export default function Games(props) {
     toast.error('An unexpected error occurred retrieving data');
   };
 
-  const mostPopularGames = () => {
-    fetch(`/api/mostPopular/${props.platform}`)
-      .then(response => response.json())
-      .then(games => setGames(games))
-      .catch(() => handleError());
+  const mostPopularGames = async () => {
+    try {
+      const response = await fetch(`/api/mostPopular/${props.platform}`);
+      const games = await response.json();
+      setGames(games);
+    } catch {
+      handleError();
+    }
   };
 
-  const newlyReleasedGames = () => {
-    fetch(`/api/newReleases/${props.platform}`)
-      .then(response => response.json())
-      .then(games => setGames(games))
-      .catch(() => handleError());
+  const newlyReleasedGames = async () => {
+    try {
+      const response = await fetch(`/api/newReleases/${props.platform}`);
+      const games = await response.json();
+      setGames(games);
+    } catch {
+      handleError();
+    }
   };
 
-  const upcomingGames = () => {
-    fetch(`/api/upcomingGames/${props.platform}`)
-      .then(response => response.json())
-      .then(games => setGames(games))
-      .catch(() => handleError());
+  const upcomingGames = async () => {
+    try {
+      const response = await fetch(`/api/upcomingGames/${props.platform}`);
+      const games = await response.json();
+      setGames(games);
+    } catch {
+      handleError();
+    }
   };
 
-  const nextRequest = () => {
+  const nextRequest = async () => {
     if (games.next !== null) {
       const nextURL = games.next.slice(8);
       const encodedURL = encodeURIComponent(nextURL);
       setGames([]);
-      fetch(`/api/nextPage?url=${encodedURL}`)
-        .then(response => response.json())
-        .then(games => {
-          setGames(games);
-        })
-        .catch(() => handleError());
+      try {
+        const response = await fetch(`/api/nextPage?url=${encodedURL}`);
+        const games = await response.json();
+        setGames(games);
+      } catch {
+        handleError();
+      }
     }
     window.scrollTo(0, 0);
   };

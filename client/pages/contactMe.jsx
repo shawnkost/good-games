@@ -28,12 +28,15 @@ export default function ContactMe(props) {
     handleDebounce(value);
   };
 
-  const searchGames = value => {
+  const searchGames = async value => {
     if (value !== '') {
-      fetch(`/api/searchGames/${value}`)
-        .then(response => response.json())
-        .then(games => setGames(games))
-        .catch(() => handleError());
+      try {
+        const response = await fetch(`/api/searchGames/${value}`);
+        const games = await response.json();
+        setGames(games);
+      } catch {
+        handleError();
+      }
     }
   };
 

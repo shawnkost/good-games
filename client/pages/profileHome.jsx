@@ -22,20 +22,18 @@ export default function ProfileHome(props) {
     toast.error('An unexpected error occurred retrieving data');
   };
 
-  const grabUserReviews = () => {
+  const grabUserReviews = async () => {
     const token = window.localStorage.getItem('jwt-token');
-    fetch('/api/games/reviews/', {
+    const response = await fetch('/api/games/reviews/', {
       headers: {
         'X-Access-Token': token
       }
-    })
-      .then(response => response.json())
-      .then(reviews => {
-        if (reviews.error) {
-          props.handleSignOut();
-        }
-        setReviews(reviews);
-      });
+    });
+    const reviews = await response.json();
+    if (reviews.error) {
+      props.handleSignOut();
+    }
+    setReviews(reviews);
   };
 
   const handleDebounce = useCallback(
@@ -48,12 +46,15 @@ export default function ProfileHome(props) {
     handleDebounce(value);
   };
 
-  const searchGames = value => {
+  const searchGames = async value => {
     if (value !== '') {
-      fetch(`/api/searchGames/${value}`)
-        .then(response => response.json())
-        .then(games => setGames(games))
-        .catch(() => handleError());
+      try {
+        const response = await fetch(`/api/searchGames/${value}`);
+        const games = await response.json();
+        setGames(games);
+      } catch {
+        handleError();
+      }
     }
   };
 

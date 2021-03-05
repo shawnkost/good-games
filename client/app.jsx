@@ -51,19 +51,19 @@ export default function App(props) {
     setUser(user);
   };
 
-  const handleSignOut = event => {
+  const handleSignOut = async event => {
     const token = window.localStorage.getItem('jwt-token');
     if (event) {
-      fetch('/api/users/session', {
+      await fetch('/api/users/session', {
         method: 'DELETE',
         headers: {
           'X-ACCESS-TOKEN': token
         }
       });
+      window.localStorage.removeItem('jwt-token');
+      setUser(null);
+      window.location.hash = '#profile-login';
     }
-    window.localStorage.removeItem('jwt-token');
-    setUser(null);
-    window.location.hash = '#profile-login';
   };
 
   const renderPage = () => {

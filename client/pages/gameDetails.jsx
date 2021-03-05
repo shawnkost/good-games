@@ -38,37 +38,34 @@ export default function GameDetails(props) {
     return { __html: gameDetails.description };
   };
 
-  const grabGameDetails = () => {
-    fetch(`/api/gameDetails/${props.gameId}`)
-      .then(response => response.json())
-      .then(gameDetails => {
-        setGameDetails(gameDetails);
-      })
-      .catch(() => handleError());
+  const grabGameDetails = async () => {
+    try {
+      const response = await fetch(`/api/gameDetails/${props.gameId}`);
+      const gameDetails = await response.json();
+      setGameDetails(gameDetails);
+    } catch {
+      handleError();
+    }
     grabGamePhotos();
   };
 
-  const grabGamePhotos = () => {
-    fetch(`/api/gamePhotos/${props.gameId}`)
-      .then(response => response.json())
-      .then(gamePhotos => {
-        setGamePhotos(gamePhotos);
-      });
+  const grabGamePhotos = async () => {
+    const response = await fetch(`/api/gamePhotos/${props.gameId}`);
+    const gamePhotos = await response.json();
+    setGamePhotos(gamePhotos);
   };
 
-  const grabYoutubeVideo = () => {
+  const grabYoutubeVideo = async () => {
     if (gameDetails.slug) {
       let youtubeSearch = gameDetails.slug.split('-').join('%20');
       youtubeSearch = youtubeSearch + '%20Official%20Trailer';
-      fetch(`/api/youtubeVideo/${youtubeSearch}`)
-        .then(response => response.json())
-        .then(youtubeResults => {
-          setYoutubeURL(youtubeResults.items[0].id.videoId);
-        });
+      const response = await fetch(`/api/youtubeVideo/${youtubeSearch}`);
+      const youtubeResults = await response.json();
+      setYoutubeURL(youtubeResults.items[0].id.videoId);
     }
   };
 
-  const sendUserReview = review => {
+  const sendUserReview = async review => {
     if (props.user) {
       const userId = props.user.userId;
       const data = {
@@ -77,24 +74,22 @@ export default function GameDetails(props) {
         details: review,
         userId: userId
       };
-      fetch('/api/games/reviews', {
+      const response = await fetch('/api/games/reviews', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-      })
-        .then(response => response.json())
-        .then(grabUserReviews);
+      });
+      await response.json();
+      grabUserReviews();
     }
   };
 
-  const grabUserReviews = () => {
-    fetch(`/api/games/reviews/${props.gameId}`)
-      .then(response => response.json())
-      .then(reviews => {
-        setReviews(reviews);
-      });
+  const grabUserReviews = async () => {
+    const response = await fetch(`/api/games/reviews/${props.gameId}`);
+    const reviews = await response.json();
+    setReviews(reviews);
   };
 
   const handleDebounce = useCallback(
@@ -107,12 +102,15 @@ export default function GameDetails(props) {
     handleDebounce(value);
   };
 
-  const searchGames = value => {
+  const searchGames = async value => {
     if (value !== '') {
-      fetch(`/api/searchGames/${value}`)
-        .then(response => response.json())
-        .then(games => setGames(games))
-        .catch(() => handleError());
+      try {
+        const response = await fetch(`/api/searchGames/${value}`);
+        const games = await response.json();
+        setGames(games);
+      } catch {
+        handleError();
+      }
     }
   };
 
@@ -160,13 +158,21 @@ export default function GameDetails(props) {
     );
   } else {
     return (
-      <Loader
-        className="text-center"
-        type="Rings"
-        color="White"
-        height={175}
-        width={175}
-      />
+      <div className={props.menuClicked ? 'blur- container' : 'page-container'}>
+        <Navbar
+          onChange={props.onChange}
+          updateValue={updateValue}
+          gameId={props.gameId}
+        />
+        <Loader
+          className="text-center"
+          type="Rings"
+          color="White"
+          height={175}
+          width={175}
+        />
+        <Menu click={props.click} menuClicked={props.menuClicked} />
+      </div>
     );
   }
 }

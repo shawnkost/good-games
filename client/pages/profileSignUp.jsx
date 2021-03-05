@@ -14,19 +14,17 @@ export default function ProfileSignUp(props) {
     });
   };
 
-  const handleSignUp = event => {
+  const handleSignUp = async event => {
     event.preventDefault();
-    fetch('/api/auth/sign-up', {
+    const response = await fetch('/api/auth/sign-up', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(state)
-    })
-      .then(response => response.json())
-      .then(result => {
-        window.location.hash = 'profile-login';
-      });
+    });
+    await response.json();
+    window.location.hash = 'profile-login';
   };
 
   return (
