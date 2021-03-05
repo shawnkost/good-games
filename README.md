@@ -16,7 +16,6 @@ A web application for users to find new games to play, leave reviews for those g
 ## Planned Features
 * Show games on a users list on their profile page
 * Add more information to the game details page about genres, etc.
-* Implement React Hooks
 
 ## Things I learned from this project
 * How to hash users passwords and create a json web token
