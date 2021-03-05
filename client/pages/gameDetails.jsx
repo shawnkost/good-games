@@ -158,13 +158,21 @@ export default function GameDetails(props) {
     );
   } else {
     return (
-      <Loader
-        className="text-center"
-        type="Rings"
-        color="White"
-        height={175}
-        width={175}
-      />
+      <div className={props.menuClicked ? 'blur- container' : 'page-container'}>
+        <Navbar
+          onChange={props.onChange}
+          updateValue={updateValue}
+          gameId={props.gameId}
+        />
+        <Loader
+          className="text-center"
+          type="Rings"
+          color="White"
+          height={175}
+          width={175}
+        />
+        <Menu click={props.click} menuClicked={props.menuClicked} />
+      </div>
     );
   }
 }

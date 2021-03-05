@@ -22,24 +22,21 @@ export default function ProfileLogin(props) {
     });
   };
 
-  const handleLogin = event => {
+  const handleLogin = async event => {
     event.preventDefault();
-    fetch('/api/auth/sign-in', {
+    const response = await fetch('/api/auth/sign-in', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(state)
-    })
-      .then(response => {
-        if (response.status !== 401) {
-          response.json().then(result => {
-            props.handleSignIn(result);
-          });
-        } else {
-          handleError();
-        }
-      });
+    });
+    if (response.status !== 401) {
+      const result = await response.json();
+      props.handleSignIn(result);
+    } else {
+      handleError();
+    }
   };
 
   if (props.user) {
