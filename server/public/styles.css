@@ -207,15 +207,25 @@ body {
   background-color: #3a3a3a;
 }
 
-span > a {
-  color: #4a88ff;
+.dropdown-menu > div:hover {
+  background-image: none;
+  background-color: #222;
 }
 
-.list-button-container {
-  border: 2px solid black;
+.list-btn {
   border-radius: 10px;
   background-color: #3a3a3a;
-  padding: 10px 0;
+  width: 135px;
+}
+
+.list-dropdown {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #3a3a3a;
+}
+
+span > a {
+  color: #4a88ff;
 }
 
 .search-img-container {
@@ -227,7 +237,6 @@ span > a {
   font-size: 14px;
 }
 
-.list-button-container:active,
 .review-button:active {
   background-color: #575656;
 }
@@ -468,11 +477,6 @@ span > a {
     justify-content: space-between;
   }
 
-  .list-button-container {
-    font-size: 28px;
-    width: 35%;
-  }
-
   .game-details-name {
     font-size: 48px;
   }
@@ -575,10 +579,6 @@ span > a {
   .screenshot {
     width: 500px;
     height: 300px;
-  }
-
-  .list-button-container {
-    width: 30%;
   }
 
   .review-text-area {
