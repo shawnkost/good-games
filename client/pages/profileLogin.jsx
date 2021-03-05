@@ -3,6 +3,7 @@ import Redirect from '../components/redirect';
 import ProfileBackground from '../images/profile-background.png';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 toast.configure();
 
@@ -24,17 +25,14 @@ export default function ProfileLogin(props) {
 
   const handleLogin = async event => {
     event.preventDefault();
-    const response = await fetch('/api/auth/sign-in', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(state)
-    });
-    if (response.status !== 401) {
-      const result = await response.json();
-      props.handleSignIn(result);
-    } else {
+    try {
+      const response = await axios({
+        method: 'POST',
+        url: '/api/auth/sign-in',
+        data: state
+      });
+      props.handleSignIn(response.data);
+    } catch {
       handleError();
     }
   };

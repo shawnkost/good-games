@@ -79,43 +79,16 @@ export default function CreateGameDetails(props) {
         });
         setGameList([response.data]);
         return;
-      }
-      if (gameList[0].wantToPlay) {
-        const data = {
-          wantToPlay: false,
-          played: false
-        };
-        const response = await fetch(
-          `/api/games/gameList/${props.gameDetails.id}/${userId}`,
-          {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+      } else {
+        const response = await axios({
+          method: 'PATCH',
+          url: `/api/games/gameList/${props.gameDetails.id}/${userId}`,
+          data: {
+            wantToPlay: !gameList[0].wantToPlay,
+            played: false
           }
-        );
-        const gameList = response.json();
-        setGameList([gameList]);
-        return;
-      }
-      if (!gameList[0].wantToPlay) {
-        const data = {
-          wantToPlay: true,
-          played: false
-        };
-        const response = await fetch(
-          `/api/games/gameList/${props.gameDetails.id}/${userId}`,
-          {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          }
-        );
-        const gameList = await response.json();
-        setGameList([gameList]);
+        });
+        setGameList([response.data]);
         return;
       }
     }
