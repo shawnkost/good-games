@@ -212,6 +212,18 @@ body {
   background-color: #222;
 }
 
+.btn-primary {
+  color: black;
+  background-color: #ffffff;
+  border-color: #ffffff;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+  color: #ffffff;
+  background-color: black;
+  border-color: black;
+}
+
 .list-btn {
   border-radius: 10px;
   background-color: #3a3a3a;
