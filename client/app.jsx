@@ -54,16 +54,22 @@ export default function App(props) {
 
   const handleSignOut = async () => {
     const token = window.localStorage.getItem('jwt-token');
-    await axios({
-      method: 'DELETE',
-      url: '/api/users/session',
-      headers: {
-        'X-ACCESS-TOKEN': token
-      }
-    });
-    window.localStorage.removeItem('jwt-token');
-    setUser(null);
-    window.location.hash = '#profile-login';
+    try {
+      await axios({
+        method: 'DELETE',
+        url: '/api/users/session',
+        headers: {
+          'X-ACCESS-TOKEN': token
+        }
+      });
+      window.localStorage.removeItem('jwt-token');
+      setUser(null);
+      window.location.hash = '#profile-login';
+    } catch {
+      window.localStorage.removeItem('jwt-token');
+      setUser(null);
+      window.location.hash = '#profile-login';
+    }
   };
 
   const renderPage = () => {

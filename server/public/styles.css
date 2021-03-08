@@ -214,12 +214,17 @@ body {
 
 .btn-primary {
   color: black;
-  background-color: #ffffff;
-  border-color: #ffffff;
+  background-color: #fff;
+  border-color: #fff;
 }
 
-.btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
-  color: #ffffff;
+.btn-primary:hover {
+  background-color: black !important;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
+  color: #fff;
   background-color: black;
   border-color: black;
 }
@@ -482,11 +487,6 @@ span > a {
   .screenshot {
     width: 380px;
     height: 250px;
-  }
-
-  .list-container {
-    display: flex;
-    justify-content: space-between;
   }
 
   .game-details-name {
