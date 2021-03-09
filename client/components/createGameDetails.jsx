@@ -96,12 +96,15 @@ export default function CreateGameDetails(props) {
   };
 
   return (
-    <div className="">
+    <div>
       <div className="mb-2 text-white text-center font-Yeseva font-16 breadcrumbs">
         <a href="#" className="detail-links">
           <span>Home /</span>
         </a>
-        <a href={props.prevRoute ? `#${props.prevRoute.path}` : '#'} className="detail-links">
+        <a
+          href={props.prevRoute ? `#${props.prevRoute.path}` : '#'}
+          className="detail-links"
+        >
           <span> Games /</span>
         </a>
         <div className="d-inline-block">&nbsp;{props.gameDetails.name}</div>
@@ -124,23 +127,43 @@ export default function CreateGameDetails(props) {
         ></iframe>
         <CreateScrollingImages images={props.gamePhotos} />
       </div>
-      <div className="list-container mb-lg-4">
-        <div
-          className="ml-3 ml-md-5 mr-3 mr-md-5 mb-4 text-center text-white font-24 list-button-container cursor-pointer"
-          onClick={addPlayed}
-        >
-          {gameList.length !== 0 && gameList[0].played
-            ? 'Played'
-            : 'Add to Played'}
-        </div>
-        <div
-          className="ml-3 ml-md-5 mr-3 mr-md-5 mb-4 text-center text-white font-24 list-button-container cursor-pointer"
-          onClick={addWantToPlay}
-        >
-          {gameList.length !== 0 && gameList[0].wantToPlay
-            ? 'Want to Play'
-            : 'Add to Want to Play'}
-        </div>
+      <div className="list-container mb-4 mb-lg-4 text-center">
+        <div className="btn-group">
+          <button className="btn text-white list-btn font-18" type="button">
+            {gameList.length !== 0 && gameList[0].played
+              ? 'Played'
+              : gameList.length !== 0 && gameList[0].wantToPlay
+                ? 'Want To Play'
+                : 'Add To:'}
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary dropdown-toggle dropdown-toggle-split"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <span className="sr-only">Toggle Dropdown</span>
+          </button>
+            <div
+              className="dropdown-menu dropdown-menu-right list-dropdown"
+              aria-labelledby="dropdownMenuButton"
+            >
+              <div
+                className="dropdown-item font-18 text-white cursor-pointer"
+                onClick={addPlayed}
+              >
+                Played
+              </div>
+              <div className="dropdown-divider"></div>
+              <div
+                className="dropdown-item font-18 text-white cursor-pointer"
+                onClick={addWantToPlay}
+              >
+                Want To Play
+              </div>
+            </div>
+          </div>
       </div>
       <div className="game-description pl-3 pl-md-5 pr-md-5">
         <div className="mb-2 mb-lg-4 text-white font-22 font-Yeseva game-about">
